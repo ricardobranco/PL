@@ -18,5 +18,6 @@ void addTitulo(PPLH*,char*);
 void addAutor(PPLH*,char*);
 void addSeccao(PPLH*,char*,int);
 void addHRef(PPLH*,char*);
+void addItem(PPLH*,char*);
 
 

@@ -147,7 +147,9 @@ void addHRef(PPLH* pplh, char* arg){
 	insertTail(pplh->latex,&hlatex);
 }
 
-
+void addItem(PPLH* pplh, char* arg){
+	
+}
 
 
 

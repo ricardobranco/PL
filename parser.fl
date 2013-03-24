@@ -19,6 +19,9 @@ PPLH pplh;
 
 \\url\{((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*,.*\}	{addHRef(&pplh,yytext+5);}
 
+=>[^=;\n]*\;			{}
+
+
 
 
 =indice= 				{printf("INDICE");}
@@ -32,7 +35,6 @@ PPLH pplh;
 
 =dl=    				{printf("LISTA DESCRITIVA");}
 
-=>[^=;\n]*\;			{printf("ITEM");}
 
 =![^=]*=				{printf("COMENTARIO");}
 
