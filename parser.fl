@@ -1,0 +1,57 @@
+%{
+#include "linkedList.h"
+#include "preprocessador.h"
+PPLH pplh;
+%}
+
+%x GLOBAL LATEX HTML COMENTARIO NFORMATADO
+
+	int tamanho;
+
+%%
+
+=titulo\[[^\n=\]]+\] 	{addTitulo(&pplh,yytext+8);}
+
+=autor\[[^\n=\]]+\] 	{addAutor(&pplh,yytext+7);}
+
+=S[1-6]\[[^\n=\]]+\] 	{tamanho = (int) (yytext[2]-'0');
+						addSeccao(&pplh,yytext+4,tamanho);}
+
+\\url\{((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*,.*\}	{addHRef(&pplh,yytext+5);}
+
+
+
+=indice= 				{printf("INDICE");}
+
+
+=tnf= 					{printf("TEXTO NAO FORMATADO");}
+
+=ol=					{printf("LISTA ORDENADA");}
+
+=ul= 					{printf("LISTA DESORDENADA");}
+
+=dl=    				{printf("LISTA DESCRITIVA");}
+
+=>[^=;\n]*\;			{printf("ITEM");}
+
+=![^=]*=				{printf("COMENTARIO");}
+
+=end 				 	{printf("END");}
+
+=\\.*					{printf("%s",yytext+2);}
+
+
+\n printf("\n");
+
+
+
+%%
+
+
+int main(int argc, char **argv){
+
+	pplh.html=init(sizeof(char*),NULL);
+	pplh.latex=init(sizeof(char*),NULL);
+	yylex();
+	return 0;
+}

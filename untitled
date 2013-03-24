@@ -1,0 +1,19 @@
+
+
+=titulo=\[[^=]*\] {
+					mybuffer = strdup(yytext+9);
+					length = strlen(mybuffer);
+					titulo = (char*) malloc(sizeof(char)*length);
+					strncpy(titulo,mybuffer,length-1);
+					printf("TITULO: %s\n",titulo);
+					}
+
+
+=autor=\[.*\] 	{mybuffer = strdup(yytext+8);
+				length = strlen(mybuffer);
+				autor = (char*) malloc(sizeof(char)*length);
+				strncpy(autor,mybuffer,length-1);
+				printf("AUTOR %s\n",autor);
+				}
+^\s* {printf("spc");}
+\n ;
