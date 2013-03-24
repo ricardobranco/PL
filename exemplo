@@ -15,9 +15,9 @@ sadasdasdasdas\b{adasdad}\it{asdasdasdasdasdasd}\emph{asdasdasd}
 
 =dl=    				{printf("LISTA DESCRITIVA");}
 
-=>ELEMENTO 1;
+=>ELEMENTO 1
 =>ELEMENT
-;
+
 
 =!um comentario= \==ol= \
 

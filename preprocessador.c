@@ -148,7 +148,19 @@ void addHRef(PPLH* pplh, char* arg){
 }
 
 void addItem(PPLH* pplh, char* arg){
-	
+	int len =strlen(arg);	
+
+	//HTML
+	char* ihtml = (char*)malloc(sizeof(char)*len+10);
+	strncat(ihtml,"<li>",4);
+	strncat(ihtml,arg,len);
+	strncat(ihtml,"</li>",5);
+	insertTail(pplh->html,&ihtml);
+
+	//LATEX
+	char* ilatex = (char*)malloc(sizeof(char)*len+7);
+	strncat(ilatex,"\\item ",6);
+	strncat(ilatex,arg,len);
 }
 
 
