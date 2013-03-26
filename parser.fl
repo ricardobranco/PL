@@ -3,25 +3,90 @@
 #include "preprocessador.h"
 PPLH pplh;
 %}
-
+%option stack
 %x GLOBAL LATEX HTML COMENTARIO NFORMATADO
-
+%x LISTA TABELA
 	int tamanho;
 
 %%
+	List* endHTML = init(sizeof(char*),NULL);
+	List* endLatex = init(sizeof(char*),NULL);
+	List* estados = init(sizeof(int),NULL);
+	char* ul = "ul";
+	char* ol = "ol";
+	char* pre = "pre";
+	char* itemize = "itemize";
+	char* enumerate = "enumerate";
+	char* verbatim = "verbatim";
+	char* comenthtml = "--";
+	char* comentlatex = "comment";
+	int estado = GLOBAL;
+	BEGIN GLOBAL;
 
-=titulo\[[^\n=\]]+\] 	{addTitulo(&pplh,yytext+8);}
+<GLOBAL>=titulo\[[^\n=\]]+\] 	{addTitulo(&pplh,yytext+8);}
 
-=autor\[[^\n=\]]+\] 	{addAutor(&pplh,yytext+7);}
+<GLOBAL>=autor\[[^\n=\]]+\] 	{addAutor(&pplh,yytext+7);}
 
-=S[1-6]\[[^\n=\]]+\] 	{tamanho = (int) (yytext[2]-'0');
-						addSeccao(&pplh,yytext+4,tamanho);}
+<GLOBAL>=S[1-6]\[[^\n=\]]+\] 	{tamanho = (int) (yytext[2]-'0');
+								addSeccao(&pplh,yytext+4,tamanho);}
 
-\\url\{((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*,.*\}	{addHRef(&pplh,yytext+5);}
+<GLOBAL>\\url\{((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*,.*\}	{addHRef(&pplh,yytext+5);}
 
-=>[^=;\n]*				{addItem(&pplh,yytext+2);}
+<LISTA>=>[^=\n]*				{addItem(&pplh,yytext+2);}
+
+<GLOBAL,LISTA>=ol=				{BEGIN LISTA;
+								addOrdList(&pplh);
+								insertHead(endHTML,&ol);
+								insertHead(endLatex,&enumerate);
+								insertHead(estados,&estado);
+								estado=LISTA;	
+								} 
+
+<GLOBAL,LISTA>=il=				{BEGIN LISTA;
+								addItemList(&pplh); 
+								insertHead(endHTML,&ul);
+								insertHead(endLatex,&itemize);
+								insertHead(estados,&estado);
+								estado=LISTA;} 
 
 
+<LISTA,TABELA,NFORMATADO,COMENTARIO>=end 	{int *popestado = pop(estados);
+											BEGIN *popestado;
+											estado=*popestado;
+											char** pophtml = pop(endHTML);
+											char** poplatex = pop(endLatex);
+											addEndTAG(&pplh,*pophtml,*poplatex);
+											}	
+											
+<HTML,LATEX>=end {int *popestado = pop(estados);
+				  BEGIN *popestado;
+				  estado=*popestado;
+				  }
+
+<GLOBAL,TABELA,LISTA>=tnf=	{BEGIN NFORMATADO;
+							addTextoNF(&pplh);
+							insertHead(endHTML,&pre);
+							insertHead(endLatex,&verbatim);
+							insertHead(estados,&estado);
+							estado=NFORMATADO;}
+
+<GLOBAL,TABELA,LISTA>=\! 	{BEGIN COMENTARIO;
+						 	addComentario(&pplh);
+							insertHead(endHTML,&comenthtml);
+							insertHead(endLatex,&comentlatex);
+							insertHead(estados,&estado);
+							estado=COMENTARIO;}
+
+<GLOBAL,TABELA,LISTA>\=html {BEGIN HTML;
+							insertHead(estados,&estado);
+							estado=HTML;}
+
+<GLOBAL,TABELA,LISTA>\=latex 	{BEGIN LATEX;
+								insertHead(estados,&estado);
+								estado=LATEX;}
+
+<GLOBAL,TABELA,LISTA>\=\= {addQuebra(&pplh);}
+<GLOBAL,TABELA,LISTA>\=[bie]+\{[^\n=\}]*\}	{addFormat(&pplh,yytext+1);}
 
 
 
@@ -29,18 +94,9 @@ PPLH pplh;
 =indice= 				{printf("INDICE");}
 
 
-=tnf= 					{printf("TEXTO NAO FORMATADO");}
-
-=ol=					{printf("LISTA ORDENADA");}
-
-=ul= 					{printf("LISTA DESORDENADA");}
 
 =dl=    				{printf("LISTA DESCRITIVA");}
 
-
-=![^=]*=				{printf("COMENTARIO");}
-
-=end 				 	{printf("END");}
 
 =\\.*					{printf("%s",yytext+2);}
 

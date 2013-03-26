@@ -4,24 +4,20 @@
 =autor[AUTOR]
 =S1[TIPO 1]
 =S6[TIPO 7]
-
- =indice=
-sadasdasdasdas\b{adasdad}\it{asdasdasdasdasdasd}\emph{asdasdasd}
-=tnf= 					{printf("TEXTO NAO FORMATADO");}
-
-=ol=					{printf("LISTA ORDENADA");}
-
-=ul= 					{printf("LISTA DESORDENADA");}
-
-=dl=    				{printf("LISTA DESCRITIVA");}
-
-=>ELEMENTO 1
-=>ELEMENT
-
-
-=!um comentario= \==ol= \
-
-=end
-\=end
-
+=bbbeieb{exemplo de um texto}
 \url{www.gregs.pt:28/item.png,cenas}
+=tnf= 					
+=end
+
+=ol=					
+=>cenas
+=>cenas
+=il= 					
+=>cenas
+=end
+=end
+==
+
+
+
+

@@ -161,11 +161,154 @@ void addItem(PPLH* pplh, char* arg){
 	char* ilatex = (char*)malloc(sizeof(char)*len+7);
 	strncat(ilatex,"\\item ",6);
 	strncat(ilatex,arg,len);
+	insertTail(pplh->latex,&ilatex);
+}
+
+void addOrdList(PPLH* pplh){
+	//HTML
+	char* olhtml = "<ol>";
+	insertTail(pplh->html,&olhtml);
+
+	//LATEX
+	char* ollatex = "\\begin{enumerate}";
+	insertTail(pplh->latex,&ollatex);
+}
+
+
+void addItemList(PPLH* pplh){
+	//HTML
+	char* ulhtml = "<ul>";
+	insertTail(pplh->html,&ulhtml);
+
+	//LATEX
+	char* ullatex = "\\begin{itemize}";
+	insertTail(pplh->latex,&ullatex);
+}
+
+void addEndTAG(PPLH* pplh,char* argHTML,char* argLatex){
+	//HTML
+	int htmllen = strlen(argHTML);
+	char* endtaghtml = (char*)malloc(sizeof(char)*htmllen+4);
+	strncpy(endtaghtml,"</\0",3);
+	strncat(endtaghtml,argHTML,htmllen);
+	strncat(endtaghtml,">",1);
+	insertTail(pplh->html,&endtaghtml);
+
+	//LATEX
+	int latexlen = strlen(argLatex);
+	char* endtaglatex = (char*)malloc(sizeof(char)*latexlen+7);
+	strncat(endtaglatex,"\\end{",5);
+	strncat(endtaglatex,argLatex,latexlen);
+	strncat(endtaglatex,"}",1);
+	insertTail(pplh->latex,&endtaglatex);
+}
+
+void addTextoNF(PPLH* pplh){
+	//HTML
+	char* htmlnf = "<pre>";
+	insertTail(pplh->html,&htmlnf);
+	//LATEX
+	char* latexnf = "\\begin{verbatim}";
+	insertTail(pplh->html,&latexnf);
+}
+
+void addComentario(PPLH* pplh){
+	//HTML
+	char* chtml = "<!-->";
+	insertTail(pplh->html,&chtml); 
+	//LATEX 
+	char* clatex ="\\begin{comment}";
+	insertTail(pplh->latex,&clatex);
+}
+
+void addQuebra(PPLH* pplh){
+	//HTML
+	char* qhtml = "<br>";
+	insertTail(pplh->html,&qhtml);
+	//LATEX
+	char* qlatex = "\\\\";
+	insertTail(pplh->latex,&qlatex);
+}
+
+int elem(char c,char* arg){
+	int flag=0;
+	int i;
+	for(i=0;i<strlen(arg)&&flag==0;i++){
+		if(arg[i]==c)
+			flag=1;
+	}
+	return flag;
 }
 
 
 
+void addFormat(PPLH* pplh,char* arg){
+	char* args[2];
+	args[0] = strtok(arg,"{"); //TIPO DE FORMATAÇÃO
+	args[1] = strtok(NULL,"}");//TEXTO A FORMATAR
+	int len = strlen(args[1]);
+	char* foptions = "bie";
+	int* options = (int*)malloc(sizeof(int)*3);
+	int i;
+
+	for(i=0;i<3;i++){
+		options[i]=elem(foptions[i],args[0]);
+	}
 
 
 
+
+	//HTML
+	int nctags = options[0]*7+options[1]*7+options[2]*9;
+	char* formathtml = (char*)malloc(sizeof(char)*len+nctags+1);
+	for(i=0;i<3;i++){
+		if(options[i]){
+			switch(i){
+				case 0:{
+					strncat(formathtml,"<b>",3);
+					break;
+				}
+				case 1:{
+					strncat(formathtml,"<i>",3);
+					break;
+				}
+				case 2:{
+					strncat(formathtml,"<em>",4);
+					break;
+				}
+
+			}
+		}
+	}
+
+	strncat(formathtml,args[1],len);
+
+	for(i=2;i>=0;i--){
+		if(options[i]){
+			switch(i){
+				case 0:{
+					strncat(formathtml,"</b>",4);
+					break;
+				}
+				case 1:{
+					strncat(formathtml,"</i>",4);
+					break;
+				}
+				case 2:{
+					strncat(formathtml,"</em>",5);
+					break;
+				}
+
+			}
+		}
+	}
+
+	printf("%s\n",formathtml);
+
+
+
+
+
+
+}
 
