@@ -3,105 +3,125 @@
 #include "preprocessador.h"
 PPLH pplh;
 %}
-%option stack
+
+url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
+img [a-zA-Z0-9_]+\.(jpg|jpeg|png)
+mfloat[0-9]+(\.[0-9]+)?	
 %x GLOBAL LATEX HTML COMENTARIO NFORMATADO
-%x LISTA TABELA
+%x LISTA TABELA IMAGEM
 	int tamanho;
+
 
 %%
 	List* endHTML = init(sizeof(char*),NULL);
 	List* endLatex = init(sizeof(char*),NULL);
 	List* estados = init(sizeof(int),NULL);
-	char* ul = "ul";
-	char* ol = "ol";
-	char* pre = "pre";
+	Image img;
+	
+	char* ul = "</ul>\n";
+	char* ol = "</ol>\n";
+	char* pre = "</pre>\n";
+	char* hfigure = "</figure>\n";
 	char* itemize = "itemize";
 	char* enumerate = "enumerate";
 	char* verbatim = "verbatim";
-	char* comenthtml = "--";
+	char* comenthtml = "-->\n";
 	char* comentlatex = "comment";
+	char* lfigure = "figure";	
 	int estado = GLOBAL;
 	BEGIN GLOBAL;
 
-<GLOBAL>=titulo\[[^\n=\]]+\] 	{addTitulo(&pplh,yytext+8);}
+<GLOBAL>\\t:[^\n\\]* 							{addTitulo(&pplh,yytext+3);}
 
-<GLOBAL>=autor\[[^\n=\]]+\] 	{addAutor(&pplh,yytext+7);}
+<GLOBAL>\\a:[^\n\\]* 							{addAutor(&pplh,yytext+3);}
 
-<GLOBAL>=S[1-6]\[[^\n=\]]+\] 	{tamanho = (int) (yytext[2]-'0');
-								addSeccao(&pplh,yytext+4,tamanho);}
+<GLOBAL>\\s[1-6]:[^\n\\]* 						{tamanho = (int) (yytext[2]-'0');
+												addSeccao(&pplh,yytext+4,tamanho);}
 
-<GLOBAL>\\url\{((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*,.*\}	{addHRef(&pplh,yytext+5);}
+<GLOBAL,LISTA,TABELA>\\href\({url},[^\n)\\]*\)	{addHRef(&pplh,yytext+6);}
 
-<LISTA>=>[^=\n]*				{addItem(&pplh,yytext+2);}
-
-<GLOBAL,LISTA>=ol=				{BEGIN LISTA;
-								addOrdList(&pplh);
-								insertHead(endHTML,&ol);
-								insertHead(endLatex,&enumerate);
-								insertHead(estados,&estado);
-								estado=LISTA;	
-								} 
-
-<GLOBAL,LISTA>=il=				{BEGIN LISTA;
-								addItemList(&pplh); 
-								insertHead(endHTML,&ul);
-								insertHead(endLatex,&itemize);
-								insertHead(estados,&estado);
-								estado=LISTA;} 
+<GLOBAL>\\fig 									{BEGIN IMAGEM;
+												addModImg(&pplh);
+												insertHead(endHTML,&hfigure);
+												insertHead(endLatex,&lfigure);
+												insertHead(estados,&estado);
+												estado=IMAGEM;}				
 
 
-<LISTA,TABELA,NFORMATADO,COMENTARIO>=end 	{int *popestado = pop(estados);
-											BEGIN *popestado;
-											estado=*popestado;
-											char** pophtml = pop(endHTML);
-											char** poplatex = pop(endLatex);
-											addEndTAG(&pplh,*pophtml,*poplatex);
-											}	
+<GLOBAL,LISTA>\\lo								{BEGIN LISTA;
+												addOrdList(&pplh);
+												insertHead(endHTML,&ol);
+												insertHead(endLatex,&enumerate);
+												insertHead(estados,&estado);
+												estado=LISTA;	
+												} 
+
+<GLOBAL,LISTA>\\li 								{BEGIN LISTA;
+												addItemList(&pplh); 
+												insertHead(endHTML,&ul);
+												insertHead(endLatex,&itemize);
+												insertHead(estados,&estado);
+												estado=LISTA;} 
+
+<LISTA>->[^\n\-]*								{addItem(&pplh,yytext+2);}
+
+<LISTA,TABELA,NFORMATADO,COMENTARIO,IMAGEM>\\end 		{int *popestado = pop(estados);
+												BEGIN *popestado;
+												estado=*popestado;
+												char** pophtml = pop(endHTML);
+												char** poplatex = pop(endLatex);
+												addEndTAG(&pplh,*pophtml,*poplatex);
+												}	
 											
-<HTML,LATEX>=end {int *popestado = pop(estados);
-				  BEGIN *popestado;
-				  estado=*popestado;
-				  }
+<HTML,LATEX>\\end 								{
+												int *popestado = pop(estados);
+												BEGIN *popestado;
+												estado=*popestado;												
+												}
 
-<GLOBAL,TABELA,LISTA>=tnf=	{BEGIN NFORMATADO;
-							addTextoNF(&pplh);
-							insertHead(endHTML,&pre);
-							insertHead(endLatex,&verbatim);
-							insertHead(estados,&estado);
-							estado=NFORMATADO;}
+<GLOBAL,TABELA,LISTA>\\tnf						{BEGIN NFORMATADO;
+												addTextoNF(&pplh);
+												insertHead(endHTML,&pre);
+												insertHead(endLatex,&verbatim);
+												insertHead(estados,&estado);
+												estado=NFORMATADO;
+												}
 
-<GLOBAL,TABELA,LISTA>=\! 	{BEGIN COMENTARIO;
-						 	addComentario(&pplh);
-							insertHead(endHTML,&comenthtml);
-							insertHead(endLatex,&comentlatex);
-							insertHead(estados,&estado);
-							estado=COMENTARIO;}
+<GLOBAL,TABELA,LISTA>\\! 						{BEGIN COMENTARIO;
+										 		addComentario(&pplh);
+												insertHead(endHTML,&comenthtml);
+												insertHead(endLatex,&comentlatex);
+												insertHead(estados,&estado);
+												estado=COMENTARIO;}
 
-<GLOBAL,TABELA,LISTA>\=html {BEGIN HTML;
-							insertHead(estados,&estado);
-							estado=HTML;}
+<GLOBAL,TABELA,LISTA>\\html 					{BEGIN HTML;
+												insertHead(estados,&estado);
+												estado=HTML;
+												}
 
-<GLOBAL,TABELA,LISTA>\=latex 	{BEGIN LATEX;
-								insertHead(estados,&estado);
-								estado=LATEX;}
+<GLOBAL,TABELA,LISTA>\\latex 					{BEGIN LATEX;
+												insertHead(estados,&estado);
+												estado=LATEX;}
 
-<GLOBAL,TABELA,LISTA>\=\= {addQuebra(&pplh);}
-<GLOBAL,TABELA,LISTA>\=[bie]+\{[^\n=\}]*\}	{addFormat(&pplh,yytext+1);}
+<GLOBAL,TABELA,LISTA>\\l 						{addQuebra(&pplh);}
 
+<GLOBAL,TABELA,LISTA>\\[bie]*\([^\n\)\\]*\)		{addFormat(&pplh,yytext+1);}
 
+<HTML>.|\n										{addHTML(&pplh,yytext);}
+<LATEX>.|\n										{addLATEX(&pplh,yytext);}									
 
+<GLOBAL,LISTA,TABELA>\\bs            			{addBackSlash(&pplh,'a');}	        	   
+<HTML>\\bs										{addBackSlash(&pplh,'h');}	        	   
+<LATEX>\\bs										{addBackSlash(&pplh,'l');}	
 
-=indice= 				{printf("INDICE");}
+<IMAGEM>\\img\({img}\)							{img.path=strdup(yytext+5);
+												printf("%s\n",yytext+5 );
+												addImagem(&pplh,&img);
+												}
 
+<IMAGEM>\\s:{mfloat}							{img.scale = strdup(yytext+3);}
 
-
-=dl=    				{printf("LISTA DESCRITIVA");}
-
-
-=\\.*					{printf("%s",yytext+2);}
-
-
-\n printf("\n");
+<IMAGEM>\\leg:[^\n]+							{img.caption=strdup(yytext+5);}
 
 
 
@@ -113,5 +133,21 @@ int main(int argc, char **argv){
 	pplh.html=init(sizeof(char*),NULL);
 	pplh.latex=init(sizeof(char*),NULL);
 	yylex();
+	char* titulo = pplh.titulo;
+	char* autor = pplh.autor;
+	printf("TITULO:%s\nAUTOR:%s\n",titulo,autor);
+	printf("HTML:\n");
+	List* html = pplh.html;
+	while(html->list){
+		char** entrada = pop(html);
+		printf("%s",*entrada);
+	}
+
+	printf("LATEX:\n");
+	List* latex = pplh.latex;
+	while(latex->list){
+		char** entrada = pop(latex);
+		printf("%s",*entrada);
+	}	
 	return 0;
 }

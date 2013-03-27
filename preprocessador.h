@@ -10,6 +10,14 @@ typedef struct spplh
 	List* latex;
 }PPLH;
 
+typedef struct sImage
+{
+	char* scale;
+	char* path;
+	char* caption;
+}Image;
+
+
 
 void addTitulo(PPLH*,char*);
 void addAutor(PPLH*,char*);
@@ -23,3 +31,8 @@ void addTextoNF(PPLH*);
 void addComentario(PPLH*);
 void addQuebra(PPLH*);
 void addFormat(PPLH*,char*);
+void addHTML(PPLH*,char*);
+void addLATEX(PPLH*,char*);
+void addBackSlash(PPLH*,char);
+void addImagem(PPLH*,Image*);
+void addModImg(PPLH*);

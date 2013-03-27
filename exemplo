@@ -1,23 +1,28 @@
-=titulo[Ricardo Jorge Rodrigues Branco] 
-=autor[RicardoBranco]
-=titulo[TITULO]
-=autor[AUTOR]
-=S1[TIPO 1]
-=S6[TIPO 7]
-=bbbeieb{exemplo de um texto}
-\url{www.gregs.pt:28/item.png,cenas}
-=tnf= 					
-=end
+\t:Titulo
+\a:Ricardo Jorge Rodrigues Branco
+\s1:Secção 1
+\href(www.gregs.pt:28/item.png,cenas)
+\lo
+->item 1
+->item 2
+\li
+->item 3 ->item 4
 
-=ol=					
-=>cenas
-=>cenas
-=il= 					
-=>cenas
-=end
-=end
-==
-
-
-
-
+\end
+\end
+\tnf
+\end
+\!
+\end
+\html
+<p>este texto só aparece em html</p>
+\end
+\latex
+este só aparece em \LaTeX
+\end 
+nao insere isto
+\fig
+\s:1.5
+\leg:uma imagem com açentos âadasdãb
+\img(imagem.png)
+\end

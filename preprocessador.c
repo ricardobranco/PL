@@ -1,36 +1,35 @@
 #include "preprocessador.h"
 
 void addTitulo(PPLH* pplh, char*arg){
-	int len = strlen(arg)-1;
-	char* titulo = (char*) malloc(sizeof(char)*len);
+	int len = strlen(arg);
+	char* titulo = (char*) malloc(sizeof(char)*len+1);
 	strncpy(titulo,arg,len);
 	pplh->titulo=strdup(titulo);
 }
 
 void addAutor(PPLH* pplh, char*arg){
-	int len = strlen(arg)-1;
-	char* autor = (char*) malloc(sizeof(char)*len);
+	int len = strlen(arg);
+	char* autor = (char*) malloc(sizeof(char)*len+1);
 	strncpy(autor,arg,len);
 	pplh->autor=strdup(autor);
 }
 
 void addSeccao(PPLH* pplh,char*arg,int tamanho){
-	int len = strlen(arg)-1;
-	char* seccao = (char*) malloc(sizeof(char)*len);
+	int len = strlen(arg);
+	char* seccao = (char*) malloc(sizeof(char)*len+1);
 	strncpy(seccao,arg,len); 	
 
 	//HTML
-	char ahtml[5] = "<h >\0";
-	char fhtml[6] = "</h >\0";
+	char ahtml[4] = "<h >";
+	char fhtml[6] = "</h >\n";
 	char ctamanho = '0'+tamanho;
 	ahtml[2]= ctamanho;
 	fhtml[3]=ctamanho;
-	char* shtml = (char*)malloc(sizeof(char)*len+10);
+	char* shtml = (char*)malloc(sizeof(char)*len+11);
 	strncat(shtml,ahtml,4);
 	strncat(shtml,seccao,strlen(seccao));
-	strncat(shtml,fhtml,5);
+	strncat(shtml,fhtml,6);
 	insertTail(pplh->html,&shtml);
-
 	//LATEX
 	/*
 	SECÇÃO LVL1 -> /section{}
@@ -49,8 +48,8 @@ void addSeccao(PPLH* pplh,char*arg,int tamanho){
 	char* as4 = "/paragraph{";
 	char* as5 = "/subparagraph{";
 	char* as6 = "/subsubparagraph{";
-	char* mbox = "\\mbox{}\\\\";
-	char* fs = "}";
+	char* mbox = "\\mbox{}\\\\\n";
+	char* fs = "}\n";
 	char* slatex;
 	int alocar;
 	switch(tamanho){
@@ -80,7 +79,7 @@ void addSeccao(PPLH* pplh,char*arg,int tamanho){
 		}
 	}
 
-	slatex = (char*)malloc(sizeof(char)*len+alocar+1);
+	slatex = (char*)malloc(sizeof(char)*len+alocar+2);
 	switch(tamanho){
 		case 1:{
 			strncat(slatex,as1,strlen(as1));
@@ -114,7 +113,7 @@ void addSeccao(PPLH* pplh,char*arg,int tamanho){
 		strncat(slatex,mbox,strlen(mbox));
 
 	insertTail(pplh->latex,&slatex);
-}
+ }
 
 
 void addHRef(PPLH* pplh, char* arg){
@@ -128,7 +127,7 @@ void addHRef(PPLH* pplh, char* arg){
 	
 	//HTML
 	char* ahref = "<a href=\"";
-	char* fhref = "</a>";
+	char* fhref = "</a>\n";
 	char* hhtml = (char*) malloc(sizeof(char)*urllen+desclen+strlen(ahref)+strlen(fhref)+3);
 	strncat(hhtml,ahref,strlen(ahref));
 	strncat(hhtml,args[0],urllen);
@@ -138,12 +137,12 @@ void addHRef(PPLH* pplh, char* arg){
 	insertTail(pplh->html,&hhtml);
 
 	//LATEX
-	char* hlatex=(char*) malloc(sizeof(char)*urllen+desclen+10);
+	char* hlatex=(char*) malloc(sizeof(char)*urllen+desclen+11);
 	strncat(hlatex,"\\href{",6);
 	strncat(hlatex,args[0],urllen);
 	strncat(hlatex,"}{",2);
 	strncat(hlatex,desc,desclen);
-	strncat(hlatex,"}",1);
+	strncat(hlatex,"}\n",2);
 	insertTail(pplh->latex,&hlatex);
 }
 
@@ -151,82 +150,78 @@ void addItem(PPLH* pplh, char* arg){
 	int len =strlen(arg);	
 
 	//HTML
-	char* ihtml = (char*)malloc(sizeof(char)*len+10);
+	char* ihtml = (char*)malloc(sizeof(char)*len+11);
 	strncat(ihtml,"<li>",4);
 	strncat(ihtml,arg,len);
-	strncat(ihtml,"</li>",5);
+	strncat(ihtml,"</li>\n",6);
 	insertTail(pplh->html,&ihtml);
 
 	//LATEX
-	char* ilatex = (char*)malloc(sizeof(char)*len+7);
+	char* ilatex = (char*)malloc(sizeof(char)*len+8);
 	strncat(ilatex,"\\item ",6);
 	strncat(ilatex,arg,len);
+	strncat(ilatex,"\n",1);
 	insertTail(pplh->latex,&ilatex);
 }
 
 void addOrdList(PPLH* pplh){
 	//HTML
-	char* olhtml = "<ol>";
+	char* olhtml = "<ol>\n";
 	insertTail(pplh->html,&olhtml);
 
 	//LATEX
-	char* ollatex = "\\begin{enumerate}";
+	char* ollatex = "\\begin{enumerate}\n";
 	insertTail(pplh->latex,&ollatex);
 }
 
 
 void addItemList(PPLH* pplh){
 	//HTML
-	char* ulhtml = "<ul>";
+	char* ulhtml = "<ul>\n";
 	insertTail(pplh->html,&ulhtml);
 
 	//LATEX
-	char* ullatex = "\\begin{itemize}";
+	char* ullatex = "\\begin{itemize}\n";
 	insertTail(pplh->latex,&ullatex);
 }
 
 void addEndTAG(PPLH* pplh,char* argHTML,char* argLatex){
 	//HTML
-	int htmllen = strlen(argHTML);
-	char* endtaghtml = (char*)malloc(sizeof(char)*htmllen+4);
-	strncpy(endtaghtml,"</\0",3);
-	strncat(endtaghtml,argHTML,htmllen);
-	strncat(endtaghtml,">",1);
-	insertTail(pplh->html,&endtaghtml);
+	insertTail(pplh->html,&argHTML);
 
 	//LATEX
 	int latexlen = strlen(argLatex);
-	char* endtaglatex = (char*)malloc(sizeof(char)*latexlen+7);
+	char* endtaglatex = (char*)malloc(sizeof(char)*latexlen+8);
 	strncat(endtaglatex,"\\end{",5);
 	strncat(endtaglatex,argLatex,latexlen);
-	strncat(endtaglatex,"}",1);
+	strncat(endtaglatex,"}\n",2);
 	insertTail(pplh->latex,&endtaglatex);
 }
 
 void addTextoNF(PPLH* pplh){
 	//HTML
-	char* htmlnf = "<pre>";
+	char* htmlnf = "<pre>\n";
 	insertTail(pplh->html,&htmlnf);
 	//LATEX
-	char* latexnf = "\\begin{verbatim}";
-	insertTail(pplh->html,&latexnf);
+	char* latexnf = "\\begin{verbatim}\n";
+	insertTail(pplh->latex,&latexnf);
 }
 
 void addComentario(PPLH* pplh){
 	//HTML
-	char* chtml = "<!-->";
+	char* chtml = "<!--\n";
 	insertTail(pplh->html,&chtml); 
 	//LATEX 
-	char* clatex ="\\begin{comment}";
+	char* clatex ="\\begin{comment}\n";
 	insertTail(pplh->latex,&clatex);
 }
 
 void addQuebra(PPLH* pplh){
 	//HTML
-	char* qhtml = "<br>";
+	char* qhtml = "<br>\n";
 	insertTail(pplh->html,&qhtml);
 	//LATEX
-	char* qlatex = "\\\\";
+	char* qlatex = "\\\\\n";
 	insertTail(pplh->latex,&qlatex);
 }
 
@@ -259,8 +254,8 @@ void addFormat(PPLH* pplh,char* arg){
 
 
 	//HTML
-	int nctags = options[0]*7+options[1]*7+options[2]*9;
-	char* formathtml = (char*)malloc(sizeof(char)*len+nctags+1);
+	int nctagshtml = options[0]*7+options[1]*7+options[2]*9;
+	char* formathtml = (char*)malloc(sizeof(char)*len+nctagshtml+1);
 	for(i=0;i<3;i++){
 		if(options[i]){
 			switch(i){
@@ -302,13 +297,147 @@ void addFormat(PPLH* pplh,char* arg){
 			}
 		}
 	}
+	insertTail(pplh->html,&formathtml);
+	//LATEX
+	int nctagslatex = options[0]*9 + options[1]*9 + options[2]*7;
+	char* formatlatex = (char*)malloc(sizeof(char)*len+nctagslatex+1);
 
-	printf("%s\n",formathtml);
+	for(i=0;i<3;i++){
+		if(options[i]){
+			switch(i){
+				case 0:{
+					strncat(formatlatex,"\\textbf{",8);
+					break;
+				}
+				case 1:{
+					strncat(formatlatex,"\\textit{",8);
+					break;
+				}
+				case 2:{
+					strncat(formatlatex,"\\emph{",6);
+					break;
+				}
 
+			}
+		}
+	}
 
+	strncat(formatlatex,args[1],len);
 
-
-
-
+	for(i=0;i<3;i++){
+		if(options[i])
+			strncat(formatlatex,"}",1);
+	}
+	insertTail(pplh->latex,&formatlatex);
 }
+
+void addHTML(PPLH* pplh,char* arg){
+	char* resultado = strdup(arg); //SE NÃO FIZER ESTE STRDUP ESTOU A FAZER COM QUE A LISTA LIGADA TENHA UM APONTADOR PARA O YYTEXT
+	insertTail(pplh->html,&resultado);	
+}
+
+void addLATEX(PPLH* pplh,char* arg){
+	char* resultado = strdup(arg); //SE NÃO FIZER ESTE STRDUP ESTOU A FAZER COM QUE A LISTA LIGADA TENHA UM APONTADOR PARA O YYTEXT
+	insertTail(pplh->latex,&resultado);	
+}
+
+void addBackSlash(PPLH* pplh,char option){
+	char* bs ="\\";
+	//HTML
+	if(option == 'h' || option == 'a')
+	insertTail(pplh->html,&bs);
+	//LATEX
+	if(option == 'l' || option == 'a')
+	insertTail(pplh->latex,&bs);
+}
+
+
+
+void addImagem(PPLH* pplh,Image* img){
+	
+
+	char* imagem = (char*)malloc(sizeof(char)*strlen(img->path));
+	strncpy(imagem,img->path,strlen(img->path)-1);
+	int len = strlen(imagem);
+	free(img->path);
+	
+	float fscale = 1;
+	int slen = 0;
+	if(img->scale){
+		fscale=atof(img->scale);
+		slen=strlen(img->scale);
+		free(img->scale);
+	}
+	int lencaption=0;
+	char* caption;
+	
+	if(img->caption){
+		lencaption=strlen(img->caption);
+		caption=strdup(img->caption);
+		free(img->caption);
+	}
+
+	//HTML
+
+
+
+	char* float2string = (char*)malloc(sizeof(char)*slen+4);
+	sprintf(float2string, "%.2f%%", fscale*100);
+	int f2shlen = strlen(float2string);
+
+	char* abrehtml = "<img src=\"";
+	char* width = "\" width=\"";
+	char* height ="\" height=\""; 
+	char* fechahtml = "/>\n";
+	
+	int alocarhtml = len+2*f2shlen+strlen(abrehtml)+strlen(width)+strlen(height)+strlen(fechahtml)+1;
+
+	char* imghtml = (char*)malloc(sizeof(char)*alocarhtml);
+	strncpy(imghtml,abrehtml,strlen(abrehtml));
+	strncat(imghtml,imagem,len);
+	strncat(imghtml,width,strlen(width));
+	strncat(imghtml,float2string,f2shlen);
+	strncat(imghtml,height,strlen(height));
+	strncat(imghtml,float2string,f2shlen);
+	strncat(imghtml,fechahtml,strlen(fechahtml));
+	
+	insertTail(pplh->html,&imghtml);
+	if(lencaption){
+		char* abrecaphtml = "<figcaption>";
+		char* fechacaphtml = "</figcaption>\n";
+
+		int alocarcaphtml = lencaption+strlen(abrecaphtml)+strlen(fechacaphtml)+1;
+		char* caphtml = (char*)malloc(sizeof(char)*alocarcaphtml);
+		strncat(caphtml,abrecaphtml,strlen(abrecaphtml));
+		strncat(caphtml,caption,lencaption);
+		strncat(caphtml,fechacaphtml,strlen(fechacaphtml));
+		insertTail(pplh->html,&caphtml);
+	}
+
+
+	//LATEX
+	
+	char* includegraphics ="\\includegraphics{";
+	
+	int alocar = len+strlen(includegraphics)+3;
+
+	char* imglatex = (char*)malloc(sizeof(char)*alocar);
+	strncat(imglatex,includegraphics,strlen(includegraphics));
+	strncat(imglatex,imagem,len);
+	strncat(imglatex,"}\n",2);
+	insertTail(pplh->latex,&imglatex);
+}
+
+
+void addModImg(PPLH* pplh){
+	//HTML
+	char* htmlfigure = "<figure>\n";
+	insertTail(pplh->html,&htmlfigure);
+	//LATEX
+	char* latexfigure ="\\begin{figure}[!hbp]\n"; 
+	insertTail(pplh->latex,&latexfigure);
+}
+
+
+
 
