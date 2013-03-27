@@ -1,13 +1,18 @@
-OBJS = linkedList.o lex.yy.o preprocessador.o
+OBJS = linkedList.o lex.yy.o preprocessador.o pplh.o
 CC = gcc
 CFLAGS = -g
 LIBS = -ll
 PARSER = parser.fl
-FILES = linkedList.c parser.fl linkedList.h Makefile preprocessador.h preprocessador.c
+FILES = linkedList.c parser.fl linkedList.h Makefile preprocessador.h preprocessador.c pplh.h pplh.c
 
 
 pplh:$(OBJS)
 	$(CC) $(CFLAGS) -o pplh $(OBJS) $(LIBS) 
+
+
+pplh.o:pplh.c pplh.h
+	$(CC) $(CFLAGS) -c pplh.c
+
 
 linkedList.o:linkedList.c linkedList.h
 	$(CC) $(CFLAGS) -c linkedList.c
@@ -18,7 +23,7 @@ preprocessador.o:preprocessador.c preprocessador.h linkedlist.h
 lex.yy.c:$(PARSER)
 	flex $(PARSER)
 
-lex.yy.o:lex.yy.c linkedlist.h preprocessador.h
+lex.yy.o:lex.yy.c linkedlist.h preprocessador.h pplh.h
 	$(CC) $(CFLAGS) -c lex.yy.c
 
 clean:

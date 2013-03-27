@@ -42,12 +42,12 @@ void addSeccao(PPLH* pplh,char*arg,int tamanho){
 	evitar erro "there's no line here to end" -> \mbox{}\\  
 	*/
 
-	char* as1 = "/section{";
-	char* as2 = "/subsection{";
-	char* as3 = "/subsubsection{";
-	char* as4 = "/paragraph{";
-	char* as5 = "/subparagraph{";
-	char* as6 = "/subsubparagraph{";
+	char* as1 = "\\section{";
+	char* as2 = "\\subsection{";
+	char* as3 = "\\subsubsection{";
+	char* as4 = "\\paragraph{";
+	char* as5 = "\\subparagraph{";
+	char* as6 = "\\subsubparagraph{";
 	char* mbox = "\\mbox{}\\\\\n";
 	char* fs = "}\n";
 	char* slatex;
@@ -238,11 +238,15 @@ int elem(char c,char* arg){
 
 
 void addFormat(PPLH* pplh,char* arg){
+	
 	char* args[2];
-	args[0] = strtok(arg,"{"); //TIPO DE FORMATAÇÃO
-	args[1] = strtok(NULL,"}");//TEXTO A FORMATAR
+	args[0] = strtok(arg,"("); //TIPO DE FORMATAÇÃO
+	args[1] = strtok(NULL,")");//TEXTO A FORMATAR
+	
 	int len = strlen(args[1]);
+	
 	char* foptions = "bie";
+	
 	int* options = (int*)malloc(sizeof(int)*3);
 	int i;
 
@@ -359,14 +363,13 @@ void addImagem(PPLH* pplh,Image* img){
 	char* imagem = (char*)malloc(sizeof(char)*strlen(img->path));
 	strncpy(imagem,img->path,strlen(img->path)-1);
 	int len = strlen(imagem);
-	free(img->path);
 	
 	float fscale = 1;
 	int slen = 0;
 	if(img->scale){
 		fscale=atof(img->scale);
 		slen=strlen(img->scale);
-		free(img->scale);
+		img->scale=NULL;
 	}
 	int lencaption=0;
 	char* caption;
@@ -374,7 +377,7 @@ void addImagem(PPLH* pplh,Image* img){
 	if(img->caption){
 		lencaption=strlen(img->caption);
 		caption=strdup(img->caption);
-		free(img->caption);
+		img->caption=NULL;
 	}
 
 	//HTML
@@ -417,15 +420,31 @@ void addImagem(PPLH* pplh,Image* img){
 
 	//LATEX
 	
-	char* includegraphics ="\\includegraphics{";
-	
-	int alocar = len+strlen(includegraphics)+3;
+	char* includegraphics ="\\includegraphics[scale=";
+	char* opt2arg ="]{";
+	sprintf(float2string, "%.2f", fscale);
+	int alocar = len+strlen(includegraphics)+strlen(opt2arg)+strlen(float2string)+3;
+
+
 
 	char* imglatex = (char*)malloc(sizeof(char)*alocar);
 	strncat(imglatex,includegraphics,strlen(includegraphics));
+	strncat(imglatex,float2string,strlen(float2string));
+	strncat(imglatex,opt2arg,strlen(opt2arg));
 	strncat(imglatex,imagem,len);
 	strncat(imglatex,"}\n",2);
 	insertTail(pplh->latex,&imglatex);
+
+	if(lencaption){
+		char* abrecaplatex = "\\caption{";
+		char* fechacaplatex ="}\n";
+		int alocarcaplatex = strlen(abrecaplatex)+strlen(fechacaplatex)+lencaption+1;
+		char* caplatex = (char*)malloc(sizeof(char)*alocarcaplatex);
+		strncat(caplatex,abrecaplatex,strlen(abrecaplatex));
+		strncat(caplatex,caption,lencaption);
+		strncat(caplatex,fechacaplatex,strlen(fechacaplatex));
+		insertTail(pplh->latex,&caplatex);	
+	}
 }
 
 
@@ -436,6 +455,14 @@ void addModImg(PPLH* pplh){
 	//LATEX
 	char* latexfigure ="\\begin{figure}[!hbp]\n"; 
 	insertTail(pplh->latex,&latexfigure);
+}
+
+void addLinha(PPLH* pplh,char* arg){
+	char* linha = strdup(arg);
+	//HTML
+	insertTail(pplh->html,&linha);
+	//LATEX
+	insertTail(pplh->latex,&linha);
 }
 
 

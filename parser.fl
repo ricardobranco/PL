@@ -1,6 +1,6 @@
 %{
 #include "linkedList.h"
-#include "preprocessador.h"
+#include "pplh.h"
 PPLH pplh;
 %}
 
@@ -103,7 +103,7 @@ mfloat[0-9]+(\.[0-9]+)?
 												insertHead(estados,&estado);
 												estado=LATEX;}
 
-<GLOBAL,TABELA,LISTA>\\l 						{addQuebra(&pplh);}
+<GLOBAL,TABELA,LISTA,IMAGEM>\\l 				{addQuebra(&pplh);}
 
 <GLOBAL,TABELA,LISTA>\\[bie]*\([^\n\)\\]*\)		{addFormat(&pplh,yytext+1);}
 
@@ -123,6 +123,8 @@ mfloat[0-9]+(\.[0-9]+)?
 
 <IMAGEM>\\leg:[^\n]+							{img.caption=strdup(yytext+5);}
 
+<GLOBAL,NFORMATADO>.|\n 						{addLinha(&pplh,yytext);}
+
 
 
 %%
@@ -133,17 +135,8 @@ int main(int argc, char **argv){
 	pplh.html=init(sizeof(char*),NULL);
 	pplh.latex=init(sizeof(char*),NULL);
 	yylex();
-	char* titulo = pplh.titulo;
-	char* autor = pplh.autor;
-	printf("TITULO:%s\nAUTOR:%s\n",titulo,autor);
-	printf("HTML:\n");
-	List* html = pplh.html;
-	while(html->list){
-		char** entrada = pop(html);
-		printf("%s",*entrada);
-	}
-
-	printf("LATEX:\n");
+	geraHTML(&pplh,NULL);
+	geraLATEX(&pplh,NULL);
 	List* latex = pplh.latex;
 	while(latex->list){
 		char** entrada = pop(latex);

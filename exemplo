@@ -1,7 +1,8 @@
-\t:Titulo
+\t:PreProcessador de Texto para HTML e/ou Latex
 \a:Ricardo Jorge Rodrigues Branco
 \s1:Secção 1
 \href(www.gregs.pt:28/item.png,cenas)
+\be(ashdask)
 \lo
 ->item 1
 ->item 2
@@ -11,7 +12,12 @@
 \end
 \end
 \tnf
+asdjasbdjkasb kj  \be(ashdask) h  adhkjashd    
+asdasd
+asdasdklasflakhfal adasdas 
+a asdasda   adasdasdasd
 \end
+
 \!
 \end
 \html
@@ -25,4 +31,6 @@ nao insere isto
 \s:1.5
 \leg:uma imagem com açentos âadasdãb
 \img(imagem.png)
+\img(imagem.png)
 \end
+

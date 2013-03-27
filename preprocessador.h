@@ -36,3 +36,4 @@ void addLATEX(PPLH*,char*);
 void addBackSlash(PPLH*,char);
 void addImagem(PPLH*,Image*);
 void addModImg(PPLH*);
+void addLinha(PPLH*,char*);
