@@ -48,7 +48,7 @@ void geraLATEX(PPLH* pplh,char* output){
 
 	}
 	else{
-		fileout=fopen("output.latex","w");
+		fileout=fopen("output.tex","w");
 
 	}
 

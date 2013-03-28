@@ -556,13 +556,16 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "parser.fl"
 #line 2 "parser.fl"
+#include "unistd.h"
+#include <fcntl.h>
+
 #include "linkedList.h"
 #include "pplh.h"
 PPLH pplh;
 
 
 int tamanho;
-#line 566 "lex.yy.c"
+#line 569 "lex.yy.c"
 
 #define INITIAL 0
 #define GLOBAL 1
@@ -752,7 +755,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 15 "parser.fl"
+#line 18 "parser.fl"
 
 	List* endHTML = init(sizeof(char*),NULL);
 	List* endLatex = init(sizeof(char*),NULL);
@@ -772,7 +775,7 @@ YY_DECL
 	int estado = GLOBAL;
 	BEGIN GLOBAL;
 
-#line 776 "lex.yy.c"
+#line 779 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -857,28 +860,28 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 34 "parser.fl"
+#line 37 "parser.fl"
 {addTitulo(&pplh,yytext+3);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 36 "parser.fl"
+#line 39 "parser.fl"
 {addAutor(&pplh,yytext+3);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 38 "parser.fl"
+#line 41 "parser.fl"
 {tamanho = (int) (yytext[2]-'0');
 												addSeccao(&pplh,yytext+4,tamanho);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 41 "parser.fl"
+#line 44 "parser.fl"
 {addHRef(&pplh,yytext+6);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 43 "parser.fl"
+#line 46 "parser.fl"
 {BEGIN IMAGEM;
 												addModImg(&pplh);
 												insertHead(endHTML,&hfigure);
@@ -888,7 +891,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 51 "parser.fl"
+#line 54 "parser.fl"
 {BEGIN LISTA;
 												addOrdList(&pplh);
 												insertHead(endHTML,&ol);
@@ -899,7 +902,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 59 "parser.fl"
+#line 62 "parser.fl"
 {BEGIN LISTA;
 												addItemList(&pplh); 
 												insertHead(endHTML,&ul);
@@ -909,12 +912,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 66 "parser.fl"
+#line 69 "parser.fl"
 {addItem(&pplh,yytext+2);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 68 "parser.fl"
+#line 71 "parser.fl"
 {int *popestado = pop(estados);
 												BEGIN *popestado;
 												estado=*popestado;
@@ -925,7 +928,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 76 "parser.fl"
+#line 79 "parser.fl"
 {
 												int *popestado = pop(estados);
 												BEGIN *popestado;
@@ -934,7 +937,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 82 "parser.fl"
+#line 85 "parser.fl"
 {BEGIN NFORMATADO;
 												addTextoNF(&pplh);
 												insertHead(endHTML,&pre);
@@ -945,7 +948,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 90 "parser.fl"
+#line 93 "parser.fl"
 {BEGIN COMENTARIO;
 										 		addComentario(&pplh);
 												insertHead(endHTML,&comenthtml);
@@ -955,7 +958,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 97 "parser.fl"
+#line 100 "parser.fl"
 {BEGIN HTML;
 												insertHead(estados,&estado);
 												estado=HTML;
@@ -963,51 +966,51 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 102 "parser.fl"
+#line 105 "parser.fl"
 {BEGIN LATEX;
 												insertHead(estados,&estado);
 												estado=LATEX;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 106 "parser.fl"
+#line 109 "parser.fl"
 {addQuebra(&pplh);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 108 "parser.fl"
+#line 111 "parser.fl"
 {addFormat(&pplh,yytext+1);}
 	YY_BREAK
 case 17:
 /* rule 17 can match eol */
 YY_RULE_SETUP
-#line 110 "parser.fl"
+#line 113 "parser.fl"
 {addHTML(&pplh,yytext);}
 	YY_BREAK
 case 18:
 /* rule 18 can match eol */
 YY_RULE_SETUP
-#line 111 "parser.fl"
+#line 114 "parser.fl"
 {addLATEX(&pplh,yytext);}									
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 113 "parser.fl"
+#line 116 "parser.fl"
 {addBackSlash(&pplh,'a');}	        	   
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 114 "parser.fl"
+#line 117 "parser.fl"
 {addBackSlash(&pplh,'h');}	        	   
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 115 "parser.fl"
+#line 118 "parser.fl"
 {addBackSlash(&pplh,'l');}	
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 117 "parser.fl"
+#line 120 "parser.fl"
 {img.path=strdup(yytext+5);
 												printf("%s\n",yytext+5 );
 												addImagem(&pplh,&img);
@@ -1015,26 +1018,26 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 122 "parser.fl"
+#line 125 "parser.fl"
 {img.scale = strdup(yytext+3);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 124 "parser.fl"
+#line 127 "parser.fl"
 {img.caption=strdup(yytext+5);}
 	YY_BREAK
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 126 "parser.fl"
+#line 129 "parser.fl"
 {addLinha(&pplh,yytext);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 130 "parser.fl"
+#line 133 "parser.fl"
 ECHO;
 	YY_BREAK
-#line 1038 "lex.yy.c"
+#line 1041 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(GLOBAL):
 case YY_STATE_EOF(LATEX):
@@ -2039,22 +2042,102 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 130 "parser.fl"
+#line 133 "parser.fl"
 
 
 
 
 int main(int argc, char **argv){
 
+	if (argc != 3 && argc != 5) {
+		printf("Parâmetros inválidos. Utilização:\npplh -[lha] <input> [-o <output>]\n\n");
+        printf("-h Apenas HTML\n");
+        printf("-l Apenas LaTeX\n");
+        printf("-a HTML e LaTeX\n");
+        printf("\n<input> *.pplh\n");
+        printf("<output> SEM EXTENSÃO\n");
+        exit(-1);
+    }
+
+    int _html = 0;
+    int _latex = 0;
+
+    //-h (HTML) -l(LATEX) -a(HTML E LATEX)
+
+    if(strcmp(argv[1],"-h")==0)
+    	_html=1;
+	
+	else
+		if(strcmp(argv[1],"-l")==0)
+			_latex=1;
+		else
+			if(strcmp(argv[1],"-a")==0){
+    			_html=_latex=1;
+    		}
+    		else{
+    			printf("Parâmetros inválidos. Utilização:\npplh -[lha] <input> [-o <output>]\n\n");
+        		printf("-h Apenas HTML\n");
+        		printf("-l Apenas LaTeX\n");
+		        printf("-a HTML e LaTeX\n");
+		        printf("\n<input> *.pplh\n");
+		        printf("<output> SEM EXTENSÃO\n");
+		        exit(-1);
+		        }
+
+
+
+	int leninput = strlen(argv[2]);
+	if (leninput<7 || strcmp(argv[2]+(leninput-5),".pplh")){
+		printf("Input inválido\n");
+		printf("\n<input> *.pplh\n");
+		exit(-1);
+	}
+
+
+
+
+	int in = open(argv[2], O_RDONLY);
+    if(in<0){
+    	printf("Input inexistente\n");
+    	printf("\n<input> *.pplh\n");
+		exit(-1);
+    }
+    dup2(in, 0); 
+
+
+    char* outputhtml=NULL;
+	char* outputlatex=NULL;
+	if(argc==5){
+
+		if(strcmp(argv[3],"-o")){
+			printf("Parâmetros inválidos. Utilização:\npplh -[lha] <input> [-o <output>]\n\n");
+        	printf("-h Apenas HTML\n");
+        	printf("-l Apenas LaTeX\n");
+		    printf("-a HTML e LaTeX\n");
+		    printf("\n<input> *.pplh\n");
+		    printf("<output> SEM EXTENSÃO\n");
+		    exit(-1);
+		        
+		}
+
+		int outputlen = strlen(argv[4]);
+		outputhtml = (char*)malloc(sizeof(char)*outputlen+6);
+		outputlatex = (char*)malloc(sizeof(char)*outputlen+5);
+		strncpy(outputhtml,argv[4],outputlen);
+		strncpy(outputlatex,argv[4],outputlen);
+		strncat(outputhtml,".html",5);
+		strncat(outputlatex,".tex",4);			
+	}
+	
 	pplh.html=init(sizeof(char*),NULL);
 	pplh.latex=init(sizeof(char*),NULL);
 	yylex();
-	geraHTML(&pplh,NULL);
-	geraLATEX(&pplh,NULL);
+	
+	if(_html)
+	geraHTML(&pplh,outputhtml);
+	if(_latex)
+	geraLATEX(&pplh,outputlatex);
+	
 	List* latex = pplh.latex;
-	while(latex->list){
-		char** entrada = pop(latex);
-		printf("%s",*entrada);
-	}	
 	return 0;
 }

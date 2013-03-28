@@ -1,4 +1,7 @@
 %{
+#include "unistd.h"
+#include <fcntl.h>
+
 #include "linkedList.h"
 #include "pplh.h"
 PPLH pplh;
@@ -132,15 +135,95 @@ mfloat[0-9]+(\.[0-9]+)?
 
 int main(int argc, char **argv){
 
+	if (argc != 3 && argc != 5) {
+		printf("Parâmetros inválidos. Utilização:\npplh -[lha] <input> [-o <output>]\n\n");
+        printf("-h Apenas HTML\n");
+        printf("-l Apenas LaTeX\n");
+        printf("-a HTML e LaTeX\n");
+        printf("\n<input> *.pplh\n");
+        printf("<output> SEM EXTENSÃO\n");
+        exit(-1);
+    }
+
+    int _html = 0;
+    int _latex = 0;
+
+    //-h (HTML) -l(LATEX) -a(HTML E LATEX)
+
+    if(strcmp(argv[1],"-h")==0)
+    	_html=1;
+	
+	else
+		if(strcmp(argv[1],"-l")==0)
+			_latex=1;
+		else
+			if(strcmp(argv[1],"-a")==0){
+    			_html=_latex=1;
+    		}
+    		else{
+    			printf("Parâmetros inválidos. Utilização:\npplh -[lha] <input> [-o <output>]\n\n");
+        		printf("-h Apenas HTML\n");
+        		printf("-l Apenas LaTeX\n");
+		        printf("-a HTML e LaTeX\n");
+		        printf("\n<input> *.pplh\n");
+		        printf("<output> SEM EXTENSÃO\n");
+		        exit(-1);
+		        }
+
+
+
+	int leninput = strlen(argv[2]);
+	if (leninput<7 || strcmp(argv[2]+(leninput-5),".pplh")){
+		printf("Input inválido\n");
+		printf("\n<input> *.pplh\n");
+		exit(-1);
+	}
+
+
+
+
+	int in = open(argv[2], O_RDONLY);
+    if(in<0){
+    	printf("Input inexistente\n");
+    	printf("\n<input> *.pplh\n");
+		exit(-1);
+    }
+    dup2(in, 0); 
+
+
+    char* outputhtml=NULL;
+	char* outputlatex=NULL;
+	if(argc==5){
+
+		if(strcmp(argv[3],"-o")){
+			printf("Parâmetros inválidos. Utilização:\npplh -[lha] <input> [-o <output>]\n\n");
+        	printf("-h Apenas HTML\n");
+        	printf("-l Apenas LaTeX\n");
+		    printf("-a HTML e LaTeX\n");
+		    printf("\n<input> *.pplh\n");
+		    printf("<output> SEM EXTENSÃO\n");
+		    exit(-1);
+		        
+		}
+
+		int outputlen = strlen(argv[4]);
+		outputhtml = (char*)malloc(sizeof(char)*outputlen+6);
+		outputlatex = (char*)malloc(sizeof(char)*outputlen+5);
+		strncpy(outputhtml,argv[4],outputlen);
+		strncpy(outputlatex,argv[4],outputlen);
+		strncat(outputhtml,".html",5);
+		strncat(outputlatex,".tex",4);			
+	}
+	
 	pplh.html=init(sizeof(char*),NULL);
 	pplh.latex=init(sizeof(char*),NULL);
 	yylex();
-	geraHTML(&pplh,NULL);
-	geraLATEX(&pplh,NULL);
+	
+	if(_html)
+	geraHTML(&pplh,outputhtml);
+	if(_latex)
+	geraLATEX(&pplh,outputlatex);
+	
 	List* latex = pplh.latex;
-	while(latex->list){
-		char** entrada = pop(latex);
-		printf("%s",*entrada);
-	}	
 	return 0;
 }
