@@ -19,7 +19,7 @@ void geraHTML(PPLH* pplh,char* output){
 	char* fbody = "</body>";
 	char* meta = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>";
 
-	fprintf(fileout,"%s\n%s\n%s\n",ahtml,meta,abody);
+			fprintf(fileout,"%s\n%s\n%s\n",ahtml,meta,abody);
 
 	if(pplh->titulo){
 		fprintf(fileout,"<h1>%s</h1>\n<hr>\n",pplh->titulo);

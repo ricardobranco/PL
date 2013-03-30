@@ -755,7 +755,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 18 "parser.fl"
+#line 17 "parser.fl"
 
 	List* endHTML = init(sizeof(char*),NULL);
 	List* endLatex = init(sizeof(char*),NULL);
@@ -860,28 +860,28 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 37 "parser.fl"
+#line 36 "parser.fl"
 {addTitulo(&pplh,yytext+3);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 39 "parser.fl"
+#line 38 "parser.fl"
 {addAutor(&pplh,yytext+3);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 41 "parser.fl"
+#line 40 "parser.fl"
 {tamanho = (int) (yytext[2]-'0');
 												addSeccao(&pplh,yytext+4,tamanho);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 44 "parser.fl"
+#line 43 "parser.fl"
 {addHRef(&pplh,yytext+6);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 46 "parser.fl"
+#line 45 "parser.fl"
 {BEGIN IMAGEM;
 												addModImg(&pplh);
 												insertHead(endHTML,&hfigure);
@@ -891,7 +891,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 54 "parser.fl"
+#line 53 "parser.fl"
 {BEGIN LISTA;
 												addOrdList(&pplh);
 												insertHead(endHTML,&ol);
@@ -902,7 +902,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 62 "parser.fl"
+#line 61 "parser.fl"
 {BEGIN LISTA;
 												addItemList(&pplh); 
 												insertHead(endHTML,&ul);
@@ -912,12 +912,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 69 "parser.fl"
+#line 68 "parser.fl"
 {addItem(&pplh,yytext+2);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 71 "parser.fl"
+#line 70 "parser.fl"
 {int *popestado = pop(estados);
 												BEGIN *popestado;
 												estado=*popestado;
@@ -928,7 +928,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 79 "parser.fl"
+#line 78 "parser.fl"
 {
 												int *popestado = pop(estados);
 												BEGIN *popestado;
@@ -937,7 +937,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 85 "parser.fl"
+#line 84 "parser.fl"
 {BEGIN NFORMATADO;
 												addTextoNF(&pplh);
 												insertHead(endHTML,&pre);
@@ -948,7 +948,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 93 "parser.fl"
+#line 92 "parser.fl"
 {BEGIN COMENTARIO;
 										 		addComentario(&pplh);
 												insertHead(endHTML,&comenthtml);
@@ -958,7 +958,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 100 "parser.fl"
+#line 99 "parser.fl"
 {BEGIN HTML;
 												insertHead(estados,&estado);
 												estado=HTML;
@@ -966,78 +966,77 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 105 "parser.fl"
+#line 104 "parser.fl"
 {BEGIN LATEX;
 												insertHead(estados,&estado);
 												estado=LATEX;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 109 "parser.fl"
+#line 108 "parser.fl"
 {addQuebra(&pplh);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 111 "parser.fl"
+#line 110 "parser.fl"
 {addFormat(&pplh,yytext+1);}
 	YY_BREAK
 case 17:
 /* rule 17 can match eol */
 YY_RULE_SETUP
-#line 113 "parser.fl"
+#line 112 "parser.fl"
 {addHTML(&pplh,yytext);}
 	YY_BREAK
 case 18:
 /* rule 18 can match eol */
 YY_RULE_SETUP
-#line 114 "parser.fl"
+#line 113 "parser.fl"
 {addLATEX(&pplh,yytext);}									
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 116 "parser.fl"
+#line 115 "parser.fl"
 {addBackSlash(&pplh,'a');}	        	   
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 117 "parser.fl"
+#line 116 "parser.fl"
 {addBackSlash(&pplh,'h');}	        	   
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 118 "parser.fl"
+#line 117 "parser.fl"
 {addBackSlash(&pplh,'l');}	
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 120 "parser.fl"
+#line 119 "parser.fl"
 {img.path=strdup(yytext+5);
-												printf("%s\n",yytext+5 );
 												addImagem(&pplh,&img);
 												}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 125 "parser.fl"
+#line 123 "parser.fl"
 {img.scale = strdup(yytext+3);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 127 "parser.fl"
+#line 125 "parser.fl"
 {img.caption=strdup(yytext+5);}
 	YY_BREAK
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 129 "parser.fl"
+#line 127 "parser.fl"
 {addLinha(&pplh,yytext);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 133 "parser.fl"
+#line 131 "parser.fl"
 ECHO;
 	YY_BREAK
-#line 1041 "lex.yy.c"
+#line 1040 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(GLOBAL):
 case YY_STATE_EOF(LATEX):
@@ -2042,7 +2041,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 133 "parser.fl"
+#line 131 "parser.fl"
 
 
 

@@ -14,7 +14,6 @@ mfloat[0-9]+(\.[0-9]+)?
 %x LISTA TABELA IMAGEM
 	int tamanho;
 
-
 %%
 	List* endHTML = init(sizeof(char*),NULL);
 	List* endLatex = init(sizeof(char*),NULL);
@@ -118,7 +117,6 @@ mfloat[0-9]+(\.[0-9]+)?
 <LATEX>\\bs										{addBackSlash(&pplh,'l');}	
 
 <IMAGEM>\\img\({img}\)							{img.path=strdup(yytext+5);
-												printf("%s\n",yytext+5 );
 												addImagem(&pplh,&img);
 												}
 
@@ -128,7 +126,7 @@ mfloat[0-9]+(\.[0-9]+)?
 
 <GLOBAL,NFORMATADO>.|\n 						{addLinha(&pplh,yytext);}
 
-
+	
 
 %%
 
