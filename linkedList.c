@@ -165,7 +165,7 @@ int search (List *l, void *data) {
 }
 
 
-int listDestroy (List *l,void (*freeFunc)(void *data)){
+int listDestroy (List *l){
 
     
     if(!l)
@@ -177,14 +177,9 @@ int listDestroy (List *l,void (*freeFunc)(void *data)){
     while(aux) {
         prev = aux;
         aux = aux->next;
-        if(freeFunc) {
-            freeFunc(prev->data);
-            free(prev);
-        }
-        else {
             free(prev->data);
             free(prev);
-        }
+        
     }
     
     return 0;

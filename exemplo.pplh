@@ -1,12 +1,12 @@
 \t:PreProcessador de Texto para HTML e/ou Latex
 \a:Ricardo Jorge Rodrigues Branco
 \s1:Secção 1
-\href(www.gregs.pt:28/item.png,cenas)
+\href(www.google.pt,cenas)
 \be(ashdask)
 \lo
 ->item 1
 ->item 2
-\li
+\lo
 ->item 3 ->item 4
 
 \end
@@ -19,6 +19,7 @@ a asdasda   adasdasdasd
 \end
 
 \!
+comentario
 \end
 \html
 <p>este texto só aparece em html</p>
@@ -26,11 +27,25 @@ a asdasda   adasdasdasd
 \latex
 este só aparece em \LaTeX
 \end 
-nao insere isto
+exemplo de texto normal
 \fig
 \s:1.5
 \leg:uma imagem com açentos âadasdãb
 \img(imagem.png)
 \img(imagem.png)
+\end
+
+\tabela
+\linha
+->cel1
+->cel2
+->cel3
+->cel4
+\linha
+->cel5
+->cel6
+\linha
+->cel7
+->cel8 ->cel8
 \end
 

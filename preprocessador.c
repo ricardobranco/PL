@@ -345,18 +345,6 @@ void addLATEX(PPLH* pplh,char* arg){
 	insertTail(pplh->latex,&resultado);	
 }
 
-void addBackSlash(PPLH* pplh,char option){
-	char* bs ="\\";
-	//HTML
-	if(option == 'h' || option == 'a')
-	insertTail(pplh->html,&bs);
-	//LATEX
-	if(option == 'l' || option == 'a')
-	insertTail(pplh->latex,&bs);
-}
-
-
-
 void addImagem(PPLH* pplh,Image* img){
 	
 
@@ -391,7 +379,7 @@ void addImagem(PPLH* pplh,Image* img){
 	char* abrehtml = "<img src=\"";
 	char* width = "\" width=\"";
 	char* height ="\" height=\""; 
-	char* fechahtml = "/>\n";
+	char* fechahtml = "\"/>\n";
 	
 	int alocarhtml = len+2*f2shlen+strlen(abrehtml)+strlen(width)+strlen(height)+strlen(fechahtml)+1;
 
@@ -457,7 +445,7 @@ void addModImg(PPLH* pplh){
 	insertTail(pplh->latex,&latexfigure);
 }
 
-void addLinha(PPLH* pplh,char* arg){
+void addTexto(PPLH* pplh,char* arg){
 	char* linha = strdup(arg);
 	//HTML
 	insertTail(pplh->html,&linha);
@@ -465,6 +453,126 @@ void addLinha(PPLH* pplh,char* arg){
 	insertTail(pplh->latex,&linha);
 }
 
+void addTabela(PPLH* pplh,Table tabela,int colunas){
+	
+
+	//INIT
+
+		
+
+	//HTML
+	
+	char* ahtmltabela = "<table border=\"1\">\n";
+	insertTail(pplh->html,&ahtmltabela);	
+
+	//LATEX
+	char* latextabela;
+	char* alatextabela = "\\begin{tabular}{";
+	int latexalocar = strlen(alatextabela) + 3 + 2*colunas;
+	latextabela = (char*) malloc(sizeof(char)*latexalocar);
+	strncat(latextabela,alatextabela,strlen(alatextabela));
+	int i,j;
+	for(i=strlen(alatextabela),j=0;i<latexalocar-2;i++,j++){
+		if(j%2)
+			latextabela[i]='l';
+		else
+			latextabela[i]='|';
+	}
+	strncat(latextabela,"}",1);
+	insertTail(pplh->latex,&latextabela);
+	char* hline = "\n\\hline\n";
+	//CORPO DA TABELA	
+	List* aux = tabela.rows;
+	while(aux->size){
+		//HTML
+		char* ahtmllinha = "<tr>";
+		insertTail(pplh->html,&ahtmllinha);
+		
+		//LATEX
+		insertTail(pplh->latex,&hline);
+		int andcount = 0;
+		char* andsymbol = " & ";
+
+		Row* rowhtml = pop(aux);
+		List* aux2 = rowhtml->cells;
+		
+				
+		while(aux2->size){
+			char** celula = pop(aux2);
+			//HTML
+			char* ahtmlcelula = "<td>";
+			insertTail(pplh->html,&ahtmlcelula);
+			insertTail(pplh->html,celula);
+			char* fhtmlcelula = "</td>\n";
+			insertTail(pplh->html,&fhtmlcelula);
+
+			//LATEX
+			insertTail(pplh->latex,celula);
+			andcount++;
+			if(andcount<colunas)
+				insertTail(pplh->latex,&andsymbol);
+		}
+
+		//HTML
+		char* fhtmllinha = "</tr>\n";
+		insertTail(pplh->html,&fhtmllinha);
+		
+		//LATEX
+		while(andcount<colunas-1){
+			insertTail(pplh->latex,&andsymbol);
+			andcount++;
+		}
+		char* quebra = "\\\\";
+		insertTail(pplh->latex,&quebra);
+		
+	}
+	//HTML
+	char* fhtmltabela = "</table>";
+	insertTail(pplh->html,&fhtmltabela);
+
+	//LATEX
+	insertTail(pplh->latex,&hline);
+	char* flatextabela = "\\end{tabular}";
+	insertTail(pplh->latex,&flatextabela);
+}
+
+void addBackSlash(PPLH* pplh){ 
+	//HTML
+	char* hbackshlash = "\\";
+	insertTail(pplh->html,&hbackshlash);
+	//LATEX
+	char* lbackslash = "\\backslash";
+	insertTail(pplh->latex,&lbackslash);
+
+}
+
+void addAnd(PPLH* pplh){
+	//HTML
+	char* hand = "&";
+	insertTail(pplh->html,&hand);
+	//LATEX
+	char* land = "\\&";
+	insertTail(pplh->latex,&land);
+}
 
 
+void addLinha(Table tabela, Row linha){
+	Row linhacopia;
+	linhacopia.cells = init(sizeof(char*),NULL);
+	while(linha.cells->list){
+		char** celula = pop(linha.cells);
+		insertTail(linhacopia.cells,celula);
+	}
 
+	insertTail(tabela.rows,&linhacopia);
+	
+
+	
+}
+
+void addCelula(Row linha, char* arg){
+	char* celula = strdup(arg);
+	insertTail(linha.cells,&celula);
+
+
+}

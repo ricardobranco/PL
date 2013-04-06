@@ -52,7 +52,7 @@ int search (List *l, void *data);
  *@param l Apontador para a lista ligada que se pretende eliminar
  *@return 0 em caso de sucesso e -1 em caso contrário
  */
-int listDestroy(List *l,void (*freeFunc)(void *data));
+int listDestroy(List *l);
 /**
  *sortedInsert
  *@brief Insere os dados ordenadamente (de acordo com a função compare)

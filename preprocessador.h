@@ -17,6 +17,18 @@ typedef struct sImage
 	char* caption;
 }Image;
 
+typedef struct stabel
+{
+	List* rows;
+}Table;
+
+typedef struct sRow
+{
+	List* cells;	
+}Row;
+
+
+
 
 
 void addTitulo(PPLH*,char*);
@@ -33,7 +45,11 @@ void addQuebra(PPLH*);
 void addFormat(PPLH*,char*);
 void addHTML(PPLH*,char*);
 void addLATEX(PPLH*,char*);
-void addBackSlash(PPLH*,char);
 void addImagem(PPLH*,Image*);
 void addModImg(PPLH*);
-void addLinha(PPLH*,char*);
+void addTexto(PPLH*,char*);
+void addTabela(PPLH*,Table,int);
+void addBackSlash(PPLH*);
+void addAnd(PPLH*);
+void addLinha(Table,Row);
+void addCelula(Row,char*);

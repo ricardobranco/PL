@@ -1,5 +1,5 @@
 %{
-#include "unistd.h"
+#include <unistd.h>
 #include <fcntl.h>
 
 #include "linkedList.h"
@@ -19,17 +19,26 @@ mfloat[0-9]+(\.[0-9]+)?
 	List* endLatex = init(sizeof(char*),NULL);
 	List* estados = init(sizeof(int),NULL);
 	Image img;
-	
+	Table table;
+	Row row;
+	int numerolinhas = 0;
+	int colunasmax = 0;
+	int colunas = 0;
+
 	char* ul = "</ul>\n";
 	char* ol = "</ol>\n";
 	char* pre = "</pre>\n";
 	char* hfigure = "</figure>\n";
+	char* comenthtml = "-->\n";
+	
 	char* itemize = "itemize";
 	char* enumerate = "enumerate";
 	char* verbatim = "verbatim";
-	char* comenthtml = "-->\n";
 	char* comentlatex = "comment";
-	char* lfigure = "figure";	
+	char* lfigure = "figure";
+	
+
+
 	int estado = GLOBAL;
 	BEGIN GLOBAL;
 
@@ -67,13 +76,22 @@ mfloat[0-9]+(\.[0-9]+)?
 
 <LISTA>->[^\n\-]*								{addItem(&pplh,yytext+2);}
 
-<LISTA,TABELA,NFORMATADO,COMENTARIO,IMAGEM>\\end 		{int *popestado = pop(estados);
+<LISTA,NFORMATADO,COMENTARIO,IMAGEM>\\end 		{int *popestado = pop(estados);
 												BEGIN *popestado;
 												estado=*popestado;
 												char** pophtml = pop(endHTML);
 												char** poplatex = pop(endLatex);
 												addEndTAG(&pplh,*pophtml,*poplatex);
 												}	
+
+<TABELA>\\end 									{int *popestado = pop(estados);
+												BEGIN *popestado;
+												estado=*popestado;
+												addLinha(table,row);
+												addTabela(&pplh,table,colunasmax);
+												}
+
+
 											
 <HTML,LATEX>\\end 								{
 												int *popestado = pop(estados);
@@ -112,9 +130,9 @@ mfloat[0-9]+(\.[0-9]+)?
 <HTML>.|\n										{addHTML(&pplh,yytext);}
 <LATEX>.|\n										{addLATEX(&pplh,yytext);}									
 
-<GLOBAL,LISTA,TABELA>\\bs            			{addBackSlash(&pplh,'a');}	        	   
-<HTML>\\bs										{addBackSlash(&pplh,'h');}	        	   
-<LATEX>\\bs										{addBackSlash(&pplh,'l');}	
+<GLOBAL,LISTA,TABELA>\\bs            			{addBackSlash(&pplh);}	        	   
+<GLOBAL>\&										{addAnd(&pplh);}	
+
 
 <IMAGEM>\\img\({img}\)							{img.path=strdup(yytext+5);
 												addImagem(&pplh,&img);
@@ -124,9 +142,30 @@ mfloat[0-9]+(\.[0-9]+)?
 
 <IMAGEM>\\leg:[^\n]+							{img.caption=strdup(yytext+5);}
 
-<GLOBAL,NFORMATADO>.|\n 						{addLinha(&pplh,yytext);}
+<GLOBAL,NFORMATADO,COMENTARIO>.|\n				{addTexto(&pplh,yytext);}
 
-	
+<GLOBAL>\\tabela								{BEGIN TABELA;
+												insertHead(estados,&estado);
+												estado=TABELA;
+												table.rows = init(sizeof(Row),NULL);
+												row.cells = init(sizeof(char*),NULL);}	
+
+<TABELA>\\linha									{if(numerolinhas>0)
+													addLinha(table,row);
+												numerolinhas++;
+												colunas = 0;
+												}
+
+<TABELA>->[^\n\-]*								{addCelula(row,yytext+2);
+												colunas++;
+												if(colunas>colunasmax)
+													colunasmax = colunas;}
+
+
+
+<LISTA,TABELA,IMAGEM>\n 						{}
+
+
 
 %%
 
