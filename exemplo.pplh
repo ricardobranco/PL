@@ -1,7 +1,7 @@
 \t:PreProcessador de Texto para HTML e/ou Latex
 \a:Ricardo Jorge Rodrigues Branco
 \s1:Secção 1
-\href(www.google.pt,cenas)
+\href(http://www.google.pt,cenas)
 \be(ashdask)
 \lo
 ->item 1
@@ -37,15 +37,15 @@ exemplo de texto normal
 
 \tabela
 \linha
-->cel1
-->cel2
-->cel3
-->cel4
+-c>celadasdasdasdasd1
+-r>ceasdasdasdasdl2
+-l>celasdasdasdasdasd3
+-l>cel4
 \linha
-->cel5
-->cel6
+-c>cel5
+-l>cel6
 \linha
-->cel7
-->cel8 ->cel8
+-r>ceasdasdasdasdl7
+-c>cel8 -c>cel9
 \end
 

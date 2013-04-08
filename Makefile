@@ -38,15 +38,11 @@ install:
 remove:
 	rm /usr/bin/pplh
 
-run:
-	@./pplh < exemplo
-
 debug::$(OBJS)
 	$(CC) $(CFLAGS) -o pplh $(OBJS) $(LIBS) -g
 
 tar:
 	mkdir pplh
-	#cp -r relatorio pplh/relatorio
 	cp $(FILES) pplh
 	tar -pczf pplh.tar.gz pplh
 	rm -r pplh

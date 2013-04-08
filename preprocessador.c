@@ -373,7 +373,7 @@ void addImagem(PPLH* pplh,Image* img){
 
 
 	char* float2string = (char*)malloc(sizeof(char)*slen+4);
-	sprintf(float2string, "%.2f%%", fscale*100);
+	sprintf(float2string, "%.2f", fscale*100);
 	int f2shlen = strlen(float2string);
 
 	char* abrehtml = "<img src=\"";
@@ -485,7 +485,7 @@ void addTabela(PPLH* pplh,Table tabela,int colunas){
 	List* aux = tabela.rows;
 	while(aux->size){
 		//HTML
-		char* ahtmllinha = "<tr>";
+		char* ahtmllinha = "<tr>\n";
 		insertTail(pplh->html,&ahtmllinha);
 		
 		//LATEX
@@ -498,16 +498,45 @@ void addTabela(PPLH* pplh,Table tabela,int colunas){
 		
 				
 		while(aux2->size){
-			char** celula = pop(aux2);
+			Cell* celula = pop(aux2);
+
 			//HTML
-			char* ahtmlcelula = "<td>";
+			char* ahtmlcelula = "<td align=\"";
+			char* htmlpos;
+			switch(celula->pos){
+				case 'r':{
+					htmlpos = "right\">";
+					break;
+				}
+				case 'l':{
+					htmlpos = "left\">";
+					break;
+				}
+				case 'c':{
+					htmlpos = "center\">";
+					break;
+				}
+				
+			}
 			insertTail(pplh->html,&ahtmlcelula);
-			insertTail(pplh->html,celula);
+			insertTail(pplh->html,&htmlpos);
+			insertTail(pplh->html,&celula->cell);
 			char* fhtmlcelula = "</td>\n";
 			insertTail(pplh->html,&fhtmlcelula);
 
 			//LATEX
-			insertTail(pplh->latex,celula);
+			
+			char* multicolumn1 = "\\multicolumn{1}{|";
+			char* multicolumn2 = "|}{";
+			char* multicolumn3 = "}";
+			char* latexpos = malloc(sizeof(char)*2);
+			latexpos[0]=celula->pos;
+
+			insertTail(pplh->latex,&multicolumn1);
+			insertTail(pplh->latex,&latexpos);
+			insertTail(pplh->latex,&multicolumn2);
+			insertTail(pplh->latex,&celula->cell);
+			insertTail(pplh->latex,&multicolumn3);
 			andcount++;
 			if(andcount<colunas)
 				insertTail(pplh->latex,&andsymbol);
@@ -558,9 +587,9 @@ void addAnd(PPLH* pplh){
 
 void addLinha(Table tabela, Row linha){
 	Row linhacopia;
-	linhacopia.cells = init(sizeof(char*),NULL);
+	linhacopia.cells = init(sizeof(Cell),NULL);
 	while(linha.cells->list){
-		char** celula = pop(linha.cells);
+		char* celula = pop(linha.cells);
 		insertTail(linhacopia.cells,celula);
 	}
 
@@ -570,8 +599,10 @@ void addLinha(Table tabela, Row linha){
 	
 }
 
-void addCelula(Row linha, char* arg){
-	char* celula = strdup(arg);
+void addCelula(Row linha, char* arg,char pos){
+	Cell celula;
+	celula.pos = pos;
+	celula.cell = strdup(arg);
 	insertTail(linha.cells,&celula);
 
 

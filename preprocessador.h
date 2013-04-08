@@ -6,6 +6,7 @@ typedef struct spplh
 {
 	char* autor;
 	char* titulo;
+	int indice;
 	List* html;
 	List* latex;
 }PPLH;
@@ -27,7 +28,11 @@ typedef struct sRow
 	List* cells;	
 }Row;
 
-
+typedef struct sCell
+{
+	char pos;
+	char* cell;
+}Cell;
 
 
 
@@ -52,4 +57,4 @@ void addTabela(PPLH*,Table,int);
 void addBackSlash(PPLH*);
 void addAnd(PPLH*);
 void addLinha(Table,Row);
-void addCelula(Row,char*);
+void addCelula(Row,char*,char);

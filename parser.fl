@@ -18,12 +18,15 @@ mfloat[0-9]+(\.[0-9]+)?
 	List* endHTML = init(sizeof(char*),NULL);
 	List* endLatex = init(sizeof(char*),NULL);
 	List* estados = init(sizeof(int),NULL);
+	
 	Image img;
 	Table table;
 	Row row;
+	
 	int numerolinhas = 0;
 	int colunasmax = 0;
 	int colunas = 0;
+
 
 	char* ul = "</ul>\n";
 	char* ol = "</ol>\n";
@@ -49,14 +52,23 @@ mfloat[0-9]+(\.[0-9]+)?
 <GLOBAL>\\s[1-6]:[^\n\\]* 						{tamanho = (int) (yytext[2]-'0');
 												addSeccao(&pplh,yytext+4,tamanho);}
 
-<GLOBAL,LISTA,TABELA>\\href\({url},[^\n)\\]*\)	{addHRef(&pplh,yytext+6);}
-
 <GLOBAL>\\fig 									{BEGIN IMAGEM;
 												addModImg(&pplh);
 												insertHead(endHTML,&hfigure);
 												insertHead(endLatex,&lfigure);
 												insertHead(estados,&estado);
-												estado=IMAGEM;}				
+												estado=IMAGEM;}
+
+<GLOBAL>\\indice								{pplh.indice=1;}
+
+<GLOBAL>\\tabela								{BEGIN TABELA;
+												insertHead(estados,&estado);
+												estado=TABELA;
+												table.rows = init(sizeof(Row),NULL);
+												row.cells = init(sizeof(Cell),NULL);}	
+
+<GLOBAL,LISTA,TABELA>\\href\({url},[^\n)\\]*\)	{addHRef(&pplh,yytext+6);}
+
 
 
 <GLOBAL,LISTA>\\lo								{BEGIN LISTA;
@@ -131,7 +143,8 @@ mfloat[0-9]+(\.[0-9]+)?
 <LATEX>.|\n										{addLATEX(&pplh,yytext);}									
 
 <GLOBAL,LISTA,TABELA>\\bs            			{addBackSlash(&pplh);}	        	   
-<GLOBAL>\&										{addAnd(&pplh);}	
+
+<GLOBAL,LISTA,TABELA>\&							{addAnd(&pplh);}	
 
 
 <IMAGEM>\\img\({img}\)							{img.path=strdup(yytext+5);
@@ -144,11 +157,6 @@ mfloat[0-9]+(\.[0-9]+)?
 
 <GLOBAL,NFORMATADO,COMENTARIO>.|\n				{addTexto(&pplh,yytext);}
 
-<GLOBAL>\\tabela								{BEGIN TABELA;
-												insertHead(estados,&estado);
-												estado=TABELA;
-												table.rows = init(sizeof(Row),NULL);
-												row.cells = init(sizeof(char*),NULL);}	
 
 <TABELA>\\linha									{if(numerolinhas>0)
 													addLinha(table,row);
@@ -156,11 +164,10 @@ mfloat[0-9]+(\.[0-9]+)?
 												colunas = 0;
 												}
 
-<TABELA>->[^\n\-]*								{addCelula(row,yytext+2);
+<TABELA>-[lcr]>[^\n\-]*							{addCelula(row,yytext+3,yytext[1]);
 												colunas++;
 												if(colunas>colunasmax)
 													colunasmax = colunas;}
-
 
 
 <LISTA,TABELA,IMAGEM>\n 						{}
@@ -243,15 +250,19 @@ int main(int argc, char **argv){
 		        
 		}
 
-		int outputlen = strlen(argv[4]);
+		char* outputarg = strdup(argv[4]);
+		int outputlen = strlen(outputarg);
 		outputhtml = (char*)malloc(sizeof(char)*outputlen+6);
 		outputlatex = (char*)malloc(sizeof(char)*outputlen+5);
-		strncpy(outputhtml,argv[4],outputlen);
-		strncpy(outputlatex,argv[4],outputlen);
+		
+		strncat(outputhtml,outputarg,outputlen);
+		strncat(outputlatex,outputarg,outputlen);
 		strncat(outputhtml,".html",5);
-		strncat(outputlatex,".tex",4);			
+		strncat(outputlatex,".tex",4);
+				
 	}
 	
+	pplh.indice = 0;
 	pplh.html=init(sizeof(char*),NULL);
 	pplh.latex=init(sizeof(char*),NULL);
 	yylex();
