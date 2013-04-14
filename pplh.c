@@ -21,12 +21,23 @@ void geraHTML(PPLH* pplh,char* output){
 
 			fprintf(fileout,"%s\n%s\n%s\n",ahtml,meta,abody);
 
+
 	if(pplh->titulo){
 		fprintf(fileout,"<h1>%s</h1>\n<hr>\n",pplh->titulo);
 	}
 	if(pplh->autor){
 		fprintf(fileout,"<address>%s</address>\n",pplh->autor);
 	}
+	
+
+	if(pplh->indice){
+		List* indice = pplh->seccoes;
+		while(indice->list){
+			char** indentrada = pop(indice);
+			fprintf(fileout, "%s",*indentrada);   
+		}
+	}
+
 	List* html = pplh->html;
 	while(html->list){
 		char** entrada = pop(html);
@@ -95,7 +106,12 @@ void geraLATEX(PPLH* pplh,char* output){
 	char* begindoc = "\\begin{document}";
 	char* maketitle = "\\maketitle";
 
+	
 	fprintf(fileout,"%s\n%s\n",begindoc,maketitle);
+
+	char* indicelatex = "\\tableofcontents";
+	if(pplh->indice)
+		fprintf(fileout, "%s\n",indicelatex);
 
 
 	List* latex = pplh->latex;

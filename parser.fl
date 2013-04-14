@@ -9,10 +9,12 @@ PPLH pplh;
 
 url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
 img [a-zA-Z0-9_]+\.(jpg|jpeg|png)
-mfloat[0-9]+(\.[0-9]+)?	
+mfloat[0-9]+(\.[0-9]+)?
+htmlheader \<h[1-6]\>([^\<]|<[^\/]|<\/[^h]|<\/h[^1-6]>|<\/h[1-6][^\>])*	
 %x GLOBAL LATEX HTML COMENTARIO NFORMATADO
 %x LISTA TABELA IMAGEM
 	int tamanho;
+	int abertos = 0;
 
 %%
 	List* endHTML = init(sizeof(char*),NULL);
@@ -26,8 +28,7 @@ mfloat[0-9]+(\.[0-9]+)?
 	int numerolinhas = 0;
 	int colunasmax = 0;
 	int colunas = 0;
-
-
+	
 	char* ul = "</ul>\n";
 	char* ol = "</ol>\n";
 	char* pre = "</pre>\n";
@@ -40,8 +41,8 @@ mfloat[0-9]+(\.[0-9]+)?
 	char* comentlatex = "comment";
 	char* lfigure = "figure";
 	
-
-
+	int ultlvl = 0;
+	int seccoes = 0;
 	int estado = GLOBAL;
 	BEGIN GLOBAL;
 
@@ -50,7 +51,15 @@ mfloat[0-9]+(\.[0-9]+)?
 <GLOBAL>\\a:[^\n\\]* 							{addAutor(&pplh,yytext+3);}
 
 <GLOBAL>\\s[1-6]:[^\n\\]* 						{tamanho = (int) (yytext[2]-'0');
-												addSeccao(&pplh,yytext+4,tamanho);}
+												if(tamanho > ultlvl){
+													addIndList(&pplh);
+													abertos++;}
+												else if(tamanho < ultlvl){
+													addIndFecho(&pplh);
+													abertos--;}
+												ultlvl = tamanho;		
+												addSeccao(&pplh,yytext+4,tamanho,seccoes);
+												seccoes++;}
 
 <GLOBAL>\\fig 									{BEGIN IMAGEM;
 												addModImg(&pplh);
@@ -172,7 +181,17 @@ mfloat[0-9]+(\.[0-9]+)?
 
 <LISTA,TABELA,IMAGEM>\n 						{}
 
-
+<HTML>{htmlheader}								{tamanho = (int) (yytext[2]-'0');
+												addIndice(&pplh,seccoes,yytext+4);
+												if(tamanho > ultlvl){
+													addIndList(&pplh);
+													abertos++;}
+												else if(tamanho < ultlvl){
+													addIndFecho(&pplh);
+													abertos--;}
+												ultlvl = tamanho;		
+												seccoes++;
+												addHTML(&pplh,yytext);}
 
 %%
 
@@ -265,8 +284,14 @@ int main(int argc, char **argv){
 	pplh.indice = 0;
 	pplh.html=init(sizeof(char*),NULL);
 	pplh.latex=init(sizeof(char*),NULL);
+	pplh.seccoes=init(sizeof(char*),NULL);
 	yylex();
 	
+	while(abertos){
+		addIndFecho(&pplh);
+		abertos--;
+	}
+
 	if(_html)
 	geraHTML(&pplh,outputhtml);
 	if(_latex)

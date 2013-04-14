@@ -1,5 +1,6 @@
 \t:PreProcessador de Texto para HTML e/ou Latex
 \a:Ricardo Jorge Rodrigues Branco
+\indice
 \s1:Secção 1
 \href(http://www.google.pt,cenas)
 \be(ashdask)
@@ -16,6 +17,9 @@ asdjasbdjkasb kj  \be(ashdask) h  adhkjashd
 asdasd
 asdasdklasflakhfal adasdas 
 a asdasda   adasdasdasd
+\end
+\html
+<h1>HEADER N1</h1>
 \end
 
 \!

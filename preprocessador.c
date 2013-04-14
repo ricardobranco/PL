@@ -14,12 +14,29 @@ void addAutor(PPLH* pplh, char*arg){
 	pplh->autor=strdup(autor);
 }
 
-void addSeccao(PPLH* pplh,char*arg,int tamanho){
+int nrDigits(int value){
+	if(value < 0)
+		value=value*-1;
+	if(value<10)
+		return 1;
+	else return 1 + nrDigits(value/10);
+}
+
+
+
+void addSeccao(PPLH* pplh,char*arg,int tamanho,int count){
 	int len = strlen(arg);
 	char* seccao = (char*) malloc(sizeof(char)*len+1);
 	strncpy(seccao,arg,len); 	
 
+
 	//HTML
+	
+	addIndice(pplh,count,seccao);
+
+
+
+
 	char ahtml[4] = "<h >";
 	char fhtml[6] = "</h >\n";
 	char ctamanho = '0'+tamanho;
@@ -604,6 +621,41 @@ void addCelula(Row linha, char* arg,char pos){
 	celula.pos = pos;
 	celula.cell = strdup(arg);
 	insertTail(linha.cells,&celula);
+}
 
+void addIndice(PPLH* pplh, int nseccao, char* arg){
+
+	char* seccao = strdup(arg);
+
+	int nrDigitsalocar = 2 + nrDigits(nseccao); //2 => \0 + sinal
+	
+	char* taghtml = (char*) malloc(sizeof(char)*nrDigitsalocar);
+	sprintf(taghtml,"%d",nseccao);
+	char* ataghtml = "<a name = \"";
+	char* ftaghtml = "\"></a>\n";
+	insertTail(pplh->html,&ataghtml);
+	insertTail(pplh->html,&taghtml);
+	insertTail(pplh->html,&ftaghtml);
+
+	char* aind = "<li><a href=\"#";
+	char* mind = "\">";
+	char* find = "</a></li>\n";
+
+	insertTail(pplh->seccoes,&aind);
+	insertTail(pplh->seccoes,&taghtml);
+	insertTail(pplh->seccoes,&mind);
+	insertTail(pplh->seccoes,&seccao);
+	insertTail(pplh->seccoes,&find);
 
 }
+
+void addIndList(PPLH* pplh){
+	char* ol = "<ol>\n";
+	insertTail(pplh->seccoes,&ol);
+}
+
+void addIndFecho(PPLH* pplh){
+	char* col = "</ol>\n";
+	insertTail(pplh->seccoes,&col);
+}
+
