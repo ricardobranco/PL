@@ -781,10 +781,11 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 19 "parser.fl"
+#line 20 "parser.fl"
 
 	List* endHTML = init(sizeof(char*),NULL);
 	List* endLatex = init(sizeof(char*),NULL);
+	
 	List* estados = init(sizeof(int),NULL);
 	
 	Image img;
@@ -812,7 +813,7 @@ YY_DECL
 	int estado = GLOBAL;
 	BEGIN GLOBAL;
 
-#line 816 "lex.yy.c"
+#line 817 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -897,17 +898,17 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 49 "parser.fl"
+#line 51 "parser.fl"
 {addTitulo(&pplh,yytext+3);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 51 "parser.fl"
+#line 53 "parser.fl"
 {addAutor(&pplh,yytext+3);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 53 "parser.fl"
+#line 55 "parser.fl"
 {tamanho = (int) (yytext[2]-'0');
 												if(tamanho > ultlvl){
 													addIndList(&pplh);
@@ -921,7 +922,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 64 "parser.fl"
+#line 66 "parser.fl"
 {BEGIN IMAGEM;
 												addModImg(&pplh);
 												insertHead(endHTML,&hfigure);
@@ -931,12 +932,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 71 "parser.fl"
+#line 73 "parser.fl"
 {pplh.indice=1;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 73 "parser.fl"
+#line 75 "parser.fl"
 {BEGIN TABELA;
 												insertHead(estados,&estado);
 												estado=TABELA;
@@ -945,12 +946,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 79 "parser.fl"
+#line 81 "parser.fl"
 {addHRef(&pplh,yytext+6);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 83 "parser.fl"
+#line 85 "parser.fl"
 {BEGIN LISTA;
 												addOrdList(&pplh);
 												insertHead(endHTML,&ol);
@@ -961,7 +962,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 91 "parser.fl"
+#line 93 "parser.fl"
 {BEGIN LISTA;
 												addItemList(&pplh); 
 												insertHead(endHTML,&ul);
@@ -971,12 +972,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 98 "parser.fl"
+#line 100 "parser.fl"
 {addItem(&pplh,yytext+2);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 100 "parser.fl"
+#line 102 "parser.fl"
 {int *popestado = pop(estados);
 												BEGIN *popestado;
 												estado=*popestado;
@@ -987,7 +988,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 108 "parser.fl"
+#line 110 "parser.fl"
 {int *popestado = pop(estados);
 												BEGIN *popestado;
 												estado=*popestado;
@@ -997,7 +998,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 117 "parser.fl"
+#line 119 "parser.fl"
 {
 												int *popestado = pop(estados);
 												BEGIN *popestado;
@@ -1006,7 +1007,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 123 "parser.fl"
+#line 125 "parser.fl"
 {BEGIN NFORMATADO;
 												addTextoNF(&pplh);
 												insertHead(endHTML,&pre);
@@ -1017,7 +1018,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 131 "parser.fl"
+#line 133 "parser.fl"
 {BEGIN COMENTARIO;
 										 		addComentario(&pplh);
 												insertHead(endHTML,&comenthtml);
@@ -1027,7 +1028,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 138 "parser.fl"
+#line 140 "parser.fl"
 {BEGIN HTML;
 												insertHead(estados,&estado);
 												estado=HTML;
@@ -1035,69 +1036,69 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 143 "parser.fl"
+#line 145 "parser.fl"
 {BEGIN LATEX;
 												insertHead(estados,&estado);
 												estado=LATEX;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 147 "parser.fl"
+#line 149 "parser.fl"
 {addQuebra(&pplh);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 149 "parser.fl"
+#line 151 "parser.fl"
 {addFormat(&pplh,yytext+1);}
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 151 "parser.fl"
+#line 153 "parser.fl"
 {addHTML(&pplh,yytext);}
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 152 "parser.fl"
+#line 154 "parser.fl"
 {addLATEX(&pplh,yytext);}									
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 154 "parser.fl"
+#line 156 "parser.fl"
 {addBackSlash(&pplh);}	        	   
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 156 "parser.fl"
+#line 158 "parser.fl"
 {addAnd(&pplh);}	
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 159 "parser.fl"
+#line 161 "parser.fl"
 {img.path=strdup(yytext+5);
 												addImagem(&pplh,&img);
 												}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 163 "parser.fl"
+#line 165 "parser.fl"
 {img.scale = strdup(yytext+3);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 165 "parser.fl"
+#line 167 "parser.fl"
 {img.caption=strdup(yytext+5);}
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 167 "parser.fl"
+#line 169 "parser.fl"
 {addTexto(&pplh,yytext);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 170 "parser.fl"
+#line 172 "parser.fl"
 {if(numerolinhas>0)
 													addLinha(table,row);
 												numerolinhas++;
@@ -1106,7 +1107,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 176 "parser.fl"
+#line 178 "parser.fl"
 {addCelula(row,yytext+3,yytext[1]);
 												colunas++;
 												if(colunas>colunasmax)
@@ -1115,13 +1116,13 @@ YY_RULE_SETUP
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
-#line 182 "parser.fl"
+#line 184 "parser.fl"
 {}
 	YY_BREAK
 case 31:
 /* rule 31 can match eol */
 YY_RULE_SETUP
-#line 184 "parser.fl"
+#line 186 "parser.fl"
 {tamanho = (int) (yytext[2]-'0');
 												addIndice(&pplh,seccoes,yytext+4);
 												if(tamanho > ultlvl){
@@ -1136,10 +1137,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 196 "parser.fl"
+#line 198 "parser.fl"
 ECHO;
 	YY_BREAK
-#line 1143 "lex.yy.c"
+#line 1144 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(GLOBAL):
 case YY_STATE_EOF(LATEX):
@@ -2144,7 +2145,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 196 "parser.fl"
+#line 198 "parser.fl"
 
 
 
@@ -2250,6 +2251,8 @@ int main(int argc, char **argv){
 	if(_latex)
 	geraLATEX(&pplh,outputlatex);
 	
-	List* latex = pplh.latex;
+	listDestroy(pplh.html);
+	listDestroy(pplh.latex);
+
 	return 0;
 }

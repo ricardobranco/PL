@@ -16,9 +16,11 @@ htmlheader \<h[1-6]\>([^\<]|<[^\/]|<\/[^h]|<\/h[^1-6]>|<\/h[1-6][^\>])*
 	int tamanho;
 	int abertos = 0;
 
+
 %%
 	List* endHTML = init(sizeof(char*),NULL);
 	List* endLatex = init(sizeof(char*),NULL);
+	
 	List* estados = init(sizeof(int),NULL);
 	
 	Image img;
@@ -297,6 +299,8 @@ int main(int argc, char **argv){
 	if(_latex)
 	geraLATEX(&pplh,outputlatex);
 	
-	List* latex = pplh.latex;
+	listDestroy(pplh.html);
+	listDestroy(pplh.latex);
+
 	return 0;
 }
