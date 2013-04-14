@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -g
 LIBS = -ll
 PARSER = parser.fl
-FILES = linkedList.c parser.fl linkedList.h Makefile preprocessador.h preprocessador.c pplh.h pplh.c
+FILES = linkedList.c parser.fl linkedList.h Makefile preprocessador.h preprocessador.c pplh.h pplh.c pplh.1.gz
 
 
 pplh:$(OBJS)
@@ -33,6 +33,7 @@ clean:
 
 install:
 	cp pplh /usr/bin
+	cp pplh.1.gz /usr/share/man/man1
 	rm *.o
 	rm pplh
 remove:
