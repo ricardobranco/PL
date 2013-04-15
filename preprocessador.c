@@ -253,7 +253,6 @@ int elem(char c,char* arg){
 }
 
 
-
 void addFormat(PPLH* pplh,char* arg){
 	
 	char* args[2];
@@ -266,6 +265,7 @@ void addFormat(PPLH* pplh,char* arg){
 	
 	int* options = (int*)malloc(sizeof(int)*3);
 	int i;
+
 
 	for(i=0;i<3;i++){
 		options[i]=elem(foptions[i],args[0]);
@@ -587,7 +587,7 @@ void addBackSlash(PPLH* pplh){
 	char* hbackshlash = "\\";
 	insertTail(pplh->html,&hbackshlash);
 	//LATEX
-	char* lbackslash = "\\backslash";
+	char* lbackslash = "\\textbackslash";
 	insertTail(pplh->latex,&lbackslash);
 
 }
