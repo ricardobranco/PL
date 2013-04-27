@@ -1,13 +1,14 @@
 \t:PreProcessador de Texto para HTML e/ou Latex
-\a:Ricardo Jorge Rodrigues Branco
+\a:Autor
 \indice
 \s1:Secção 1
 \href(http://www.google.pt,cenas)
 \be(ashdask)
+
 \lo
 ->item 1
 ->item 2
-\lo
+\li
 ->item 3 ->item 4
 
 \end
@@ -35,8 +36,7 @@ exemplo de texto normal
 \fig
 \s:1.5
 \leg:uma imagem com açentos âadasdãb
-\img(imagem.png)
-\img(imagem.png)
+\img(uminho.jpg)
 \end
 
 \tabela
