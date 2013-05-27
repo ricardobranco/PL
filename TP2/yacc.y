@@ -3,46 +3,97 @@
 #include <string.h>
 %}
 
-%token STRING EMAIL URL
-
+%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK 
+%token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC
 %start Report
-
 
 %%
 
-Report : FrontMatter Body BackMatter;
+Report: FrontMatter '$' {return 0;};
 
-FrontMatter : Title SubTitle Authors Date Institution Keywords Abstract Aknowledgements Toc Loc Lot;
+FrontMatter : Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot;
 
-Title : STRING;
+Title : BTITLE TEXT ENDARG ;
 
-SubTitle : STRING
-		 | ;
+SubTitle : BSTITLE TEXT ENDARG 
+		 | 
+		 ;
 
-Authors : Authors Author
-		| Author
-		| ;			 
+Authors : Author Authors 
+		|
+		;
 
-Author : Name Nident Email Url Affiliation ;
+Author : BAUTHOR Name AuthorOPT ENDARG ;
 
-Name : STRING ;
 
-/*Nident ?*/  
+Name : TEXT ;
+
+
+AuthorOPT : SEP Nident AuthorOPT
+		  | SEP Url AuthorOPT
+		  | SEP Email AuthorOPT
+		  | SEP Affilliation AuthorOPT
+		  |;
+
+Nident : NID  ;
 
 Email : EMAIL ;
 
-Url : URL ;
+Url :  URL  ;
 
-/*Affiliation?*/
+Affilliation :  TEXT ;
 
+Abstract : BABS ParaList ENDBLOCK
 
-Date: Dia Mes Ano;
+Aknowledgements : BAKNOW ParaList ENDBLOCK
 
+ParaList : TEXT ParaList 
+		 | ENDARG ParaList
+		 | SEP ParaList
+		 | ;
 
+Date : BDATE ENDARG;
 
+Instituition : BINST TEXT ENDARG 
+			 |
+			 ;
 
+Keywords : BKEY Keys ENDARG
+		 |
+		 ;
 
+Keys : TEXT SEP Keys
+	 | TEXT 
+	 ;
 
+ Toc : BTOC 
+ 	 |
+ 	 ;
+
+ Lof : BLOF
+ 	 |
+ 	 ;
+
+ Lot : BLOT
+     |
+     ;	 	 	
+	
 
 
 %%
+
+int yyerror( char *s )
+{
+  fprintf(stderr, "%s", s);
+}
+
+int main()
+{
+  int yyres = yyparse();
+  printf("YYRES: %d\n",yyres);
+  return 0;
+}
+
+
+
+

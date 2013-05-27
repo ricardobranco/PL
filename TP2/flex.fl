@@ -1,0 +1,30 @@
+%{
+#include "y.tab.h"
+%}
+
+text ([^\n\\,)]|(\\[\)}]))+
+nid [a-z]{0,2}[0-9]+
+email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
+url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
+
+%%
+
+<<EOF>>				{return '$';}
+[ \t\n]+   			{;}
+\)					{return ENDARG;}	
+\}					{return ENDBLOCK;}
+{nid}    			{return NID;}
+{email}				{return EMAIL;}
+{url}				{return URL;}
+,					{printf("SEPARADOR\n");return SEP;}
+{text}				{printf("STRING: %s|\n",yytext);return TEXT;}
+
+
+\\titulo\(		{return BTITLE;}
+\\subtitulo\(	{return BSTITLE;}
+\\autor\(		{return BAUTHOR;}
+\\resumo\(\)\{	{return BABS;}
+
+%%
+
+int yywrap() {}
