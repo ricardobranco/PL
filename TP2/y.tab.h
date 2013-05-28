@@ -47,20 +47,22 @@
      EMAIL = 263,
      URL = 264,
      ENDBLOCK = 265,
-     BTITLE = 266,
-     BSTITLE = 267,
-     BAUTHOR = 268,
-     BEMAIL = 269,
-     BURL = 270,
-     BAFFIL = 271,
-     BABS = 272,
-     BDATE = 273,
-     BINST = 274,
-     BKEY = 275,
-     BAKNOW = 276,
-     BLOF = 277,
-     BLOT = 278,
-     BTOC = 279
+     BTEXT = 266,
+     BREAK = 267,
+     BTITLE = 268,
+     BSTITLE = 269,
+     BAUTHOR = 270,
+     BEMAIL = 271,
+     BURL = 272,
+     BAFFIL = 273,
+     BABS = 274,
+     BDATE = 275,
+     BINST = 276,
+     BKEY = 277,
+     BAKNOW = 278,
+     BLOF = 279,
+     BLOT = 280,
+     BTOC = 281
    };
 #endif
 /* Tokens.  */
@@ -72,26 +74,35 @@
 #define EMAIL 263
 #define URL 264
 #define ENDBLOCK 265
-#define BTITLE 266
-#define BSTITLE 267
-#define BAUTHOR 268
-#define BEMAIL 269
-#define BURL 270
-#define BAFFIL 271
-#define BABS 272
-#define BDATE 273
-#define BINST 274
-#define BKEY 275
-#define BAKNOW 276
-#define BLOF 277
-#define BLOT 278
-#define BTOC 279
+#define BTEXT 266
+#define BREAK 267
+#define BTITLE 268
+#define BSTITLE 269
+#define BAUTHOR 270
+#define BEMAIL 271
+#define BURL 272
+#define BAFFIL 273
+#define BABS 274
+#define BDATE 275
+#define BINST 276
+#define BKEY 277
+#define BAKNOW 278
+#define BLOF 279
+#define BLOT 280
+#define BTOC 281
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+#line 10 "yacc.y"
+{
+	char* vals;
+}
+/* Line 1529 of yacc.c.  */
+#line 105 "y.tab.h"
+	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1

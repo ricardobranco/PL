@@ -3,15 +3,19 @@
 #include <string.h>
 %}
 
-%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK 
+%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK
 %token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC
 %start Report
+
+%union{
+	char* vals;
+} 
 
 %%
 
 Report: FrontMatter '$' {return 0;};
 
-FrontMatter : Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot;
+FrontMatter : Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot ;
 
 Title : BTITLE TEXT ENDARG ;
 
@@ -47,12 +51,13 @@ Abstract : BABS ParaList ENDBLOCK
 
 Aknowledgements : BAKNOW ParaList ENDBLOCK
 
-ParaList : TEXT ParaList 
-		 | ENDARG ParaList
-		 | SEP ParaList
-		 | ;
+ParaList : Paragraph BREAK ParaList;
+		 | Paragraph ;
+		 ;
 
-Date : BDATE ENDARG;
+Paragraph : BTEXT ;
+
+Date : BDATE ;
 
 Instituition : BINST TEXT ENDARG 
 			 |

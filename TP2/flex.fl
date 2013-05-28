@@ -2,15 +2,16 @@
 #include "y.tab.h"
 %}
 
+%x BLOCOTEXTO
 text ([^\n\\,)]|(\\[\)}]))+
 nid [a-z]{0,2}[0-9]+
 email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
 url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
-
+btext ([^\}\\]|(\\\}))+
 %%
 
 <<EOF>>				{return '$';}
-[ \t\n]+   			{;}
+<*>[ \t\n]+   			{;}
 \)					{return ENDARG;}	
 \}					{return ENDBLOCK;}
 {nid}    			{return NID;}
@@ -23,7 +24,20 @@ url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?
 \\titulo\(		{return BTITLE;}
 \\subtitulo\(	{return BSTITLE;}
 \\autor\(		{return BAUTHOR;}
-\\resumo\(\)\{	{return BABS;}
+\\resumo\(\)\{	{BEGIN BLOCOTEXTO;
+				return BABS;}
+\\inst\(		{return BINST;}
+\\data\(\)	    {return BDATE;}
+\\agrad\(\)\{	{BEGIN BLOCOTEXTO;
+				return BAKNOW;}
+\\indice\(\)	{return BTOC;}
+\\indice\(figuras\) {return BLOF;}
+\\indice\(tabelas\) {return BLOT;}
+
+
+<BLOCOTEXTO>\\p\(\)	{return BREAK;}
+<BLOCOTEXTO>{btext} {printf("BLOCO:%s|\n",yytext);return BTEXT;}
+<BLOCOTEXTO>\}		{printf("FECHOU\n"); BEGIN 0;return ENDBLOCK;}		
 
 %%
 
