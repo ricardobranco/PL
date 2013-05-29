@@ -5,9 +5,10 @@
 \inst(Universidade do Minho)
 \resumo(){
 	Um Simples resumo deste exemplo que tem um paragrafo
-	\p()
+	\p() \
 	pelo meio
 }
+
 \agrad(){Quero agradecer a minha mãe.}
 
 \indice()
