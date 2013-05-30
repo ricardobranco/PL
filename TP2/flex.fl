@@ -4,7 +4,7 @@
 
 %}
 
-%x BLOCOTEXTO
+%x BLOCOTEXTO BLOCOD
 text ([^\n\\,)]|(\\[\)}]))+
 nid [a-z]{0,2}[0-9]+
 email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
@@ -16,6 +16,7 @@ btext ([^\}\\]|(\\\}))+
 <*>[ \t\n]+   			{;}
 \)					{return ENDARG;}	
 \}					{return ENDBLOCK;}
+\{					{return BLIST}
 {nid}    			{return NID;}
 {email}				{return EMAIL;}
 {url}				{return URL;}
@@ -35,11 +36,16 @@ btext ([^\}\\]|(\\\}))+
 \\indice\(\)	{return BTOC;}
 \\indice\(figuras\) {return BLOF;}
 \\indice\(tabelas\) {return BLOT;}
+\\codigo\(\)\{	{BEGIN BLOCOD; return CodeBlock;}
+
+\\s[1-6]\(		{yylval.vali = atoi(yytext[2]);
+				return SECTION;}
 
 
-<BLOCOTEXTO>\\p\(\)	{return BREAK;}
-<BLOCOTEXTO>{btext} {printf("BLOCO:%s|\n",yytext);return BTEXT;}
-<BLOCOTEXTO>\}		{printf("FECHOU\n"); BEGIN 0;return ENDBLOCK;}		
+<BLOCOTEXTO>\\p\(\)		{return BREAK;}
+<BLOCOTEXTO>{btext} 	{printf("BLOCO:%s|\n",yytext);return BTEXT;}
+<BLOCOD>{btext} 	{printf("BLOCO:%s|\n",yytext);return BCOD;}
+<BLOCOTEXTO,BLOCOD>\}{btext}	{printf("FECHOU\n"); BEGIN 0;return ENDBLOCK;}		
 
 %%
 

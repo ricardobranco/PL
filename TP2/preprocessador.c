@@ -14,10 +14,17 @@ void addSTitulo(Report *report, char*arg){
 	report->stitulo=strdup(stitulo);
 }
 
-void addAutor(Report* report, char*arg){
-	int len = (int)strlen(arg);
-	//strncpy(autor,arg,len);
-	//report->autor=strdup(arg);
+void addAutor(List* list, char*arg, opt){
+	
+    switch (opt) {
+        case 1:
+            <#statements#>
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 void init_Aut(Report *report, char* autor){

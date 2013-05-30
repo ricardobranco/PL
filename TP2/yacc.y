@@ -7,12 +7,14 @@ Report report;
 
 %}
 
-%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK
-%token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC
+%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE
+
+%token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC BBODY BCHAP BLIST
 %start Report
 
 %union{
 	char* vals;
+	int vali;
 } 
 
 %type<vals> Report
@@ -20,7 +22,9 @@ Report report;
 
 %%
 
-Report: FrontMatter '$' {return 0;};
+Report: Breport FrontMatter '$' {return 0;};
+
+Breport : {yylval.vali=0; };
 
 FrontMatter : Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot ;
 
@@ -37,10 +41,10 @@ Authors : Author Authors
 Author : BAUTHOR Name AuthorOPT ENDARG ;
 
 
-Name : TEXT init_Aut(&report, $1);
+Name : TEXT {init_Aut(&report, $1);};
 
 
-AuthorOPT : SEP Nident AuthorOPT
+AuthorOPT : SEP Nident AuthorOPT {add};
 		  | SEP Url AuthorOPT
 		  | SEP Email AuthorOPT
 		  | SEP Affilliation AuthorOPT
@@ -90,6 +94,56 @@ Keys : TEXT SEP Keys
      |
      ;	 	 	
 	
+//----------------------------
+
+Body : BBODY Chapterlist ENDARG ;
+
+Chapterlist : 	Chapter Chapterlist
+			|	Chapter
+			;
+
+Chapter :	 C_Title	ElemList  ;
+
+
+C_Title: BCHAP 	TEXT   ENDARG;
+
+
+
+SECTION	:	S_Title  ElemList ;
+
+
+S_Title: BSEC  TEXT  ENDARG;
+
+
+ElemList	: Elem ElemList
+			| Elem
+			;
+
+
+Elem 	: Paragraph 	Elem
+		| Float 		Elem
+		| List			Elem
+		| CodeBlock  	Elem
+		| SECTION		Elem
+		| Summary 		Elem
+		|
+		;
+
+CodeBlock: BCODE BCODE ENDBLOCK;
+
+
+ 
+
+
+Float	: Figure
+		| TABLE
+		;
+
+
+
+
+
+
 
 
 %%
