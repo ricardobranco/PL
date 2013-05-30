@@ -1087,12 +1087,12 @@ case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
 #line 44 "flex.fl"
-{printf("BLOCO:%s|\n",yytext);return BTEXT;}
+{return BTEXT;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 45 "flex.fl"
-{printf("FECHOU\n"); BEGIN 0;return ENDBLOCK;}		
+{BEGIN 0;return ENDBLOCK;}		
 	YY_BREAK
 case 22:
 YY_RULE_SETUP

@@ -28,7 +28,7 @@ FrontMatter : Title SubTitle Authors Date Instituition Keywords Abstract Aknowle
 Title : BTITLE TEXT ENDARG  {addTitulo(&report, yylval.valS);};
 
 SubTitle : BSTITLE TEXT ENDARG {addSTitulo(&report, yylval.valS);}
-		 | {}
+		 | {report.stitulo = NULL;}
 		 ;
 
 Authors : Author Authors 

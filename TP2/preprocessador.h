@@ -79,4 +79,4 @@ void addIndice(Report*,int,char*);
 void addIndList(Report*);
 void addIndFecho(Report*);
 Autor init_Autor();
-
+void addData(Report*);

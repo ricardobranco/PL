@@ -1429,7 +1429,7 @@ yyreduce:
 
   case 6:
 #line 31 "yacc.y"
-    {}
+    {report.stitulo = NULL;}
     break;
 
   case 9:

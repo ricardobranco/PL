@@ -41,8 +41,9 @@ btext ([^\}\\]|(\\\}))+
 
 
 <BLOCOTEXTO>\\p\(\)	{return BREAK;}
-<BLOCOTEXTO>{btext} {printf("BLOCO:%s|\n",yytext);return BTEXT;}
-<BLOCOTEXTO>\}		{printf("FECHOU\n"); BEGIN 0;return ENDBLOCK;}		
+<BLOCOTEXTO>{btext} {return BTEXT;}
+<BLOCOTEXTO>\}		{BEGIN 0;
+					return ENDBLOCK;}		
 
 %%
 
