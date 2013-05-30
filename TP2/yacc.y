@@ -3,7 +3,9 @@
 #include <string.h>
 #include "report.h"
 
+
 Report report;
+Autor autor;
 
 %}
 
@@ -12,11 +14,10 @@ Report report;
 %start Report
 
 %union{
-	char* vals;
+	char* valS;
 } 
 
-%type<vals> Report
-
+%type<valS> TEXT BTEXT EMAIL URL NID Name Nident Email Url Affilliation
 
 %%
 
@@ -24,37 +25,41 @@ Report: FrontMatter '$' {return 0;};
 
 FrontMatter : Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot ;
 
-Title : BTITLE TEXT ENDARG  {addTitulo(&report, $2);};
+Title : BTITLE TEXT ENDARG  {addTitulo(&report, yylval.valS);};
 
-SubTitle : BSTITLE TEXT ENDARG {addSTitulo(&report, $2);};
-		 | 
+SubTitle : BSTITLE TEXT ENDARG {addSTitulo(&report, yylval.valS);}
+		 | {}
 		 ;
 
 Authors : Author Authors 
-		|
+		| 
 		;
 
-Author : BAUTHOR Name AuthorOPT ENDARG ;
+Author : Bauthor Name AuthorOPT ENDARG {autor.nome = strdup($2);
+										insertHead(report.autores,&autor);} ;
+
+Bauthor : BAUTHOR {autor = init_Autor();};
 
 
-Name : TEXT init_Aut(&report, $1);
+Name : TEXT {$$=$1;};
 
 
-AuthorOPT : SEP Nident AuthorOPT
-		  | SEP Url AuthorOPT
-		  | SEP Email AuthorOPT
-		  | SEP Affilliation AuthorOPT
-		  |;
+AuthorOPT : SEP Nident AuthorOPT {insertHead(autor.nident,&($2));}
+		  | SEP Url AuthorOPT {insertHead(autor.url,&($2));}
+		  | SEP Email AuthorOPT {insertHead(autor.email,&($2));}
+		  | SEP Affilliation AuthorOPT {insertHead(autor.affil,&($2));}
+		  |
+		  ;
 
-Nident : NID  ;
+Nident : NID  {$$=$1;};
 
-Email : EMAIL ;
+Email : EMAIL {$$=$1;};
 
-Url :  URL  ;
+Url :  URL  {$$=$1;};
 
-Affilliation :  TEXT ;
+Affilliation :  TEXT {$$=$1;};
 
-Abstract : BABS ParaList ENDBLOCK
+Abstract : BABS ParaList ENDBLOCK ;
 
 Aknowledgements : BAKNOW ParaList ENDBLOCK
 
@@ -66,8 +71,8 @@ Paragraph : BTEXT ;
 
 Date : BDATE ;
 
-Instituition : BINST TEXT ENDARG 
-			 |
+Instituition : BINST TEXT ENDARG {report.inst = strdup($2); } 
+			 | {report.inst = NULL;}
 			 ;
 
 Keywords : BKEY Keys ENDARG
@@ -108,11 +113,13 @@ int main()
 	report.html=init(sizeof(char*),NULL);
 	report.latex=init(sizeof(char*),NULL);
 	report.seccoes=init(sizeof(char*),NULL);
-	report.autor=init(sizeof(Autor),NULL)
+	report.autores=init(sizeof(Autor),NULL);
 
 
   	int yyres = yyparse();
   	printf("YYRES: %d\n",yyres);
+  	geraHTML(&report,NULL);
+  	geraLATEX(&report,NULL);
   	return 0;
 }
 

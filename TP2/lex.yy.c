@@ -706,7 +706,8 @@ char *yytext;
 #line 2 "flex.fl"
 #include "y.tab.h"
 
-#line 710 "lex.yy.c"
+
+#line 711 "lex.yy.c"
 
 #define INITIAL 0
 #define BLOCOTEXTO 1
@@ -889,10 +890,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 11 "flex.fl"
+#line 12 "flex.fl"
 
 
-#line 896 "lex.yy.c"
+#line 897 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -977,124 +978,128 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(BLOCOTEXTO):
-#line 13 "flex.fl"
+#line 14 "flex.fl"
 {return '$';}
 	YY_BREAK
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 14 "flex.fl"
+#line 15 "flex.fl"
 {;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 15 "flex.fl"
+#line 16 "flex.fl"
 {return ENDARG;}	
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 16 "flex.fl"
+#line 17 "flex.fl"
 {return ENDBLOCK;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 17 "flex.fl"
-{return NID;}
+#line 18 "flex.fl"
+{yylval.valS = strdup(yytext);
+					return NID;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 18 "flex.fl"
-{return EMAIL;}
+#line 20 "flex.fl"
+{yylval.valS = strdup(yytext);
+					return EMAIL;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 19 "flex.fl"
-{return URL;}
+#line 22 "flex.fl"
+{yylval.valS = strdup(yytext);
+					return URL;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 20 "flex.fl"
-{printf("SEPARADOR\n");return SEP;}
+#line 24 "flex.fl"
+{return SEP;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 21 "flex.fl"
-{printf("STRING: %s|\n",yytext);return TEXT;}
+#line 25 "flex.fl"
+{yylval.valS = strdup(yytext);
+					return TEXT;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 24 "flex.fl"
+#line 29 "flex.fl"
 {return BTITLE;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 25 "flex.fl"
+#line 30 "flex.fl"
 {return BSTITLE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 26 "flex.fl"
+#line 31 "flex.fl"
 {return BAUTHOR;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 27 "flex.fl"
+#line 32 "flex.fl"
 {BEGIN BLOCOTEXTO;
 				return BABS;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 29 "flex.fl"
+#line 34 "flex.fl"
 {return BINST;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 30 "flex.fl"
+#line 35 "flex.fl"
 {return BDATE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 31 "flex.fl"
+#line 36 "flex.fl"
 {BEGIN BLOCOTEXTO;
 				return BAKNOW;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 33 "flex.fl"
+#line 38 "flex.fl"
 {return BTOC;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 34 "flex.fl"
+#line 39 "flex.fl"
 {return BLOF;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 35 "flex.fl"
+#line 40 "flex.fl"
 {return BLOT;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 38 "flex.fl"
+#line 43 "flex.fl"
 {return BREAK;}
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 39 "flex.fl"
+#line 44 "flex.fl"
 {printf("BLOCO:%s|\n",yytext);return BTEXT;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 40 "flex.fl"
+#line 45 "flex.fl"
 {printf("FECHOU\n"); BEGIN 0;return ENDBLOCK;}		
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 42 "flex.fl"
+#line 47 "flex.fl"
 ECHO;
 	YY_BREAK
-#line 1098 "lex.yy.c"
+#line 1103 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2089,7 +2094,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 42 "flex.fl"
+#line 47 "flex.fl"
 
 
 

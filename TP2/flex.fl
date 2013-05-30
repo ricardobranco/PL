@@ -1,7 +1,6 @@
 %{
 #include "y.tab.h"
 
-
 %}
 
 %x BLOCOTEXTO
@@ -16,11 +15,15 @@ btext ([^\}\\]|(\\\}))+
 <*>[ \t\n]+   			{;}
 \)					{return ENDARG;}	
 \}					{return ENDBLOCK;}
-{nid}    			{return NID;}
-{email}				{return EMAIL;}
-{url}				{return URL;}
-,					{printf("SEPARADOR\n");return SEP;}
-{text}				{printf("STRING: %s|\n",yytext);return TEXT;}
+{nid}    			{yylval.valS = strdup(yytext);
+					return NID;}
+{email}				{yylval.valS = strdup(yytext);
+					return EMAIL;}
+{url}				{yylval.valS = strdup(yytext);
+					return URL;}
+,					{return SEP;}
+{text}				{yylval.valS = strdup(yytext);
+					return TEXT;}
 
 
 \\titulo\(		{return BTITLE;}

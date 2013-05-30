@@ -1,16 +1,16 @@
-OBJS = y.tab.o lex.yy.o linkedlist.o
+OBJS = y.tab.o lex.yy.o linkedlist.o preprocessador.o report.o
 CC = gcc
 CFLAGS = 
 LIBS = -ll -ly
 YACC = yacc.y
 PARSER = flex.fl
-FILES = flex.fl yacc.y linkedlist.c linkedlist.h makefile
+FILES = flex.fl yacc.y linkedlist.c linkedlist.h makefile preprocessador.c preprocessador.h report.c report.o
 OUTPUT = report
 
 
 report:$(OBJS)
 	$(CC) $(CFLAGS) -o $(OUTPUT) $(OBJS) $(LIBS) -g
-	#./$(OUTPUT) < Exemplo.rpt
+	
 
 lex.yy.c: $(PARSER)
 	flex $(PARSER)
@@ -27,6 +27,14 @@ y.tab.o: y.tab.c
 linkedlist.o: linkedlist.c linkedList.h
 	$(CC) $(CFLAGS) -c linkedlist.c	
 
+preprocessador.o: preprocessador.c preprocessador.h
+	$(CC) $(CFLAGS) -c preprocessador.c
+
+report.o: report.c report.h
+	$(CC) $(CFLAGS) -c report.c
+
+run: $(OUTPUT)
+	./$(OUTPUT) < Exemplo.rpt
 clean:
 	rm *.o
 	rm $(OUTPUT)

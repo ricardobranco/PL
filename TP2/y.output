@@ -22,52 +22,54 @@ Grammar
     6 Authors: Author Authors
     7        | /* empty */
 
-    8 Author: BAUTHOR Name AuthorOPT ENDARG
+    8 Author: Bauthor Name AuthorOPT ENDARG
 
-    9 Name: TEXT
+    9 Bauthor: BAUTHOR
 
-   10 AuthorOPT: SEP Nident AuthorOPT
-   11          | SEP Url AuthorOPT
-   12          | SEP Email AuthorOPT
-   13          | SEP Affilliation AuthorOPT
-   14          | /* empty */
+   10 Name: TEXT
 
-   15 Nident: NID
+   11 AuthorOPT: SEP Nident AuthorOPT
+   12          | SEP Url AuthorOPT
+   13          | SEP Email AuthorOPT
+   14          | SEP Affilliation AuthorOPT
+   15          | /* empty */
 
-   16 Email: EMAIL
+   16 Nident: NID
 
-   17 Url: URL
+   17 Email: EMAIL
 
-   18 Affilliation: TEXT
+   18 Url: URL
 
-   19 Abstract: BABS ParaList ENDBLOCK
+   19 Affilliation: TEXT
 
-   20 Aknowledgements: BAKNOW ParaList ENDBLOCK
+   20 Abstract: BABS ParaList ENDBLOCK
 
-   21 ParaList: Paragraph BREAK ParaList
-   22         | Paragraph
+   21 Aknowledgements: BAKNOW ParaList ENDBLOCK
 
-   23 Paragraph: BTEXT
+   22 ParaList: Paragraph BREAK ParaList
+   23         | Paragraph
 
-   24 Date: BDATE
+   24 Paragraph: BTEXT
 
-   25 Instituition: BINST TEXT ENDARG
-   26             | /* empty */
+   25 Date: BDATE
 
-   27 Keywords: BKEY Keys ENDARG
-   28         | /* empty */
+   26 Instituition: BINST TEXT ENDARG
+   27             | /* empty */
 
-   29 Keys: TEXT SEP Keys
-   30     | TEXT
+   28 Keywords: BKEY Keys ENDARG
+   29         | /* empty */
 
-   31 Toc: BTOC
-   32    | /* empty */
+   30 Keys: TEXT SEP Keys
+   31     | TEXT
 
-   33 Lof: BLOF
-   34    | /* empty */
+   32 Toc: BTOC
+   33    | /* empty */
 
-   35 Lot: BLOT
-   36    | /* empty */
+   34 Lof: BLOF
+   35    | /* empty */
+
+   36 Lot: BLOT
+   37    | /* empty */
 
 
 Terminals, with rules where they appear
@@ -75,30 +77,30 @@ Terminals, with rules where they appear
 $end (0) 0
 '$' (36) 1
 error (256)
-TEXT (258) 3 4 9 18 25 29 30
+TEXT (258) 3 4 10 19 26 30 31
 ERROR (259)
-ENDARG (260) 3 4 8 25 27
-NID (261) 15
-SEP (262) 10 11 12 13 29
-EMAIL (263) 16
-URL (264) 17
-ENDBLOCK (265) 19 20
-BTEXT (266) 23
-BREAK (267) 21
+ENDARG (260) 3 4 8 26 28
+NID (261) 16
+SEP (262) 11 12 13 14 30
+EMAIL (263) 17
+URL (264) 18
+ENDBLOCK (265) 20 21
+BTEXT (266) 24
+BREAK (267) 22
 BTITLE (268) 3
 BSTITLE (269) 4
-BAUTHOR (270) 8
+BAUTHOR (270) 9
 BEMAIL (271)
 BURL (272)
 BAFFIL (273)
-BABS (274) 19
-BDATE (275) 24
-BINST (276) 25
-BKEY (277) 27
-BAKNOW (278) 20
-BLOF (279) 33
-BLOT (280) 35
-BTOC (281) 31
+BABS (274) 20
+BDATE (275) 25
+BINST (276) 26
+BKEY (277) 28
+BAKNOW (278) 21
+BLOF (279) 34
+BLOT (280) 36
+BTOC (281) 32
 
 
 Nonterminals, with rules where they appear
@@ -117,40 +119,42 @@ Authors (33)
     on left: 6 7, on right: 2 6
 Author (34)
     on left: 8, on right: 6
-Name (35)
+Bauthor (35)
     on left: 9, on right: 8
-AuthorOPT (36)
-    on left: 10 11 12 13 14, on right: 8 10 11 12 13
-Nident (37)
-    on left: 15, on right: 10
-Email (38)
-    on left: 16, on right: 12
-Url (39)
-    on left: 17, on right: 11
-Affilliation (40)
-    on left: 18, on right: 13
-Abstract (41)
-    on left: 19, on right: 2
-Aknowledgements (42)
+Name (36)
+    on left: 10, on right: 8
+AuthorOPT (37)
+    on left: 11 12 13 14 15, on right: 8 11 12 13 14
+Nident (38)
+    on left: 16, on right: 11
+Email (39)
+    on left: 17, on right: 13
+Url (40)
+    on left: 18, on right: 12
+Affilliation (41)
+    on left: 19, on right: 14
+Abstract (42)
     on left: 20, on right: 2
-ParaList (43)
-    on left: 21 22, on right: 19 20 21
-Paragraph (44)
-    on left: 23, on right: 21 22
-Date (45)
-    on left: 24, on right: 2
-Instituition (46)
-    on left: 25 26, on right: 2
-Keywords (47)
-    on left: 27 28, on right: 2
-Keys (48)
-    on left: 29 30, on right: 27 29
-Toc (49)
-    on left: 31 32, on right: 2
-Lof (50)
-    on left: 33 34, on right: 2
-Lot (51)
-    on left: 35 36, on right: 2
+Aknowledgements (43)
+    on left: 21, on right: 2
+ParaList (44)
+    on left: 22 23, on right: 20 21 22
+Paragraph (45)
+    on left: 24, on right: 22 23
+Date (46)
+    on left: 25, on right: 2
+Instituition (47)
+    on left: 26 27, on right: 2
+Keywords (48)
+    on left: 28 29, on right: 2
+Keys (49)
+    on left: 30 31, on right: 28 30
+Toc (50)
+    on left: 32 33, on right: 2
+Lof (51)
+    on left: 34 35, on right: 2
+Lot (52)
+    on left: 36 37, on right: 2
 
 
 state 0
@@ -234,6 +238,7 @@ state 9
 
     Authors  go to state 13
     Author   go to state 14
+    Bauthor  go to state 15
 
 
 state 10
@@ -247,25 +252,23 @@ state 11
 
     4 SubTitle: BSTITLE TEXT . ENDARG
 
-    ENDARG  shift, and go to state 15
+    ENDARG  shift, and go to state 16
 
 
 state 12
 
-    8 Author: BAUTHOR . Name AuthorOPT ENDARG
+    9 Bauthor: BAUTHOR .
 
-    TEXT  shift, and go to state 16
-
-    Name  go to state 17
+    $default  reduce using rule 9 (Bauthor)
 
 
 state 13
 
     2 FrontMatter: Title SubTitle Authors . Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot
 
-    BDATE  shift, and go to state 18
+    BDATE  shift, and go to state 17
 
-    Date  go to state 19
+    Date  go to state 18
 
 
 state 14
@@ -276,428 +279,438 @@ state 14
 
     $default  reduce using rule 7 (Authors)
 
-    Authors  go to state 20
+    Authors  go to state 19
     Author   go to state 14
+    Bauthor  go to state 15
 
 
 state 15
+
+    8 Author: Bauthor . Name AuthorOPT ENDARG
+
+    TEXT  shift, and go to state 20
+
+    Name  go to state 21
+
+
+state 16
 
     4 SubTitle: BSTITLE TEXT ENDARG .
 
     $default  reduce using rule 4 (SubTitle)
 
 
-state 16
-
-    9 Name: TEXT .
-
-    $default  reduce using rule 9 (Name)
-
-
 state 17
 
-    8 Author: BAUTHOR Name . AuthorOPT ENDARG
+   25 Date: BDATE .
 
-    SEP  shift, and go to state 21
-
-    $default  reduce using rule 14 (AuthorOPT)
-
-    AuthorOPT  go to state 22
+    $default  reduce using rule 25 (Date)
 
 
 state 18
 
-   24 Date: BDATE .
+    2 FrontMatter: Title SubTitle Authors Date . Instituition Keywords Abstract Aknowledgements Toc Lof Lot
 
-    $default  reduce using rule 24 (Date)
+    BINST  shift, and go to state 22
+
+    $default  reduce using rule 27 (Instituition)
+
+    Instituition  go to state 23
 
 
 state 19
-
-    2 FrontMatter: Title SubTitle Authors Date . Instituition Keywords Abstract Aknowledgements Toc Lof Lot
-
-    BINST  shift, and go to state 23
-
-    $default  reduce using rule 26 (Instituition)
-
-    Instituition  go to state 24
-
-
-state 20
 
     6 Authors: Author Authors .
 
     $default  reduce using rule 6 (Authors)
 
 
+state 20
+
+   10 Name: TEXT .
+
+    $default  reduce using rule 10 (Name)
+
+
 state 21
 
-   10 AuthorOPT: SEP . Nident AuthorOPT
-   11          | SEP . Url AuthorOPT
-   12          | SEP . Email AuthorOPT
-   13          | SEP . Affilliation AuthorOPT
+    8 Author: Bauthor Name . AuthorOPT ENDARG
 
-    TEXT   shift, and go to state 25
-    NID    shift, and go to state 26
-    EMAIL  shift, and go to state 27
-    URL    shift, and go to state 28
+    SEP  shift, and go to state 24
 
-    Nident        go to state 29
-    Email         go to state 30
-    Url           go to state 31
-    Affilliation  go to state 32
+    $default  reduce using rule 15 (AuthorOPT)
+
+    AuthorOPT  go to state 25
 
 
 state 22
 
-    8 Author: BAUTHOR Name AuthorOPT . ENDARG
+   26 Instituition: BINST . TEXT ENDARG
 
-    ENDARG  shift, and go to state 33
+    TEXT  shift, and go to state 26
 
 
 state 23
 
-   25 Instituition: BINST . TEXT ENDARG
+    2 FrontMatter: Title SubTitle Authors Date Instituition . Keywords Abstract Aknowledgements Toc Lof Lot
 
-    TEXT  shift, and go to state 34
+    BKEY  shift, and go to state 27
+
+    $default  reduce using rule 29 (Keywords)
+
+    Keywords  go to state 28
 
 
 state 24
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition . Keywords Abstract Aknowledgements Toc Lof Lot
+   11 AuthorOPT: SEP . Nident AuthorOPT
+   12          | SEP . Url AuthorOPT
+   13          | SEP . Email AuthorOPT
+   14          | SEP . Affilliation AuthorOPT
 
-    BKEY  shift, and go to state 35
+    TEXT   shift, and go to state 29
+    NID    shift, and go to state 30
+    EMAIL  shift, and go to state 31
+    URL    shift, and go to state 32
 
-    $default  reduce using rule 28 (Keywords)
-
-    Keywords  go to state 36
+    Nident        go to state 33
+    Email         go to state 34
+    Url           go to state 35
+    Affilliation  go to state 36
 
 
 state 25
 
-   18 Affilliation: TEXT .
+    8 Author: Bauthor Name AuthorOPT . ENDARG
 
-    $default  reduce using rule 18 (Affilliation)
+    ENDARG  shift, and go to state 37
 
 
 state 26
 
-   15 Nident: NID .
+   26 Instituition: BINST TEXT . ENDARG
 
-    $default  reduce using rule 15 (Nident)
+    ENDARG  shift, and go to state 38
 
 
 state 27
 
-   16 Email: EMAIL .
+   28 Keywords: BKEY . Keys ENDARG
 
-    $default  reduce using rule 16 (Email)
+    TEXT  shift, and go to state 39
+
+    Keys  go to state 40
 
 
 state 28
 
-   17 Url: URL .
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords . Abstract Aknowledgements Toc Lof Lot
 
-    $default  reduce using rule 17 (Url)
+    BABS  shift, and go to state 41
+
+    Abstract  go to state 42
 
 
 state 29
 
-   10 AuthorOPT: SEP Nident . AuthorOPT
+   19 Affilliation: TEXT .
 
-    SEP  shift, and go to state 21
-
-    $default  reduce using rule 14 (AuthorOPT)
-
-    AuthorOPT  go to state 37
+    $default  reduce using rule 19 (Affilliation)
 
 
 state 30
 
-   12 AuthorOPT: SEP Email . AuthorOPT
+   16 Nident: NID .
 
-    SEP  shift, and go to state 21
-
-    $default  reduce using rule 14 (AuthorOPT)
-
-    AuthorOPT  go to state 38
+    $default  reduce using rule 16 (Nident)
 
 
 state 31
 
-   11 AuthorOPT: SEP Url . AuthorOPT
+   17 Email: EMAIL .
 
-    SEP  shift, and go to state 21
-
-    $default  reduce using rule 14 (AuthorOPT)
-
-    AuthorOPT  go to state 39
+    $default  reduce using rule 17 (Email)
 
 
 state 32
 
-   13 AuthorOPT: SEP Affilliation . AuthorOPT
+   18 Url: URL .
 
-    SEP  shift, and go to state 21
-
-    $default  reduce using rule 14 (AuthorOPT)
-
-    AuthorOPT  go to state 40
+    $default  reduce using rule 18 (Url)
 
 
 state 33
 
-    8 Author: BAUTHOR Name AuthorOPT ENDARG .
+   11 AuthorOPT: SEP Nident . AuthorOPT
 
-    $default  reduce using rule 8 (Author)
+    SEP  shift, and go to state 24
+
+    $default  reduce using rule 15 (AuthorOPT)
+
+    AuthorOPT  go to state 43
 
 
 state 34
 
-   25 Instituition: BINST TEXT . ENDARG
+   13 AuthorOPT: SEP Email . AuthorOPT
 
-    ENDARG  shift, and go to state 41
+    SEP  shift, and go to state 24
+
+    $default  reduce using rule 15 (AuthorOPT)
+
+    AuthorOPT  go to state 44
 
 
 state 35
 
-   27 Keywords: BKEY . Keys ENDARG
+   12 AuthorOPT: SEP Url . AuthorOPT
 
-    TEXT  shift, and go to state 42
+    SEP  shift, and go to state 24
 
-    Keys  go to state 43
+    $default  reduce using rule 15 (AuthorOPT)
+
+    AuthorOPT  go to state 45
 
 
 state 36
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords . Abstract Aknowledgements Toc Lof Lot
+   14 AuthorOPT: SEP Affilliation . AuthorOPT
 
-    BABS  shift, and go to state 44
+    SEP  shift, and go to state 24
 
-    Abstract  go to state 45
+    $default  reduce using rule 15 (AuthorOPT)
+
+    AuthorOPT  go to state 46
 
 
 state 37
 
-   10 AuthorOPT: SEP Nident AuthorOPT .
+    8 Author: Bauthor Name AuthorOPT ENDARG .
 
-    $default  reduce using rule 10 (AuthorOPT)
+    $default  reduce using rule 8 (Author)
 
 
 state 38
 
-   12 AuthorOPT: SEP Email AuthorOPT .
+   26 Instituition: BINST TEXT ENDARG .
 
-    $default  reduce using rule 12 (AuthorOPT)
+    $default  reduce using rule 26 (Instituition)
 
 
 state 39
 
-   11 AuthorOPT: SEP Url AuthorOPT .
+   30 Keys: TEXT . SEP Keys
+   31     | TEXT .
 
-    $default  reduce using rule 11 (AuthorOPT)
+    SEP  shift, and go to state 47
+
+    $default  reduce using rule 31 (Keys)
 
 
 state 40
 
-   13 AuthorOPT: SEP Affilliation AuthorOPT .
+   28 Keywords: BKEY Keys . ENDARG
 
-    $default  reduce using rule 13 (AuthorOPT)
+    ENDARG  shift, and go to state 48
 
 
 state 41
 
-   25 Instituition: BINST TEXT ENDARG .
+   20 Abstract: BABS . ParaList ENDBLOCK
 
-    $default  reduce using rule 25 (Instituition)
+    BTEXT  shift, and go to state 49
+
+    ParaList   go to state 50
+    Paragraph  go to state 51
 
 
 state 42
 
-   29 Keys: TEXT . SEP Keys
-   30     | TEXT .
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract . Aknowledgements Toc Lof Lot
 
-    SEP  shift, and go to state 46
+    BAKNOW  shift, and go to state 52
 
-    $default  reduce using rule 30 (Keys)
+    Aknowledgements  go to state 53
 
 
 state 43
 
-   27 Keywords: BKEY Keys . ENDARG
+   11 AuthorOPT: SEP Nident AuthorOPT .
 
-    ENDARG  shift, and go to state 47
+    $default  reduce using rule 11 (AuthorOPT)
 
 
 state 44
 
-   19 Abstract: BABS . ParaList ENDBLOCK
+   13 AuthorOPT: SEP Email AuthorOPT .
 
-    BTEXT  shift, and go to state 48
-
-    ParaList   go to state 49
-    Paragraph  go to state 50
+    $default  reduce using rule 13 (AuthorOPT)
 
 
 state 45
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract . Aknowledgements Toc Lof Lot
+   12 AuthorOPT: SEP Url AuthorOPT .
 
-    BAKNOW  shift, and go to state 51
-
-    Aknowledgements  go to state 52
+    $default  reduce using rule 12 (AuthorOPT)
 
 
 state 46
 
-   29 Keys: TEXT SEP . Keys
+   14 AuthorOPT: SEP Affilliation AuthorOPT .
 
-    TEXT  shift, and go to state 42
-
-    Keys  go to state 53
+    $default  reduce using rule 14 (AuthorOPT)
 
 
 state 47
 
-   27 Keywords: BKEY Keys ENDARG .
+   30 Keys: TEXT SEP . Keys
 
-    $default  reduce using rule 27 (Keywords)
+    TEXT  shift, and go to state 39
+
+    Keys  go to state 54
 
 
 state 48
 
-   23 Paragraph: BTEXT .
+   28 Keywords: BKEY Keys ENDARG .
 
-    $default  reduce using rule 23 (Paragraph)
+    $default  reduce using rule 28 (Keywords)
 
 
 state 49
 
-   19 Abstract: BABS ParaList . ENDBLOCK
+   24 Paragraph: BTEXT .
 
-    ENDBLOCK  shift, and go to state 54
+    $default  reduce using rule 24 (Paragraph)
 
 
 state 50
 
-   21 ParaList: Paragraph . BREAK ParaList
-   22         | Paragraph .
+   20 Abstract: BABS ParaList . ENDBLOCK
 
-    BREAK  shift, and go to state 55
-
-    $default  reduce using rule 22 (ParaList)
+    ENDBLOCK  shift, and go to state 55
 
 
 state 51
 
-   20 Aknowledgements: BAKNOW . ParaList ENDBLOCK
+   22 ParaList: Paragraph . BREAK ParaList
+   23         | Paragraph .
 
-    BTEXT  shift, and go to state 48
+    BREAK  shift, and go to state 56
 
-    ParaList   go to state 56
-    Paragraph  go to state 50
+    $default  reduce using rule 23 (ParaList)
 
 
 state 52
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements . Toc Lof Lot
+   21 Aknowledgements: BAKNOW . ParaList ENDBLOCK
 
-    BTOC  shift, and go to state 57
+    BTEXT  shift, and go to state 49
 
-    $default  reduce using rule 32 (Toc)
-
-    Toc  go to state 58
+    ParaList   go to state 57
+    Paragraph  go to state 51
 
 
 state 53
 
-   29 Keys: TEXT SEP Keys .
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements . Toc Lof Lot
 
-    $default  reduce using rule 29 (Keys)
+    BTOC  shift, and go to state 58
+
+    $default  reduce using rule 33 (Toc)
+
+    Toc  go to state 59
 
 
 state 54
 
-   19 Abstract: BABS ParaList ENDBLOCK .
+   30 Keys: TEXT SEP Keys .
 
-    $default  reduce using rule 19 (Abstract)
+    $default  reduce using rule 30 (Keys)
 
 
 state 55
 
-   21 ParaList: Paragraph BREAK . ParaList
+   20 Abstract: BABS ParaList ENDBLOCK .
 
-    BTEXT  shift, and go to state 48
-
-    ParaList   go to state 59
-    Paragraph  go to state 50
+    $default  reduce using rule 20 (Abstract)
 
 
 state 56
 
-   20 Aknowledgements: BAKNOW ParaList . ENDBLOCK
+   22 ParaList: Paragraph BREAK . ParaList
 
-    ENDBLOCK  shift, and go to state 60
+    BTEXT  shift, and go to state 49
+
+    ParaList   go to state 60
+    Paragraph  go to state 51
 
 
 state 57
 
-   31 Toc: BTOC .
+   21 Aknowledgements: BAKNOW ParaList . ENDBLOCK
 
-    $default  reduce using rule 31 (Toc)
+    ENDBLOCK  shift, and go to state 61
 
 
 state 58
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc . Lof Lot
+   32 Toc: BTOC .
 
-    BLOF  shift, and go to state 61
-
-    $default  reduce using rule 34 (Lof)
-
-    Lof  go to state 62
+    $default  reduce using rule 32 (Toc)
 
 
 state 59
 
-   21 ParaList: Paragraph BREAK ParaList .
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc . Lof Lot
 
-    $default  reduce using rule 21 (ParaList)
+    BLOF  shift, and go to state 62
+
+    $default  reduce using rule 35 (Lof)
+
+    Lof  go to state 63
 
 
 state 60
 
-   20 Aknowledgements: BAKNOW ParaList ENDBLOCK .
+   22 ParaList: Paragraph BREAK ParaList .
 
-    $default  reduce using rule 20 (Aknowledgements)
+    $default  reduce using rule 22 (ParaList)
 
 
 state 61
 
-   33 Lof: BLOF .
+   21 Aknowledgements: BAKNOW ParaList ENDBLOCK .
 
-    $default  reduce using rule 33 (Lof)
+    $default  reduce using rule 21 (Aknowledgements)
 
 
 state 62
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof . Lot
+   34 Lof: BLOF .
 
-    BLOT  shift, and go to state 63
-
-    $default  reduce using rule 36 (Lot)
-
-    Lot  go to state 64
+    $default  reduce using rule 34 (Lof)
 
 
 state 63
 
-   35 Lot: BLOT .
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof . Lot
 
-    $default  reduce using rule 35 (Lot)
+    BLOT  shift, and go to state 64
+
+    $default  reduce using rule 37 (Lot)
+
+    Lot  go to state 65
 
 
 state 64
+
+   36 Lot: BLOT .
+
+    $default  reduce using rule 36 (Lot)
+
+
+state 65
 
     2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot .
 
