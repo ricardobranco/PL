@@ -1,0 +1,13 @@
+
+\titulo{PL - Processamento de Linguagens}
+\subtitulo(Report 2007: vamos escrever relatórios)
+\autor{a61030 - Diogo Alves\\a61075 - Ricardo Branco\\a61084 - Helder Gonçalves}
+\data{2 de Junho de 2013}
+\inst(Universidade do Minho)
+
+resumo(){
+	Neste trabalho temos como objetivo criar um analisador léxico e um sintático, que "processa"/analisa o texto, apanhando as palavras especiais, e de seguida verifica se a estrutura do relatório está bem construida. Enquando analisa o texto vai guardando-o em estruturas de dados, e em listas ligadas para separar o código html do código latex. 
+}
+
+\indice()
+
