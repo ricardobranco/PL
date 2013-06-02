@@ -1092,14 +1092,15 @@ YY_RULE_SETUP
 case 21:
 YY_RULE_SETUP
 #line 45 "flex.fl"
-{BEGIN 0;return ENDBLOCK;}		
+{BEGIN 0;
+					return ENDBLOCK;}		
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 47 "flex.fl"
+#line 48 "flex.fl"
 ECHO;
 	YY_BREAK
-#line 1103 "lex.yy.c"
+#line 1104 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2094,7 +2095,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 47 "flex.fl"
+#line 48 "flex.fl"
 
 
 

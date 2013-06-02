@@ -50,7 +50,7 @@ typedef struct sCell
 	char* cell;
 }Cell;
 
-
+Autor init_Autor();
 
 void addTitulo(Report*,char*);
 void addSTitulo(Report*, char*);
@@ -78,5 +78,4 @@ void addCelula(Row,char*,char);
 void addIndice(Report*,int,char*);
 void addIndList(Report*);
 void addIndFecho(Report*);
-Autor init_Autor();
 void addData(Report*);

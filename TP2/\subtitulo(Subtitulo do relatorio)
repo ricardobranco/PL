@@ -1,0 +1,85 @@
+\subtitulo(Subtitulo do relatorio)
+\autor(Ricardo Branco,\nident(61075),\mail(a61075@alunos.uminho.pt),\url(www.github.com/ricardobranco),\afl(Engenharia Informática))
+\autor(Ricardo Branco,)
+
+
+\data()
+\instituiçao(Universidade do Minho)
+\resumo(){
+	Um Simples resumo deste exemplo
+}
+
+\indice()
+\indice(tabelas)
+\indice(figuras)
+
+
+\s1(Introdução)
+Introdução deste exemplo
+
+\s1(Secçao lvl1){{
+\s2(Secçao lvl2)
+\s3(Secçao lvl3)
+\s4(Secçao lvl4)
+\s5(Secção lvl5)
+\s6(Secção lvl6)
+Um simples texto escrito em normal quando de repente já está a \n(negrito) e de repente aparece a \i(italico) e por vezes \i(\n(italico e negrito)).\nl
+Agora estamos numa nova linha e queremos ter uma imagem
+\imagem(){
+	\escala(6)
+	\nome(imagem.png)
+	\leg(Legenda nº1 com uma escala = 6)
+}
+
+\imagem(){
+	\nome(imagem2.png)
+	\leg(legenda nº2 com escala default)
+	\escala(3)
+	\nome(imagem3.png)	
+}
+
+ou entao uma tabela
+\tabela(){
+	\l(){
+		\c(centro){
+		celula nº1
+		}
+		\c(esquerda){
+		celula nº2
+		}
+		\c(direira){
+		celula nº3
+		}
+	}
+	\l(){
+		\c(centro,2){
+		celula nº4
+		}
+	}
+	\leg(legenda da tabela))		
+}
+
+por vezes o que queremos é codigo(texto nao formatado)
+\codigo(){
+	int main()\{
+	printf("%s",REPORT 2007);
+	return 0;
+	\}
+}
+
+ou entao uma lista 
+
+\lo(){
+	\item(item 1)
+	\item(item 2)
+	\li(){
+		\item(item 3)
+		\item(item 4)
+	}
+}
+
+
+
+
+
+

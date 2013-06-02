@@ -110,6 +110,8 @@ int main()
 	//Inicializações
 
 	report.indice = 0;
+	report.indice_fig = 0;
+	report.indice_tab = 0;
 	report.html=init(sizeof(char*),NULL);
 	report.latex=init(sizeof(char*),NULL);
 	report.seccoes=init(sizeof(char*),NULL);
