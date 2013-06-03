@@ -1,5 +1,6 @@
 %{
 #include "y.tab.h"
+#include <stdlib.h>
 
 
 %}
@@ -42,13 +43,18 @@ btext ([^\}\\]|(\\\}))+
 \\indice\(tabelas\) {return BLOT;}
 \\codigo\(\)\{	{BEGIN BLOCOD; return BCODE;}
 \\[beiu]+\( 	{ return BBEIU;}
+\\body\(		{return BBODY;}
 \\ref\(			{return BREF;}
-\\xref( 		{return BXREF;}
+\\xref\( 		{return BXREF;}
 \\citeref\(		{return BCiteR;}
+\\chapter\(		{return BCHAP;}
+\\paragraph\(	{return BParag;}
+	
 \\fig
 
 \\s[1-6]\(		{yylval.vali = atoi(yytext[2]);
-				return SECTION;}
+				return BSEC;}
+
 
 
 <BLOCOTEXTO>\\p\(\)		{return BREAK;}

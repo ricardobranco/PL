@@ -49,20 +49,35 @@
      ENDBLOCK = 265,
      BTEXT = 266,
      BREAK = 267,
-     BTITLE = 268,
-     BSTITLE = 269,
-     BAUTHOR = 270,
-     BEMAIL = 271,
-     BURL = 272,
-     BAFFIL = 273,
-     BABS = 274,
-     BDATE = 275,
-     BINST = 276,
-     BKEY = 277,
-     BAKNOW = 278,
-     BLOF = 279,
-     BLOT = 280,
-     BTOC = 281
+     BCODE = 268,
+     CodeB = 269,
+     BCiteR = 270,
+     BIterm = 271,
+     BBEIU = 272,
+     BXREF = 273,
+     BFoteN = 274,
+     BAcronym = 275,
+     BLineCode = 276,
+     BTITLE = 277,
+     BSTITLE = 278,
+     BAUTHOR = 279,
+     BEMAIL = 280,
+     BURL = 281,
+     BAFFIL = 282,
+     BABS = 283,
+     BDATE = 284,
+     BINST = 285,
+     BKEY = 286,
+     BAKNOW = 287,
+     BLOF = 288,
+     BLOT = 289,
+     BTOC = 290,
+     BBODY = 291,
+     BCHAP = 292,
+     BLIST = 293,
+     BSEC = 294,
+     BParag = 295,
+     BREF = 296
    };
 #endif
 /* Tokens.  */
@@ -76,32 +91,48 @@
 #define ENDBLOCK 265
 #define BTEXT 266
 #define BREAK 267
-#define BTITLE 268
-#define BSTITLE 269
-#define BAUTHOR 270
-#define BEMAIL 271
-#define BURL 272
-#define BAFFIL 273
-#define BABS 274
-#define BDATE 275
-#define BINST 276
-#define BKEY 277
-#define BAKNOW 278
-#define BLOF 279
-#define BLOT 280
-#define BTOC 281
+#define BCODE 268
+#define CodeB 269
+#define BCiteR 270
+#define BIterm 271
+#define BBEIU 272
+#define BXREF 273
+#define BFoteN 274
+#define BAcronym 275
+#define BLineCode 276
+#define BTITLE 277
+#define BSTITLE 278
+#define BAUTHOR 279
+#define BEMAIL 280
+#define BURL 281
+#define BAFFIL 282
+#define BABS 283
+#define BDATE 284
+#define BINST 285
+#define BKEY 286
+#define BAKNOW 287
+#define BLOF 288
+#define BLOT 289
+#define BTOC 290
+#define BBODY 291
+#define BCHAP 292
+#define BLIST 293
+#define BSEC 294
+#define BParag 295
+#define BREF 296
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 10 "yacc.y"
+#line 15 "yacc.y"
 {
-	char* vals;
+	char* valS;
+	int vali;
 }
 /* Line 1529 of yacc.c.  */
-#line 105 "y.tab.h"
+#line 136 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
