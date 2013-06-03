@@ -42,6 +42,7 @@ btext ([^\}\\]|(\\\}))+
 \\indice\(figuras\) {return BLOF;}
 \\indice\(tabelas\) {return BLOT;}
 \\codigo\(\)\{	{BEGIN BLOCOD; return BCODE;}
+
 \\[beiu]+\( 	{ return BBEIU;}
 \\body\(		{return BBODY;}
 \\ref\(			{return BREF;}
@@ -49,7 +50,12 @@ btext ([^\}\\]|(\\\}))+
 \\citeref\(		{return BCiteR;}
 \\chapter\(		{return BCHAP;}
 \\paragraph\(	{return BParag;}
-	
+\\acronym\(		{return BAcronym;}
+\\iterm\(		{return BIterm;}
+\\footnote\(	{return BFoteN;}
+
+
+
 \\fig
 
 \\s[1-6]\(		{yylval.vali = atoi(yytext[2]);

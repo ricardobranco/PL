@@ -96,27 +96,25 @@ Keys : TEXT SEP Keys
 	
 //----------------------------
 
-
-Body : BBODY Chapterlist ENDARG ;
-
-//Chapterlist : 	Chapter Chapterlist
-//			|	Chapter
-//			;
+ 
+Body : Bbody Chapterlist ENDARG ;
 
 
-Chapterlist: TEXT;
+Chapterlist : 	Chapter Chapterlist
+			|	Chapter
+			;
 
-			/*
+Chapter: BCHAP;
+			
 
+/*
 Chapter :	 C_Title	ElemList  ;
 
 
 C_Title: BCHAP 	TEXT   ENDARG;
 
 
-
 SECTION	:	S_Title  ElemList ;
-
 
 
 S_Title: BSEC  TEXT  ENDARG;
@@ -127,13 +125,11 @@ ElemList	: Elem ElemList
 			;
 
 
-
-/*
 Elem 	: Paragraph 	
 		| CodeBlock  	
 		| SECTION		
-		|
 		;
+		// pode ter um vazio
 		//	| Float 		
 	//	| List		
 		//	| Summary 	
@@ -146,14 +142,13 @@ Paragraph:	BParag	ParaContend ENDARG;
 
 ParaContend	: TEXT_Virg ParaContend
 			| FreeElem	ParaContend
-			|
 			;
+			// pode ter um vazio
 
 TEXT_Virg 	: TEXT SEP TEXT_Virg
 			| TEXT
-			|
 			; 
-
+			// pode ter um vazio
 
 FreeElem	: FootNote
 			| Ref
@@ -185,9 +180,9 @@ InlineCode: BLineCode TEXT ENDARG;
 
 Acronym	: BAcronym TEXT ENDARG;
 
-
-
 */
+
+
 
 
 
