@@ -7,7 +7,7 @@
 
 %x BLOCOTEXTO BLOCOD BEG
 text ([^\n\\,)]|(\\[\)}]))+
-text_v text ([^\n\\)]|(\\[\)}]))+
+text_v ([^\n\\)]|(\\[\)}]))+
 nid [a-z]{0,2}[0-9]+
 email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
 url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
