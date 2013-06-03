@@ -11,7 +11,7 @@ Image imagem;
 
 %token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE CodeB BCiteR BIterm BBEIU BXREF BFoteN BAcronym BLineCode BEGI
 %token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC BBODY BCHAP BLIST BSEC BParag BREF TEXT_V
-%token BSUMMARY BBOLD BUnderLine BItalic Path BFig BImg BCAP
+%token BSUMMARY BBOLD BUnderLine BItalic Path BFig BImg BCAP BENUM BItemize BItem BLinha DIM BCel POS C_Cel BTAB
 %start Report
 
 %union{
@@ -78,7 +78,7 @@ Keywords : BKEY Keys ENDARG
 		 |
 		 ;
 
-Keys : TEXT SEP Keys
+Keys : Keys SEP TEXT  
 	 | TEXT 
 	 ;
 
@@ -110,16 +110,10 @@ Chapter :	 C_Title BEGI ElemList  ENDARG;
 C_Title: BCHAP 	TEXT   ENDARG;
 
 
-<<<<<<< HEAD
-SECTION	: S_Title  BEGI ElemList ENDBLOCK;
+Section	: S_Title  BEGI ElemList ENDBLOCK;
 
 S_Title: BSEC  TEXT  ENDARG;
-=======
-Section	: BSEC  TEXT  ENDARG ElemList ;
->>>>>>> 424a94137393753cbb1fdbb78dd342280dde51ac
 
-/*S_Title: BSEC  TEXT  ENDARG;
-*/
 
 ElemList	:  ElemList Elem
 			|  Elem
@@ -128,15 +122,10 @@ ElemList	:  ElemList Elem
 
 Elem 	: CodeBlock 
 		| Paragraph
-		| Section	ENDARG
+		| Section	
 		| Summary 
-<<<<<<< HEAD
 		| Float 		
-	//	| List		
-=======
-	//	| Float 		
-	//	| List
->>>>>>> 424a94137393753cbb1fdbb78dd342280dde51ac
+		| List
 		;	
 
 CodeBlock: BCODE CodeB ENDBLOCK;
@@ -157,18 +146,13 @@ FreeElem	: FootNote
 			| Xref
 			| CitRef
 			| Iterm
-<<<<<<< HEAD
 			| Bold
 			| Italic
 			| Underline
-=======
-			//| BEIU
->>>>>>> 424a94137393753cbb1fdbb78dd342280dde51ac
 			| InlineCode
 			| Acronym
 			;
 
-<<<<<<< HEAD
 Bold: BBOLD BCont ENDARG
 
 BCont	: BCont TEXT
@@ -179,27 +163,20 @@ BCont	: BCont TEXT
 
 Italic: BItalic ICont ENDARG
 
-ICont	: BCont TEXT
-		| BCont Bold
-		| BCont Underline
+ICont	: ICont TEXT
+		| ICont Bold
+		| ICont Underline
 		|
 		;
 
 Underline: BUnderLine UCont ENDARG
 
-UCont	: BCont TEXT
-		| BCont Bold
-		| BCont Italic
+UCont	: UCont TEXT
+		| UCont Bold
+		| UCont Italic
 		|
-=======
-//BEIU	: BBEIU OPT_BEIU ENDARG;
-
-/*OPT_BEIU: BEIU TEXT_V
-		| TEXT_V BEIU
-		| TEXT_V
->>>>>>> 424a94137393753cbb1fdbb78dd342280dde51ac
 		;
-*/
+
 
 //Confirmar se só leva TEXT_V ou é uma String especial
 
@@ -225,7 +202,7 @@ Acronym	: BAcronym BTEXT ENDARG;
 
 
 Float	: Figure
-	//	| TABLE
+		| TABELA
 		;
 
 
@@ -235,14 +212,65 @@ Image 	: BImg	Path  ENDARG;
 
 Caption	: BCAP TEXT ENDARG;
 
+//---------------- Listas --------------------------
+
+List: Enumerate
+	| Itemize
+	;
+
+Enumerate	: BENUM  C_ENUM   ENDARG
+
+C_ENUM	: C_ENUM Item
+		| C_ENUM Itemize
+		|
+		;
+
+
+Itemize	: BItemize C_Item ENDARG;
+
+C_Item	: C_Item Item
+		| C_Item Enumerate
+		|
+		;
+
+Item: BItem ParaContend ENDARG;
+
+
+//----------------------- TABELAS --------------------------------
+
+
+
+TABELA 	: BTAB  Caption  C_Tabela ENDARG;
+
+
+C_Tabela: C_Tabela Linha
+		| Linha
+		;
+
+Linha	: BLinha   Celulas  ENDBLOCK;
+
+
+Celulas	:  Celulas  Cel
+		| Cel
+		;
+
+Cel : BCel  OPT_Cel  ENDARG  '{'   ParaContend   '}' ;
+
+
+OPT_Cel :  POS SEP OPT_Cel_um
+		| OPT_Cel_um;
+
+
+OPT_Cel_um	: DIM
+			|
+			;
 
 
 
 
 
 
-
-
+//-----------------------------------------------------------------
 %%
 
 

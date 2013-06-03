@@ -87,7 +87,16 @@
      Path = 303,
      BFig = 304,
      BImg = 305,
-     BCAP = 306
+     BCAP = 306,
+     BENUM = 307,
+     BItemize = 308,
+     BItem = 309,
+     BLinha = 310,
+     DIM = 311,
+     BCel = 312,
+     POS = 313,
+     C_Cel = 314,
+     BTAB = 315
    };
 #endif
 /* Tokens.  */
@@ -140,6 +149,15 @@
 #define BFig 304
 #define BImg 305
 #define BCAP 306
+#define BENUM 307
+#define BItemize 308
+#define BItem 309
+#define BLinha 310
+#define DIM 311
+#define BCel 312
+#define POS 313
+#define C_Cel 314
+#define BTAB 315
 
 
 
@@ -152,7 +170,7 @@ typedef union YYSTYPE
 	int vali;
 }
 /* Line 1529 of yacc.c.  */
-#line 156 "y.tab.h"
+#line 174 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
