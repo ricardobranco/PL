@@ -25,10 +25,10 @@ Report: FrontMatter '$' {return 0;};
 
 FrontMatter : Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot ;
 
-Title : BTITLE TEXT ENDARG  ;//{addTitulo(&report, yylval.valS);};
+Title : BTITLE TEXT ENDARG  {addTitulo(&report, yylval.valS);};
 
-SubTitle : BSTITLE TEXT ENDARG //{addSTitulo(&report, yylval.valS);}
-		 | //{report.stitulo = NULL;}
+SubTitle : BSTITLE TEXT ENDARG {addSTitulo(&report, yylval.valS);} ;
+		 | 
 		 ;
 Authors : Author Authors 
 		| 
