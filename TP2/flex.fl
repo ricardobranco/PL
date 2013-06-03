@@ -73,8 +73,8 @@ img [a-zA-Z0-9_]+\.(jpg|jpeg|png)
 <TEXT_VI>{text_v}	{return TEXT_V;}
 <BEG>\{			{BEGIN 0; return BEGI;}
 <BLOCOTEXTO>\\p\(\)		{return BREAK;}
-<BLOCOTEXTO>{btext} 	{printf("BLOCO:%s|\n",yytext);return BTEXT;}
-<BLOCOD>{btext} 	{printf("BLOCO:%s|\n",yytext);return CodeB;}
+<BLOCOTEXTO>{btext} 	{return BTEXT;}
+<BLOCOD>{btext} 		{return CodeB;}
 <BLOCOTEXTO,BLOCOD>\}{btext}	{printf("FECHOU\n"); BEGIN 0;return ENDBLOCK;}		
 
 %%

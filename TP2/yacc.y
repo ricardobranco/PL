@@ -100,7 +100,7 @@ Keys : TEXT SEP Keys
 Body : BBODY Chapterlist ENDARG ;
 
 Chapterlist : 	Chapterlist Chapter 
-			| 	Chapterlist SECTION
+			| 	Chapterlist Section
 			|	
 			;
 
@@ -110,10 +110,16 @@ Chapter :	 C_Title BEGI ElemList  ENDARG;
 C_Title: BCHAP 	TEXT   ENDARG;
 
 
+<<<<<<< HEAD
 SECTION	: S_Title  BEGI ElemList ENDBLOCK;
 
 S_Title: BSEC  TEXT  ENDARG;
+=======
+Section	: BSEC  TEXT  ENDARG ElemList ;
+>>>>>>> 424a94137393753cbb1fdbb78dd342280dde51ac
 
+/*S_Title: BSEC  TEXT  ENDARG;
+*/
 
 ElemList	:  ElemList Elem
 			|  Elem
@@ -122,10 +128,15 @@ ElemList	:  ElemList Elem
 
 Elem 	: CodeBlock 
 		| Paragraph
-		| SECTION	
+		| Section	ENDARG
 		| Summary 
+<<<<<<< HEAD
 		| Float 		
 	//	| List		
+=======
+	//	| Float 		
+	//	| List
+>>>>>>> 424a94137393753cbb1fdbb78dd342280dde51ac
 		;	
 
 CodeBlock: BCODE CodeB ENDBLOCK;
@@ -146,13 +157,18 @@ FreeElem	: FootNote
 			| Xref
 			| CitRef
 			| Iterm
+<<<<<<< HEAD
 			| Bold
 			| Italic
 			| Underline
+=======
+			//| BEIU
+>>>>>>> 424a94137393753cbb1fdbb78dd342280dde51ac
 			| InlineCode
 			| Acronym
 			;
 
+<<<<<<< HEAD
 Bold: BBOLD BCont ENDARG
 
 BCont	: BCont TEXT
@@ -175,26 +191,33 @@ UCont	: BCont TEXT
 		| BCont Bold
 		| BCont Italic
 		|
-		;
+=======
+//BEIU	: BBEIU OPT_BEIU ENDARG;
 
+/*OPT_BEIU: BEIU TEXT_V
+		| TEXT_V BEIU
+		| TEXT_V
+>>>>>>> 424a94137393753cbb1fdbb78dd342280dde51ac
+		;
+*/
 
 //Confirmar se só leva TEXT_V ou é uma String especial
 
-Summary: BSUMMARY TEXT_V ENDARG;
+Summary: BSUMMARY BTEXT ENDARG;
 
-Ref 	: BREF TEXT ENDARG;
+Ref 	: BREF BTEXT ENDARG;
 
-Xref	: BXREF TEXT ENDARG;
+Xref	: BXREF BTEXT ENDARG;
 
-CitRef	: BCiteR TEXT ENDARG;
+CitRef	: BCiteR BTEXT ENDARG;
 
-Iterm	: BIterm TEXT ENDARG;
+Iterm	: BIterm BTEXT ENDARG;
 
-FootNote: BFoteN TEXT ENDARG;
+FootNote: BFoteN BTEXT ENDARG;
 
-InlineCode: BLineCode TEXT ENDARG;
+InlineCode: BLineCode BTEXT ENDARG;
 
-Acronym	: BAcronym TEXT ENDARG;
+Acronym	: BAcronym BTEXT ENDARG;
 
 
 

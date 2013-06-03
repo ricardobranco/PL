@@ -1,0 +1,25 @@
+\documentclass[10pt]{article}
+\usepackage{graphicx, url,hyperref,verbatim}
+\usepackage[utf8]{inputenc}
+\usepackage[portuges]{babel}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0ex}
+\setcounter{secnumdepth}{6}
+\setcounter{tocdepth}{6}
+\makeatletter
+\newcounter{subsubparagraph}[subparagraph]
+\renewcommand\thesubsubparagraph{%%
+\thesubparagraph.\@arabic\c@subsubparagraph}
+\newcommand\subsubparagraph{%%
+\@startsection{subsubparagraph}    %% counter
+{6} %% level
+{\parindent}                     %% indent
+{3.25ex \@plus 1ex \@minus .2ex} %% beforeskip
+{-1em}                           %% afterskip
+{\normalfont\normalsize\bfseries}}
+\newcommand\l@subsubparagraph{\@dottedtocline{6}{10em}{5em}}
+\newcommand{\subsubparagraphmark}[1]{}
+\makeatother
+\begin{document}
+\maketitle
+\end{document}
