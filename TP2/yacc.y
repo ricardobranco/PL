@@ -65,7 +65,7 @@ ParaList : Paragraph BREAK ParaList;
 		 | Paragraph ;
 		 ;
 
-Paragraph : BTEXT ;
+Paragraph : BTEXT ; // ------------- FALTA CENAS -> TERMINA ESTE PORQUE JÁ DEFENI O OUTRO EM BAIXO --------------------------
 
 Date : BDATE ;
 
