@@ -1,16 +1,5 @@
 \titulo(Titulo do relatorio)
-\subtitulo(Subtitulo do relatorio)
-\autor(Ricardo Branco,61075,a61075@alunos.uminho.pt,www.uminho.pt,www.uminho.pt,Engenharia Informática)
+\stitulo(Subtitulo do relatorio)
+\autor(Ricardo Branco,a61075,a61075@alunos.uminho.pt)
+\autor(Helder Gonçalves,a61084,a61084@alunos.uminho.pt)
 \data()
-\inst(Universidade do Minho)
-\resumo(){
-	Um Simples resumo deste exemplo que tem um paragrafo
-	\p() \
-	pelo meio
-}
-
-\agrad(){Quero agradecer a minha mãe.}
-
-\indice()
-\indice(figuras)
-\indice(tabelas)

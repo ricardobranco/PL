@@ -49,7 +49,15 @@
      BAUTHOR = 265,
      BURL = 266,
      BAFFIL = 267,
-     BEMAIL = 268
+     BEMAIL = 268,
+     BDATE = 269,
+     BINST = 270,
+     BKEY = 271,
+     BABS = 272,
+     BAKNOW = 273,
+     BINDICE = 274,
+     FIGURE = 275,
+     TABLE = 276
    };
 #endif
 /* Tokens.  */
@@ -64,19 +72,27 @@
 #define BURL 266
 #define BAFFIL 267
 #define BEMAIL 268
+#define BDATE 269
+#define BINST 270
+#define BKEY 271
+#define BABS 272
+#define BAKNOW 273
+#define BINDICE 274
+#define FIGURE 275
+#define TABLE 276
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 12 "yacc.y"
+#line 13 "yacc.y"
 {
 	char* valS;
 	int valI;
 }
 /* Line 1529 of yacc.c.  */
-#line 80 "y.tab.h"
+#line 96 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
