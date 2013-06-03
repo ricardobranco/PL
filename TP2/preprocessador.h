@@ -63,7 +63,7 @@ typedef struct sIndiceCell
 	char* label;
 	char* texto;
 
-}IndiceCell
+}IndiceCell;
 
 
 //INICIALIZAÇÕES
@@ -75,7 +75,7 @@ Image init_Image();
 IndiceCell init_IndiceCell();
 Image init_Image();
 Keywords init_Keywords();
-
+Report init_Report();
 //FrontMatter
 void addTitulo(Report*,char*);
 void addSTitulo(Report*, char*);

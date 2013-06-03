@@ -64,6 +64,12 @@ IndiceCell init_IndiceCell(){
 
 }
 
+
+Keywords init_Keywords(){
+	Keywords keywords;
+	keywords.keywords = init(sizeof(char*),NULL);
+}
+
 //FrontMatter
 
 

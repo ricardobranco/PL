@@ -164,7 +164,8 @@
 
 Report report;
 Autor autor;
-
+Image imagem;
+ 
 
 
 /* Enabling traces.  */
@@ -187,13 +188,13 @@ Autor autor;
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 15 "yacc.y"
+#line 16 "yacc.y"
 {
 	char* valS;
 	int vali;
 }
 /* Line 193 of yacc.c.  */
-#line 197 "y.tab.c"
+#line 198 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -206,7 +207,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 210 "y.tab.c"
+#line 211 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -511,12 +512,12 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    24,    24,    26,    28,    30,    31,    33,    34,    37,
-      40,    43,    46,    47,    48,    49,    50,    53,    55,    57,
-      59,    61,    63,    65,    66,    69,    71,    73,    74,    77,
-      78,    81,    82,    85,    86,    89,    90,    93,    94,   100,
-     102,   103,   104,   107,   110,   114,   117,   120,   121,   126,
-     128,   134
+       0,    25,    25,    27,    29,    31,    32,    34,    35,    38,
+      41,    44,    47,    48,    49,    50,    51,    54,    56,    58,
+      60,    62,    64,    66,    67,    70,    72,    74,    75,    78,
+      79,    82,    83,    86,    87,    90,    91,    94,    95,   101,
+     103,   104,   105,   108,   111,   115,   118,   121,   122,   127,
+     129,   135
 };
 #endif
 
@@ -1482,13 +1483,79 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 24 "yacc.y"
+#line 25 "yacc.y"
     {return 0;}
+    break;
+
+  case 4:
+#line 29 "yacc.y"
+    {addTitulo(&report, yylval.valS);}
+    break;
+
+  case 5:
+#line 31 "yacc.y"
+    {addSTitulo(&report, yylval.valS);}
+    break;
+
+  case 9:
+#line 38 "yacc.y"
+    {autor.nome = strdup((yyvsp[(2) - (4)].valS));
+										 insertHead(report.autores,&autor);}
+    break;
+
+  case 10:
+#line 41 "yacc.y"
+    {autor = init_Autor();}
+    break;
+
+  case 11:
+#line 44 "yacc.y"
+    {(yyval.valS)=(yyvsp[(1) - (1)].valS);}
+    break;
+
+  case 12:
+#line 47 "yacc.y"
+    {insertHead(autor.nident,&((yyvsp[(2) - (3)].valS)));}
+    break;
+
+  case 13:
+#line 48 "yacc.y"
+    {insertHead(autor.url,&((yyvsp[(2) - (3)].valS)));}
+    break;
+
+  case 14:
+#line 49 "yacc.y"
+    {insertHead(autor.email,&((yyvsp[(2) - (3)].valS)));}
+    break;
+
+  case 15:
+#line 50 "yacc.y"
+    {insertHead(autor.affil,&((yyvsp[(2) - (3)].valS)));}
+    break;
+
+  case 17:
+#line 54 "yacc.y"
+    {(yyval.valS)=(yyvsp[(1) - (1)].valS);}
+    break;
+
+  case 18:
+#line 56 "yacc.y"
+    {(yyval.valS)=(yyvsp[(1) - (1)].valS);}
+    break;
+
+  case 19:
+#line 58 "yacc.y"
+    {(yyval.valS)=(yyvsp[(1) - (1)].valS);}
+    break;
+
+  case 20:
+#line 60 "yacc.y"
+    {(yyval.valS)=(yyvsp[(1) - (1)].valS);}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1492 "y.tab.c"
+#line 1559 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1702,7 +1769,7 @@ yyreturn:
 }
 
 
-#line 200 "yacc.y"
+#line 201 "yacc.y"
 
 
 
@@ -1715,17 +1782,9 @@ int main()
 {
 
 	//Inicializações
-/*
-	report.indice = 0;
-	report.indice_fig = 0;
-	report.indice_tab = 0;
-	report.html=init(sizeof(char*),NULL);
-	report.latex=init(sizeof(char*),NULL);
-	report.seccoes=init(sizeof(char*),NULL);
-	report.autores=init(sizeof(Autor),NULL);
+	report = init_Report();
 
-
-  	int yyres = yyparse();
+  	/*int yyres = yyparse();
   	printf("YYRES: %d\n",yyres);
   	geraHTML(&report,NULL);
   	geraLATEX(&report,NULL);
