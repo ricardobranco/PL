@@ -79,7 +79,8 @@
      BSEC = 295,
      BParag = 296,
      BREF = 297,
-     TEXT_V = 298
+     TEXT_V = 298,
+     BSUMMARY = 299
    };
 #endif
 /* Tokens.  */
@@ -124,19 +125,20 @@
 #define BParag 296
 #define BREF 297
 #define TEXT_V 298
+#define BSUMMARY 299
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 16 "yacc.y"
+#line 17 "yacc.y"
 {
 	char* valS;
 	int vali;
 }
 /* Line 1529 of yacc.c.  */
-#line 140 "y.tab.h"
+#line 142 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

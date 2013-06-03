@@ -11,6 +11,7 @@ Image imagem;
 
 %token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE CodeB BCiteR BIterm BBEIU BXREF BFoteN BAcronym BLineCode BEGI
 %token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC BBODY BCHAP BLIST BSEC BParag BREF TEXT_V
+%token BSUMMARY
 %start Report
 
 %union{
@@ -111,9 +112,7 @@ Chapter :	 C_Title BEGI ElemList  ENDARG;
 C_Title: BCHAP 	TEXT   ENDARG;
 
 
-
-SECTION	:	 S_Title BEGI ElemList ENDARG 
-		;
+SECTION	: S_Title  BEGI ElemList ENDARG;
 
 S_Title: BSEC  TEXT  ENDARG;
 
@@ -126,13 +125,12 @@ ElemList	:  ElemList Elem
 Elem 	: CodeBlock 
 		| Paragraph
 		| SECTION	
+		| Summary 
 	//	| Float 		
 	//	| List		
-	//	| Summary 
 		;	
 
 CodeBlock: BCODE CodeB ENDBLOCK;
-
 
 
 Paragraph:	BParag	ParaContend ENDARG;
@@ -142,7 +140,6 @@ ParaContend	: ParaContend TEXT_V
 			| ParaContend FreeElem	
 			|
 			;
-			// pode ter um vazio
 
 
 
@@ -154,7 +151,6 @@ FreeElem	: FootNote
 			| BEIU
 			| InlineCode
 			| Acronym
-			
 			;
 
 BEIU	: BBEIU OPT_BEIU ENDARG;
@@ -165,7 +161,10 @@ OPT_BEIU: BEIU TEXT_V
 		;
 
 
-//Confirmar se só leva TEXT ou é uma String especial
+//Confirmar se só leva TEXT_V ou é uma String especial
+
+Summary: BSUMMARY TEXT_V ENDARG;
+
 Ref 	: BREF TEXT ENDARG;
 
 Xref	: BXREF TEXT ENDARG;
