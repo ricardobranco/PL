@@ -29,25 +29,34 @@ STitle: BSTITLE '(' arg ')' ;
 Authores : Authores Author 
 		 | Author
 		 ;
-Author : BAUTHOR '(' Nome Nident Email Url Affiliation ')' ;
-
-
+Author : BAUTHOR '(' Nome OPT_Author ')';
 
 Nome : arg ;
 
-Nident : sep id
-	   | 
-	   ;	
+
+OPT_Author	: Nident OPT_A_UM
+			| OPT_A_UM
+			;
+
+OPT_A_UM	: Email OPT_A_Dois
+			| OPT_A_Dois
+			;
+
+OPT_A_Dois	: Url OPT_A_Tres
+			| OPT_A_Tres
+			;
+
+OPT_A_Tres	: Affiliation
+			|
+			;
+
+Nident : sep id	;	
 	   
-Email : sep BEMAIL '(' email ')' 
-	  |		
-	  ;
-Url : sep BURL '(' url ')' 
-	  |	
-	  ;
-Affiliation : sep BAFFIL '(' arg ')' 
-			   |	
-			   ;	
+Email : sep BEMAIL '(' email ')';
+
+Url : sep BURL '(' url ')';
+
+Affiliation : sep BAFFIL '(' arg ')';
 
 
 %%
