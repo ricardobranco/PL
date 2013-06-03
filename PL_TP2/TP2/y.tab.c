@@ -116,6 +116,11 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "preprocessador.h"
+
+//VARIAVEIS GLOBAIS
+Report report;
+
 
 
 /* Enabling traces.  */
@@ -138,13 +143,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 13 "yacc.y"
+#line 18 "yacc.y"
 {
 	char* valS;
 	int valI;
 }
 /* Line 193 of yacc.c.  */
-#line 148 "y.tab.c"
+#line 153 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -157,7 +162,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 161 "y.tab.c"
+#line 166 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -456,11 +461,11 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    22,    22,    24,    26,    28,    29,    31,    32,    34,
-      36,    39,    40,    43,    44,    47,    48,    51,    52,    55,
-      57,    59,    61,    63,    65,    66,    69,    70,    73,    74,
-      77,    79,    81,    82,    85,    87,    88,    90,    91,    93,
-      94,    99
+       0,    27,    27,    29,    31,    33,    34,    36,    37,    39,
+      41,    44,    45,    48,    49,    52,    53,    56,    57,    60,
+      62,    64,    66,    68,    70,    71,    74,    75,    78,    79,
+      82,    84,    86,    87,    90,    92,    93,    95,    96,    98,
+      99,   105
 };
 #endif
 
@@ -1417,13 +1422,18 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 22 "yacc.y"
+#line 27 "yacc.y"
     {return 0;}
+    break;
+
+  case 4:
+#line 31 "yacc.y"
+    {}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1427 "y.tab.c"
+#line 1437 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1637,7 +1647,7 @@ yyreturn:
 }
 
 
-#line 104 "yacc.y"
+#line 110 "yacc.y"
 
 
 

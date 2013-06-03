@@ -1,6 +1,11 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include "preprocessador.h"
+
+//VARIAVEIS GLOBAIS
+Report report;
+
 %}
 
 
@@ -8,7 +13,7 @@
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
 %token FIGURE TABLE
 
-
+%type<valS> arg id email url sep
 
 %union{
 	char* valS;
@@ -23,7 +28,7 @@ Report : FrontMatter '$' {return 0;};
 
 FrontMatter : Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice;
 
-Title: BTITLE '(' arg ')' ;
+Title: BTITLE '(' arg ')' {};
 
 STitle: BSTITLE '(' arg ')'
 	  | ;
@@ -93,6 +98,7 @@ Lof : BINDICE '(' FIGURE ')' Lot
 Lot : BINDICE '(' TABLE ')'
 	|
 	;
+
 
 
 //CONCLUIR

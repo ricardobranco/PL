@@ -1,4 +1,4 @@
-OBJS = y.tab.o lex.yy.o linkedlist.o preprocessador.o report.o
+OBJS = y.tab.o lex.yy.o linkedlist.o preprocessador.o 
 CC = gcc
 CFLAGS = 
 LIBS = -ll -ly
