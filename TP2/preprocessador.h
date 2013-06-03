@@ -28,6 +28,10 @@ typedef struct sAutor
 	List* affil;
 }Autor;
 
+typedef struct sKeywords
+{
+	List* keywords;
+}Keywords;
 
 typedef struct sImage
 {
@@ -70,6 +74,7 @@ Table init_Table();
 Image init_Image();
 IndiceCell init_IndiceCell();
 Image init_Image();
+Keywords init_Keywords();
 
 //FrontMatter
 void addTitulo(Report*,char*);

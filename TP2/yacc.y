@@ -2,10 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 #include "report.h"
+#include "preprocessador.h"
 
 Report report;
 Autor autor;
-
+Image imagem;
+ 
 %}
 
 %token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE CodeB BCiteR BIterm BBEIU BXREF BFoteN BAcronym BLineCode BEGI
@@ -34,29 +36,29 @@ Authors : Author Authors
 		| 
 		;
 
-Author : Bauthor Name AuthorOPT ENDARG ;//{autor.nome = strdup($2);
-										//insertHead(report.autores,&autor);} ;
+Author : Bauthor Name AuthorOPT ENDARG 	{autor.nome = strdup($2);
+										 insertHead(report.autores,&autor);} ;
 
-Bauthor : BAUTHOR ;//{autor = init_Autor();};
-
-
-Name : TEXT ;//{$$=$1;};
+Bauthor : BAUTHOR  {autor = init_Autor();};
 
 
-AuthorOPT : SEP Nident AuthorOPT //{insertHead(autor.nident,&($2));}
-		  | SEP Url AuthorOPT //{insertHead(autor.url,&($2));}
-		  | SEP Email AuthorOPT //{insertHead(autor.email,&($2));}
-		  | SEP Affilliation AuthorOPT //{insertHead(autor.affil,&($2));}
+Name : TEXT {$$=$1;};
+
+
+AuthorOPT : SEP Nident AuthorOPT {insertHead(autor.nident,&($2));}
+		  | SEP Url AuthorOPT {insertHead(autor.url,&($2));}
+		  | SEP Email AuthorOPT {insertHead(autor.email,&($2));}
+		  | SEP Affilliation AuthorOPT {insertHead(autor.affil,&($2));}
 		  |
 		  ;
 
-Nident : NID  ;//{$$=$1;};
+Nident : NID  {$$=$1;};
 
-Email : EMAIL ;//{$$=$1;};
+Email : EMAIL {$$=$1;};
 
-Url :  URL  ;//{$$=$1;};
+Url :  URL  {$$=$1;};
 
-Affilliation :  TEXT ;//{$$=$1;};
+Affilliation :  TEXT {$$=$1;};
 
 Abstract : BABS ParaList ENDBLOCK ;
 
