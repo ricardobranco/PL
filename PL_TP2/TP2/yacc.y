@@ -11,7 +11,7 @@ Report report;
 
 %token arg id email url sep
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
-%token FIGURE TABLE
+%token IFIGURE ITABLE
 
 %type<valS> arg id email url sep
 
@@ -92,10 +92,10 @@ Indice : Toc ;
 Toc : BINDICE '(' ')' Lof
 	| Lof
 	;
-Lof : BINDICE '(' FIGURE ')' Lot
+Lof : BINDICE '(' IFIGURE ')' Lot
 	| Lot
 	;
-Lot : BINDICE '(' TABLE ')'
+Lot : BINDICE '(' ITABLE ')'
 	|
 	;
 
