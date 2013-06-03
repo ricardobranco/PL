@@ -1,6 +1,7 @@
 Terminals which are not used
 
    ERROR
+   BTEXT
    BEMAIL
    BURL
    BAFFIL
@@ -47,91 +48,89 @@ Grammar
 
    21 Aknowledgements: BAKNOW ParaList ENDBLOCK
 
-   22 ParaList: Paragraph_ BREAK ParaList
-   23         | Paragraph_
+   22 ParaList: Paragraph BREAK ParaList
+   23         | Paragraph
 
-   24 Paragraph_: BTEXT
+   24 Date: BDATE
 
-   25 Date: BDATE
+   25 Instituition: BINST TEXT ENDARG
+   26             | /* empty */
 
-   26 Instituition: BINST TEXT ENDARG
-   27             | /* empty */
+   27 Keywords: BKEY Keys ENDARG
+   28         | /* empty */
 
-   28 Keywords: BKEY Keys ENDARG
-   29         | /* empty */
+   29 Keys: TEXT SEP Keys
+   30     | TEXT
 
-   30 Keys: TEXT SEP Keys
-   31     | TEXT
+   31 Toc: BTOC
+   32    | /* empty */
 
-   32 Toc: BTOC
-   33    | /* empty */
+   33 Lof: BLOF
+   34    | /* empty */
 
-   34 Lof: BLOF
-   35    | /* empty */
+   35 Lot: BLOT
+   36    | /* empty */
 
-   36 Lot: BLOT
-   37    | /* empty */
+   37 Body: BBODY Chapterlist ENDARG
 
-   38 Body: BBODY Chapterlist ENDARG
+   38 Chapterlist: Chapterlist Chapter
+   39            | Chapterlist SECTION
+   40            | /* empty */
 
-   39 Chapterlist: Chapterlist Chapter
-   40            | Chapterlist SECTION
-   41            | /* empty */
+   41 Chapter: C_Title BEGI ElemList ENDARG
 
-   42 Chapter: C_Title BEGI ElemList ENDARG
+   42 C_Title: BCHAP TEXT ENDARG
 
-   43 C_Title: BCHAP TEXT ENDARG
+   43 SECTION: S_Title BEGI ElemList ENDARG
 
-   44 SECTION: S_Title BEGI ElemList ENDARG
+   44 S_Title: BSEC TEXT ENDARG
 
-   45 S_Title: BSEC TEXT ENDARG
+   45 ElemList: ElemList Elem
+   46         | Elem
 
-   46 ElemList: ElemList Elem
-   47         | Elem
+   47 Elem: CodeBlock
+   48     | Paragraph
+   49     | SECTION
+   50     | Summary
 
-   48 Elem: CodeBlock
-   49     | Paragraph
-   50     | SECTION
-   51     | Summary
+   51 CodeBlock: BCODE CodeB ENDBLOCK
 
-   52 CodeBlock: BCODE CodeB ENDBLOCK
+   52 Paragraph: BParag ParaContend ENDARG
 
-   53 Paragraph: BParag ParaContend ENDARG
+   53 ParaContend: ParaContend TEXT_V
+   54            | ParaContend FreeElem
+   55            | /* empty */
 
-   54 ParaContend: ParaContend TEXT_V
-   55            | ParaContend FreeElem
-   56            | /* empty */
+   56 FreeElem: FootNote
+   57         | Ref
+   58         | Xref
+   59         | CitRef
+   60         | Iterm
+   61         | BEIU
+   62         | InlineCode
+   63         | Acronym
 
-   57 FreeElem: FootNote
-   58         | Ref
-   59         | Xref
-   60         | CitRef
-   61         | Iterm
-   62         | BEIU
-   63         | InlineCode
-   64         | Acronym
+   64 BEIU: BBEIU OPT_BEIU ENDARG
 
-   65 BEIU: BBEIU OPT_BEIU ENDARG
+   65 OPT_BEIU: BEIU TEXT_V
+   66         | TEXT_V BEIU
+   67         | TEXT_V
 
-   66 OPT_BEIU: BEIU TEXT_V
-   67         | TEXT_V BEIU
-   68         | TEXT_V
+   68 Summary: BSUMMARY TEXT_V ENDARG
 
-   69 Summary: BSUMMARY TEXT_V ENDARG
+   69 Ref: BREF TEXT ENDARG
 
-   70 Ref: BREF TEXT ENDARG
+   70 Xref: BXREF TEXT ENDARG
 
-   71 Xref: BXREF TEXT ENDARG
+   71 CitRef: BCiteR TEXT ENDARG
 
-   72 CitRef: BCiteR TEXT ENDARG
+   72 Iterm: BIterm TEXT ENDARG
 
-   73 Iterm: BIterm TEXT ENDARG
+   73 FootNote: BFoteN TEXT ENDARG
 
-   74 FootNote: BFoteN TEXT ENDARG
+   74 InlineCode: BLineCode TEXT ENDARG
 
-   75 InlineCode: BLineCode TEXT ENDARG
-
-   76 Acronym: BAcronym TEXT ENDARG
+   75 Acronym: BAcronym TEXT ENDARG
 
 
 Terminals, with rules where they appear
@@ -139,27 +138,27 @@ Terminals, with rules where they appear
 $end (0) 0
 '$' (36) 1
 error (256)
-TEXT (258) 3 4 10 19 26 30 31 43 45 70 71 72 73 74 75 76
+TEXT (258) 3 4 10 19 25 29 30 42 44 69 70 71 72 73 74 75
 ERROR (259)
-ENDARG (260) 3 4 8 26 28 38 42 43 44 45 53 65 69 70 71 72 73 74 75
-    76
+ENDARG (260) 3 4 8 25 27 37 41 42 43 44 52 64 68 69 70 71 72 73 74
+    75
 NID (261) 16
-SEP (262) 11 12 13 14 30
+SEP (262) 11 12 13 14 29
 EMAIL (263) 17
 URL (264) 18
-ENDBLOCK (265) 20 21 52
-BTEXT (266) 24
+ENDBLOCK (265) 20 21 51
+BTEXT (266)
 BREAK (267) 22
-BCODE (268) 52
-CodeB (269) 52
-BCiteR (270) 72
-BIterm (271) 73
-BBEIU (272) 65
-BXREF (273) 71
-BFoteN (274) 74
-BAcronym (275) 76
-BLineCode (276) 75
-BEGI (277) 42 44
+BCODE (268) 51
+CodeB (269) 51
+BCiteR (270) 71
+BIterm (271) 72
+BBEIU (272) 64
+BXREF (273) 70
+BFoteN (274) 73
+BAcronym (275) 75
+BLineCode (276) 74
+BEGI (277) 41 43
 BTITLE (278) 3
 BSTITLE (279) 4
 BAUTHOR (280) 9
@@ -167,21 +166,21 @@ BEMAIL (281)
 BURL (282)
 BAFFIL (283)
 BABS (284) 20
-BDATE (285) 25
-BINST (286) 26
-BKEY (287) 28
+BDATE (285) 24
+BINST (286) 25
+BKEY (287) 27
 BAKNOW (288) 21
-BLOF (289) 34
-BLOT (290) 36
-BTOC (291) 32
-BBODY (292) 38
-BCHAP (293) 43
+BLOF (289) 33
+BLOT (290) 35
+BTOC (291) 31
+BBODY (292) 37
+BCHAP (293) 42
 BLIST (294)
-BSEC (295) 45
-BParag (296) 53
-BREF (297) 70
-TEXT_V (298) 54 66 67 68 69
-BSUMMARY (299) 69
+BSEC (295) 44
+BParag (296) 52
+BREF (297) 69
+TEXT_V (298) 53 65 66 67 68
+BSUMMARY (299) 68
 
 
 Nonterminals, with rules where they appear
@@ -220,66 +219,64 @@ Aknowledgements (61)
     on left: 21, on right: 2
 ParaList (62)
     on left: 22 23, on right: 20 21 22
-Paragraph_ (63)
-    on left: 24, on right: 22 23
-Date (64)
-    on left: 25, on right: 2
-Instituition (65)
-    on left: 26 27, on right: 2
-Keywords (66)
-    on left: 28 29, on right: 2
-Keys (67)
-    on left: 30 31, on right: 28 30
-Toc (68)
-    on left: 32 33, on right: 2
-Lof (69)
-    on left: 34 35, on right: 2
-Lot (70)
-    on left: 36 37, on right: 2
-Body (71)
-    on left: 38, on right: 1
-Chapterlist (72)
-    on left: 39 40 41, on right: 38 39 40
-Chapter (73)
-    on left: 42, on right: 39
-C_Title (74)
-    on left: 43, on right: 42
-SECTION (75)
-    on left: 44, on right: 40 50
-S_Title (76)
-    on left: 45, on right: 44
-ElemList (77)
-    on left: 46 47, on right: 42 44 46
-Elem (78)
-    on left: 48 49 50 51, on right: 46 47
-CodeBlock (79)
-    on left: 52, on right: 48
-Paragraph (80)
-    on left: 53, on right: 49
-ParaContend (81)
-    on left: 54 55 56, on right: 53 54 55
-FreeElem (82)
-    on left: 57 58 59 60 61 62 63 64, on right: 55
-BEIU (83)
-    on left: 65, on right: 62 66 67
-OPT_BEIU (84)
-    on left: 66 67 68, on right: 65
-Summary (85)
-    on left: 69, on right: 51
-Ref (86)
+Date (63)
+    on left: 24, on right: 2
+Instituition (64)
+    on left: 25 26, on right: 2
+Keywords (65)
+    on left: 27 28, on right: 2
+Keys (66)
+    on left: 29 30, on right: 27 29
+Toc (67)
+    on left: 31 32, on right: 2
+Lof (68)
+    on left: 33 34, on right: 2
+Lot (69)
+    on left: 35 36, on right: 2
+Body (70)
+    on left: 37, on right: 1
+Chapterlist (71)
+    on left: 38 39 40, on right: 37 38 39
+Chapter (72)
+    on left: 41, on right: 38
+C_Title (73)
+    on left: 42, on right: 41
+SECTION (74)
+    on left: 43, on right: 39 49
+S_Title (75)
+    on left: 44, on right: 43
+ElemList (76)
+    on left: 45 46, on right: 41 43 45
+Elem (77)
+    on left: 47 48 49 50, on right: 45 46
+CodeBlock (78)
+    on left: 51, on right: 47
+Paragraph (79)
+    on left: 52, on right: 22 23 48
+ParaContend (80)
+    on left: 53 54 55, on right: 52 53 54
+FreeElem (81)
+    on left: 56 57 58 59 60 61 62 63, on right: 54
+BEIU (82)
+    on left: 64, on right: 61 65 66
+OPT_BEIU (83)
+    on left: 65 66 67, on right: 64
+Summary (84)
+    on left: 68, on right: 50
+Ref (85)
+    on left: 69, on right: 57
+Xref (86)
     on left: 70, on right: 58
-Xref (87)
+CitRef (87)
     on left: 71, on right: 59
-CitRef (88)
+Iterm (88)
     on left: 72, on right: 60
-Iterm (89)
-    on left: 73, on right: 61
-FootNote (90)
-    on left: 74, on right: 57
-InlineCode (91)
+FootNote (89)
+    on left: 73, on right: 56
+InlineCode (90)
+    on left: 74, on right: 62
+Acronym (91)
     on left: 75, on right: 63
-Acronym (92)
-    on left: 76, on right: 64
 
 
 state 0
@@ -343,9 +340,9 @@ state 6
 
 state 7
 
-   38 Body: BBODY . Chapterlist ENDARG
+   37 Body: BBODY . Chapterlist ENDARG
 
-    $default  reduce using rule 41 (Chapterlist)
+    $default  reduce using rule 40 (Chapterlist)
 
     Chapterlist  go to state 12
 
@@ -386,9 +383,9 @@ state 11
 
 state 12
 
-   38 Body: BBODY Chapterlist . ENDARG
-   39 Chapterlist: Chapterlist . Chapter
-   40            | Chapterlist . SECTION
+   37 Body: BBODY Chapterlist . ENDARG
+   38 Chapterlist: Chapterlist . Chapter
+   39            | Chapterlist . SECTION
 
     ENDARG  shift, and go to state 19
     BCHAP   shift, and go to state 20
@@ -454,49 +451,49 @@ state 18
 
 state 19
 
-   38 Body: BBODY Chapterlist ENDARG .
+   37 Body: BBODY Chapterlist ENDARG .
 
-    $default  reduce using rule 38 (Body)
+    $default  reduce using rule 37 (Body)
 
 
 state 20
 
-   43 C_Title: BCHAP . TEXT ENDARG
+   42 C_Title: BCHAP . TEXT ENDARG
 
     TEXT  shift, and go to state 32
 
 
 state 21
 
-   45 S_Title: BSEC . TEXT ENDARG
+   44 S_Title: BSEC . TEXT ENDARG
 
     TEXT  shift, and go to state 33
 
 
 state 22
 
-   39 Chapterlist: Chapterlist Chapter .
+   38 Chapterlist: Chapterlist Chapter .
 
-    $default  reduce using rule 39 (Chapterlist)
+    $default  reduce using rule 38 (Chapterlist)
 
 
 state 23
 
-   42 Chapter: C_Title . BEGI ElemList ENDARG
+   41 Chapter: C_Title . BEGI ElemList ENDARG
 
     BEGI  shift, and go to state 34
 
 
 state 24
 
-   40 Chapterlist: Chapterlist SECTION .
+   39 Chapterlist: Chapterlist SECTION .
 
-    $default  reduce using rule 40 (Chapterlist)
+    $default  reduce using rule 39 (Chapterlist)
 
 
 state 25
 
-   44 SECTION: S_Title . BEGI ElemList ENDARG
+   43 SECTION: S_Title . BEGI ElemList ENDARG
 
     BEGI  shift, and go to state 35
 
@@ -510,9 +507,9 @@ state 26
 
 state 27
 
-   25 Date: BDATE .
+   24 Date: BDATE .
 
-    $default  reduce using rule 25 (Date)
+    $default  reduce using rule 24 (Date)
 
 
 state 28
@@ -521,7 +518,7 @@ state 28
 
     BINST  shift, and go to state 36
 
-    $default  reduce using rule 27 (Instituition)
+    $default  reduce using rule 26 (Instituition)
 
     Instituition  go to state 37
 
@@ -553,21 +550,21 @@ state 31
 
 state 32
 
-   43 C_Title: BCHAP TEXT . ENDARG
+   42 C_Title: BCHAP TEXT . ENDARG
 
     ENDARG  shift, and go to state 40
 
 
 state 33
 
-   45 S_Title: BSEC TEXT . ENDARG
+   44 S_Title: BSEC TEXT . ENDARG
 
     ENDARG  shift, and go to state 41
 
 
 state 34
 
-   42 Chapter: C_Title BEGI . ElemList ENDARG
+   41 Chapter: C_Title BEGI . ElemList ENDARG
 
     BCODE     shift, and go to state 42
     BSEC      shift, and go to state 21
@@ -585,7 +582,7 @@ state 34
 
 state 35
 
-   44 SECTION: S_Title BEGI . ElemList ENDARG
+   43 SECTION: S_Title BEGI . ElemList ENDARG
 
     BCODE     shift, and go to state 42
     BSEC      shift, and go to state 21
@@ -603,7 +600,7 @@ state 35
 
 state 36
 
-   26 Instituition: BINST . TEXT ENDARG
+   25 Instituition: BINST . TEXT ENDARG
 
     TEXT  shift, and go to state 52
 
@@ -614,7 +611,7 @@ state 37
 
     BKEY  shift, and go to state 53
 
-    $default  reduce using rule 29 (Keywords)
+    $default  reduce using rule 28 (Keywords)
 
     Keywords  go to state 54
 
@@ -646,52 +643,52 @@ state 39
 
 state 40
 
-   43 C_Title: BCHAP TEXT ENDARG .
+   42 C_Title: BCHAP TEXT ENDARG .
 
-    $default  reduce using rule 43 (C_Title)
+    $default  reduce using rule 42 (C_Title)
 
 
 state 41
 
-   45 S_Title: BSEC TEXT ENDARG .
+   44 S_Title: BSEC TEXT ENDARG .
 
-    $default  reduce using rule 45 (S_Title)
+    $default  reduce using rule 44 (S_Title)
 
 
 state 42
 
-   52 CodeBlock: BCODE . CodeB ENDBLOCK
+   51 CodeBlock: BCODE . CodeB ENDBLOCK
 
     CodeB  shift, and go to state 64
 
 
 state 43
 
-   53 Paragraph: BParag . ParaContend ENDARG
+   52 Paragraph: BParag . ParaContend ENDARG
 
-    $default  reduce using rule 56 (ParaContend)
+    $default  reduce using rule 55 (ParaContend)
 
     ParaContend  go to state 65
 
 
 state 44
 
-   69 Summary: BSUMMARY . TEXT_V ENDARG
+   68 Summary: BSUMMARY . TEXT_V ENDARG
 
     TEXT_V  shift, and go to state 66
 
 
 state 45
 
-   50 Elem: SECTION .
+   49 Elem: SECTION .
 
-    $default  reduce using rule 50 (Elem)
+    $default  reduce using rule 49 (Elem)
 
 
 state 46
 
-   42 Chapter: C_Title BEGI ElemList . ENDARG
-   46 ElemList: ElemList . Elem
+   41 Chapter: C_Title BEGI ElemList . ENDARG
+   45 ElemList: ElemList . Elem
 
     ENDARG    shift, and go to state 67
     BCODE     shift, and go to state 42
@@ -709,36 +706,36 @@ state 46
 
 state 47
 
-   47 ElemList: Elem .
+   46 ElemList: Elem .
 
-    $default  reduce using rule 47 (ElemList)
+    $default  reduce using rule 46 (ElemList)
 
 
 state 48
 
-   48 Elem: CodeBlock .
+   47 Elem: CodeBlock .
 
-    $default  reduce using rule 48 (Elem)
+    $default  reduce using rule 47 (Elem)
 
 
 state 49
 
-   49 Elem: Paragraph .
+   48 Elem: Paragraph .
 
-    $default  reduce using rule 49 (Elem)
+    $default  reduce using rule 48 (Elem)
 
 
 state 50
 
-   51 Elem: Summary .
+   50 Elem: Summary .
 
-    $default  reduce using rule 51 (Elem)
+    $default  reduce using rule 50 (Elem)
 
 
 state 51
 
-   44 SECTION: S_Title BEGI ElemList . ENDARG
-   46 ElemList: ElemList . Elem
+   43 SECTION: S_Title BEGI ElemList . ENDARG
+   45 ElemList: ElemList . Elem
 
     ENDARG    shift, and go to state 69
     BCODE     shift, and go to state 42
@@ -756,14 +753,14 @@ state 51
 
 state 52
 
-   26 Instituition: BINST TEXT . ENDARG
+   25 Instituition: BINST TEXT . ENDARG
 
     ENDARG  shift, and go to state 70
 
 
 state 53
 
-   28 Keywords: BKEY . Keys ENDARG
+   27 Keywords: BKEY . Keys ENDARG
 
     TEXT  shift, and go to state 71
 
@@ -860,16 +857,16 @@ state 63
 
 state 64
 
-   52 CodeBlock: BCODE CodeB . ENDBLOCK
+   51 CodeBlock: BCODE CodeB . ENDBLOCK
 
     ENDBLOCK  shift, and go to state 79
 
 
 state 65
 
-   53 Paragraph: BParag ParaContend . ENDARG
-   54 ParaContend: ParaContend . TEXT_V
-   55            | ParaContend . FreeElem
+   52 Paragraph: BParag ParaContend . ENDARG
+   53 ParaContend: ParaContend . TEXT_V
+   54            | ParaContend . FreeElem
 
     ENDARG     shift, and go to state 80
     BCiteR     shift, and go to state 81
@@ -895,52 +892,52 @@ state 65
 
 state 66
 
-   69 Summary: BSUMMARY TEXT_V . ENDARG
+   68 Summary: BSUMMARY TEXT_V . ENDARG
 
     ENDARG  shift, and go to state 99
 
 
 state 67
 
-   42 Chapter: C_Title BEGI ElemList ENDARG .
+   41 Chapter: C_Title BEGI ElemList ENDARG .
 
-    $default  reduce using rule 42 (Chapter)
+    $default  reduce using rule 41 (Chapter)
 
 
 state 68
 
-   46 ElemList: ElemList Elem .
+   45 ElemList: ElemList Elem .
 
-    $default  reduce using rule 46 (ElemList)
+    $default  reduce using rule 45 (ElemList)
 
 
 state 69
 
-   44 SECTION: S_Title BEGI ElemList ENDARG .
+   43 SECTION: S_Title BEGI ElemList ENDARG .
 
-    $default  reduce using rule 44 (SECTION)
+    $default  reduce using rule 43 (SECTION)
 
 
 state 70
 
-   26 Instituition: BINST TEXT ENDARG .
+   25 Instituition: BINST TEXT ENDARG .
 
-    $default  reduce using rule 26 (Instituition)
+    $default  reduce using rule 25 (Instituition)
 
 
 state 71
 
-   30 Keys: TEXT . SEP Keys
-   31     | TEXT .
+   29 Keys: TEXT . SEP Keys
+   30     | TEXT .
 
     SEP  shift, and go to state 100
 
-    $default  reduce using rule 31 (Keys)
+    $default  reduce using rule 30 (Keys)
 
 
 state 72
 
-   28 Keywords: BKEY Keys . ENDARG
+   27 Keywords: BKEY Keys . ENDARG
 
     ENDARG  shift, and go to state 101
 
@@ -949,19 +946,19 @@ state 73
 
    20 Abstract: BABS . ParaList ENDBLOCK
 
-    BTEXT  shift, and go to state 102
+    BParag  shift, and go to state 43
 
-    ParaList    go to state 103
-    Paragraph_  go to state 104
+    ParaList   go to state 102
+    Paragraph  go to state 103
 
 
 state 74
 
     2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract . Aknowledgements Toc Lof Lot
 
-    BAKNOW  shift, and go to state 105
+    BAKNOW  shift, and go to state 104
 
-    Aknowledgements  go to state 106
+    Aknowledgements  go to state 105
 
 
 state 75
@@ -994,450 +991,443 @@ state 78
 
 state 79
 
-   52 CodeBlock: BCODE CodeB ENDBLOCK .
+   51 CodeBlock: BCODE CodeB ENDBLOCK .
 
-    $default  reduce using rule 52 (CodeBlock)
+    $default  reduce using rule 51 (CodeBlock)
 
 
 state 80
 
-   53 Paragraph: BParag ParaContend ENDARG .
+   52 Paragraph: BParag ParaContend ENDARG .
 
-    $default  reduce using rule 53 (Paragraph)
+    $default  reduce using rule 52 (Paragraph)
 
 
 state 81
 
-   72 CitRef: BCiteR . TEXT ENDARG
+   71 CitRef: BCiteR . TEXT ENDARG
 
-    TEXT  shift, and go to state 107
+    TEXT  shift, and go to state 106
 
 
 state 82
 
-   73 Iterm: BIterm . TEXT ENDARG
+   72 Iterm: BIterm . TEXT ENDARG
 
-    TEXT  shift, and go to state 108
+    TEXT  shift, and go to state 107
 
 
 state 83
 
-   65 BEIU: BBEIU . OPT_BEIU ENDARG
+   64 BEIU: BBEIU . OPT_BEIU ENDARG
 
     BBEIU   shift, and go to state 83
-    TEXT_V  shift, and go to state 109
+    TEXT_V  shift, and go to state 108
 
-    BEIU      go to state 110
-    OPT_BEIU  go to state 111
+    BEIU      go to state 109
+    OPT_BEIU  go to state 110
 
 
 state 84
 
-   71 Xref: BXREF . TEXT ENDARG
+   70 Xref: BXREF . TEXT ENDARG
 
-    TEXT  shift, and go to state 112
+    TEXT  shift, and go to state 111
 
 
 state 85
 
-   74 FootNote: BFoteN . TEXT ENDARG
+   73 FootNote: BFoteN . TEXT ENDARG
 
-    TEXT  shift, and go to state 113
+    TEXT  shift, and go to state 112
 
 
 state 86
 
-   76 Acronym: BAcronym . TEXT ENDARG
+   75 Acronym: BAcronym . TEXT ENDARG
 
-    TEXT  shift, and go to state 114
+    TEXT  shift, and go to state 113
 
 
 state 87
 
-   75 InlineCode: BLineCode . TEXT ENDARG
+   74 InlineCode: BLineCode . TEXT ENDARG
 
-    TEXT  shift, and go to state 115
+    TEXT  shift, and go to state 114
 
 
 state 88
 
-   70 Ref: BREF . TEXT ENDARG
+   69 Ref: BREF . TEXT ENDARG
 
-    TEXT  shift, and go to state 116
+    TEXT  shift, and go to state 115
 
 
 state 89
 
-   54 ParaContend: ParaContend TEXT_V .
+   53 ParaContend: ParaContend TEXT_V .
 
-    $default  reduce using rule 54 (ParaContend)
+    $default  reduce using rule 53 (ParaContend)
 
 
 state 90
 
-   55 ParaContend: ParaContend FreeElem .
+   54 ParaContend: ParaContend FreeElem .
 
-    $default  reduce using rule 55 (ParaContend)
+    $default  reduce using rule 54 (ParaContend)
 
 
 state 91
 
-   62 FreeElem: BEIU .
-
-    $default  reduce using rule 62 (FreeElem)
-
-
-state 92
-
-   58 FreeElem: Ref .
-
-    $default  reduce using rule 58 (FreeElem)
-
-
-state 93
-
-   59 FreeElem: Xref .
-
-    $default  reduce using rule 59 (FreeElem)
-
-
-state 94
-
-   60 FreeElem: CitRef .
-
-    $default  reduce using rule 60 (FreeElem)
-
-
-state 95
-
-   61 FreeElem: Iterm .
+   61 FreeElem: BEIU .
 
     $default  reduce using rule 61 (FreeElem)
 
 
-state 96
+state 92
 
-   57 FreeElem: FootNote .
+   57 FreeElem: Ref .
 
     $default  reduce using rule 57 (FreeElem)
 
 
+state 93
+
+   58 FreeElem: Xref .
+
+    $default  reduce using rule 58 (FreeElem)
+
+
+state 94
+
+   59 FreeElem: CitRef .
+
+    $default  reduce using rule 59 (FreeElem)
+
+
+state 95
+
+   60 FreeElem: Iterm .
+
+    $default  reduce using rule 60 (FreeElem)
+
+
+state 96
+
+   56 FreeElem: FootNote .
+
+    $default  reduce using rule 56 (FreeElem)
+
+
 state 97
 
-   63 FreeElem: InlineCode .
+   62 FreeElem: InlineCode .
 
-    $default  reduce using rule 63 (FreeElem)
+    $default  reduce using rule 62 (FreeElem)
 
 
 state 98
 
-   64 FreeElem: Acronym .
+   63 FreeElem: Acronym .
 
-    $default  reduce using rule 64 (FreeElem)
+    $default  reduce using rule 63 (FreeElem)
 
 
 state 99
 
-   69 Summary: BSUMMARY TEXT_V ENDARG .
+   68 Summary: BSUMMARY TEXT_V ENDARG .
 
-    $default  reduce using rule 69 (Summary)
+    $default  reduce using rule 68 (Summary)
 
 
 state 100
 
-   30 Keys: TEXT SEP . Keys
+   29 Keys: TEXT SEP . Keys
 
     TEXT  shift, and go to state 71
 
-    Keys  go to state 117
+    Keys  go to state 116
 
 
 state 101
 
-   28 Keywords: BKEY Keys ENDARG .
+   27 Keywords: BKEY Keys ENDARG .
 
-    $default  reduce using rule 28 (Keywords)
+    $default  reduce using rule 27 (Keywords)
 
 
 state 102
 
-   24 Paragraph_: BTEXT .
+   20 Abstract: BABS ParaList . ENDBLOCK
 
-    $default  reduce using rule 24 (Paragraph_)
+    ENDBLOCK  shift, and go to state 117
 
 
 state 103
 
-   20 Abstract: BABS ParaList . ENDBLOCK
+   22 ParaList: Paragraph . BREAK ParaList
+   23         | Paragraph .
 
-    ENDBLOCK  shift, and go to state 118
-
-
-state 104
-
-   22 ParaList: Paragraph_ . BREAK ParaList
-   23         | Paragraph_ .
-
-    BREAK  shift, and go to state 119
+    BREAK  shift, and go to state 118
 
     $default  reduce using rule 23 (ParaList)
 
 
-state 105
+state 104
 
    21 Aknowledgements: BAKNOW . ParaList ENDBLOCK
 
-    BTEXT  shift, and go to state 102
+    BParag  shift, and go to state 43
 
-    ParaList    go to state 120
-    Paragraph_  go to state 104
+    ParaList   go to state 119
+    Paragraph  go to state 103
+
+
+state 105
+
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements . Toc Lof Lot
+
+    BTOC  shift, and go to state 120
+
+    $default  reduce using rule 32 (Toc)
+
+    Toc  go to state 121
 
 
 state 106
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements . Toc Lof Lot
+   71 CitRef: BCiteR TEXT . ENDARG
 
-    BTOC  shift, and go to state 121
-
-    $default  reduce using rule 33 (Toc)
-
-    Toc  go to state 122
+    ENDARG  shift, and go to state 122
 
 
 state 107
 
-   72 CitRef: BCiteR TEXT . ENDARG
+   72 Iterm: BIterm TEXT . ENDARG
 
     ENDARG  shift, and go to state 123
 
 
 state 108
 
-   73 Iterm: BIterm TEXT . ENDARG
+   66 OPT_BEIU: TEXT_V . BEIU
+   67         | TEXT_V .
 
-    ENDARG  shift, and go to state 124
+    BBEIU  shift, and go to state 83
+
+    $default  reduce using rule 67 (OPT_BEIU)
+
+    BEIU  go to state 124
 
 
 state 109
 
-   67 OPT_BEIU: TEXT_V . BEIU
-   68         | TEXT_V .
+   65 OPT_BEIU: BEIU . TEXT_V
 
-    BBEIU  shift, and go to state 83
-
-    $default  reduce using rule 68 (OPT_BEIU)
-
-    BEIU  go to state 125
+    TEXT_V  shift, and go to state 125
 
 
 state 110
 
-   66 OPT_BEIU: BEIU . TEXT_V
+   64 BEIU: BBEIU OPT_BEIU . ENDARG
 
-    TEXT_V  shift, and go to state 126
+    ENDARG  shift, and go to state 126
 
 
 state 111
 
-   65 BEIU: BBEIU OPT_BEIU . ENDARG
+   70 Xref: BXREF TEXT . ENDARG
 
     ENDARG  shift, and go to state 127
 
 
 state 112
 
-   71 Xref: BXREF TEXT . ENDARG
+   73 FootNote: BFoteN TEXT . ENDARG
 
     ENDARG  shift, and go to state 128
 
 
 state 113
 
-   74 FootNote: BFoteN TEXT . ENDARG
+   75 Acronym: BAcronym TEXT . ENDARG
 
     ENDARG  shift, and go to state 129
 
 
 state 114
 
-   76 Acronym: BAcronym TEXT . ENDARG
+   74 InlineCode: BLineCode TEXT . ENDARG
 
     ENDARG  shift, and go to state 130
 
 
 state 115
 
-   75 InlineCode: BLineCode TEXT . ENDARG
+   69 Ref: BREF TEXT . ENDARG
 
     ENDARG  shift, and go to state 131
 
 
 state 116
 
-   70 Ref: BREF TEXT . ENDARG
+   29 Keys: TEXT SEP Keys .
 
-    ENDARG  shift, and go to state 132
+    $default  reduce using rule 29 (Keys)
 
 
 state 117
-
-   30 Keys: TEXT SEP Keys .
-
-    $default  reduce using rule 30 (Keys)
-
-
-state 118
 
    20 Abstract: BABS ParaList ENDBLOCK .
 
     $default  reduce using rule 20 (Abstract)
 
 
+state 118
+
+   22 ParaList: Paragraph BREAK . ParaList
+
+    BParag  shift, and go to state 43
+
+    ParaList   go to state 132
+    Paragraph  go to state 103
+
+
 state 119
 
-   22 ParaList: Paragraph_ BREAK . ParaList
+   21 Aknowledgements: BAKNOW ParaList . ENDBLOCK
 
-    BTEXT  shift, and go to state 102
-
-    ParaList    go to state 133
-    Paragraph_  go to state 104
+    ENDBLOCK  shift, and go to state 133
 
 
 state 120
 
-   21 Aknowledgements: BAKNOW ParaList . ENDBLOCK
+   31 Toc: BTOC .
 
-    ENDBLOCK  shift, and go to state 134
+    $default  reduce using rule 31 (Toc)
 
 
 state 121
 
-   32 Toc: BTOC .
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc . Lof Lot
 
-    $default  reduce using rule 32 (Toc)
+    BLOF  shift, and go to state 134
+
+    $default  reduce using rule 34 (Lof)
+
+    Lof  go to state 135
 
 
 state 122
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc . Lof Lot
+   71 CitRef: BCiteR TEXT ENDARG .
 
-    BLOF  shift, and go to state 135
-
-    $default  reduce using rule 35 (Lof)
-
-    Lof  go to state 136
+    $default  reduce using rule 71 (CitRef)
 
 
 state 123
 
-   72 CitRef: BCiteR TEXT ENDARG .
+   72 Iterm: BIterm TEXT ENDARG .
 
-    $default  reduce using rule 72 (CitRef)
+    $default  reduce using rule 72 (Iterm)
 
 
 state 124
 
-   73 Iterm: BIterm TEXT ENDARG .
-
-    $default  reduce using rule 73 (Iterm)
-
-
-state 125
-
-   67 OPT_BEIU: TEXT_V BEIU .
-
-    $default  reduce using rule 67 (OPT_BEIU)
-
-
-state 126
-
-   66 OPT_BEIU: BEIU TEXT_V .
+   66 OPT_BEIU: TEXT_V BEIU .
 
     $default  reduce using rule 66 (OPT_BEIU)
 
 
+state 125
+
+   65 OPT_BEIU: BEIU TEXT_V .
+
+    $default  reduce using rule 65 (OPT_BEIU)
+
+
+state 126
+
+   64 BEIU: BBEIU OPT_BEIU ENDARG .
+
+    $default  reduce using rule 64 (BEIU)
+
+
 state 127
 
-   65 BEIU: BBEIU OPT_BEIU ENDARG .
+   70 Xref: BXREF TEXT ENDARG .
 
-    $default  reduce using rule 65 (BEIU)
+    $default  reduce using rule 70 (Xref)
 
 
 state 128
 
-   71 Xref: BXREF TEXT ENDARG .
+   73 FootNote: BFoteN TEXT ENDARG .
 
-    $default  reduce using rule 71 (Xref)
+    $default  reduce using rule 73 (FootNote)
 
 
 state 129
 
-   74 FootNote: BFoteN TEXT ENDARG .
+   75 Acronym: BAcronym TEXT ENDARG .
 
-    $default  reduce using rule 74 (FootNote)
+    $default  reduce using rule 75 (Acronym)
 
 
 state 130
 
-   76 Acronym: BAcronym TEXT ENDARG .
+   74 InlineCode: BLineCode TEXT ENDARG .
 
-    $default  reduce using rule 76 (Acronym)
+    $default  reduce using rule 74 (InlineCode)
 
 
 state 131
 
-   75 InlineCode: BLineCode TEXT ENDARG .
+   69 Ref: BREF TEXT ENDARG .
 
-    $default  reduce using rule 75 (InlineCode)
+    $default  reduce using rule 69 (Ref)
 
 
 state 132
 
-   70 Ref: BREF TEXT ENDARG .
-
-    $default  reduce using rule 70 (Ref)
-
-
-state 133
-
-   22 ParaList: Paragraph_ BREAK ParaList .
+   22 ParaList: Paragraph BREAK ParaList .
 
     $default  reduce using rule 22 (ParaList)
 
 
-state 134
+state 133
 
    21 Aknowledgements: BAKNOW ParaList ENDBLOCK .
 
     $default  reduce using rule 21 (Aknowledgements)
 
 
+state 134
+
+   33 Lof: BLOF .
+
+    $default  reduce using rule 33 (Lof)
+
+
 state 135
 
-   34 Lof: BLOF .
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof . Lot
 
-    $default  reduce using rule 34 (Lof)
+    BLOT  shift, and go to state 136
+
+    $default  reduce using rule 36 (Lot)
+
+    Lot  go to state 137
 
 
 state 136
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof . Lot
+   35 Lot: BLOT .
 
-    BLOT  shift, and go to state 137
-
-    $default  reduce using rule 37 (Lot)
-
-    Lot  go to state 138
+    $default  reduce using rule 35 (Lot)
 
 
 state 137
-
-   36 Lot: BLOT .
-
-    $default  reduce using rule 36 (Lot)
-
-
-state 138
 
     2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot .
 

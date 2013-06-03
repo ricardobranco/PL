@@ -64,11 +64,10 @@ Abstract : BABS ParaList ENDBLOCK ;
 
 Aknowledgements : BAKNOW ParaList ENDBLOCK
 
-ParaList : Paragraph_ BREAK ParaList;
-		 | Paragraph_ ;
+ParaList : Paragraph BREAK ParaList;
+		 | Paragraph ;
 		 ;
 
-Paragraph_ : BTEXT ; // ------------- FALTA CENAS -> TERMINA ESTE PORQUE JÁ DEFENI O OUTRO EM BAIXO --------------------------
 
 Date : BDATE ;
 
