@@ -14,23 +14,19 @@ void addSTitulo(Report *report, char*arg){
 	report->stitulo=strdup(stitulo);
 }
 
-void addAutor(List* list, char*arg, opt){
-	
-    switch (opt) {
-        case 1:
-            <#statements#>
-            break;
-            
-        default:
-            break;
-    }
-    
+void addAutor(Report* report, char*arg){
+	int len = (int)strlen(arg);
+	//strncpy(autor,arg,len);
+	//report->autor=strdup(arg);
 }
 
-void init_Aut(Report *report, char* autor){
-	Autor aut;
-    aut.author=strdup(autor);
-	insertHead(&report->autor,&aut);
+Autor init_Autor(){
+	Autor autor;
+	autor.nident = init(sizeof(char*),NULL);
+	autor.email = init(sizeof(char*),NULL);
+	autor.url = init(sizeof(char*),NULL);
+	autor.affil = init(sizeof(char*),NULL);
+	return autor;
 }
 
 int nrDigits(int value){
@@ -484,8 +480,14 @@ void addModImg(Report* report){
 void addTexto(Report* report,char* arg){
 	char* linha = strdup(arg);
 	//HTML
+	char* habre = "<p>";
+	char* hfecho = "</p>";
+	insertTail(report->html,&habre); 
 	insertTail(report->html,&linha);
+	insertTail(report->html,&hfecho);
 	//LATEX
+	char* lpar = "\\\\";
+	insertTail(report->latex,&lpar);
 	insertTail(report->latex,&linha);
 }
 

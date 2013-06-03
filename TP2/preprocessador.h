@@ -4,31 +4,26 @@
 
 typedef struct sreport
 {
-	List autor;
+	
 	char* titulo;
 	char* stitulo;
+	char* inst;
 	int indice;
 	int indice_fig;
 	int indice_tab;
+	List* autores;
 	List* seccoes;
 	List* html;
 	List* latex;
 }Report;
 
-typedef struct sAUT_OPT
-{
-	List nident;
-	List email;
-	List url;
-	List affil;
-
-}AUT_OPT;
-
 typedef struct sAutor
 {
-	char* author;
-	AUT_OPT opt;
-
+	char* nome;
+	List* nident;
+	List* email;
+	List* url;
+	List* affil;
 }Autor;
 
 
@@ -83,3 +78,5 @@ void addCelula(Row,char*,char);
 void addIndice(Report*,int,char*);
 void addIndList(Report*);
 void addIndFecho(Report*);
+Autor init_Autor();
+void addData(Report*);
