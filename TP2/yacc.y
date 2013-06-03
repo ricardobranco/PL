@@ -134,18 +134,18 @@ Elem 	: CodeBlock
 CodeBlock: BCODE CodeB ENDBLOCK;
 
 
+
 Paragraph:	BParag	ParaContend ENDARG;
 
 
 ParaContend	: ParaContend TEXT_V
 			| ParaContend FreeElem	
+			|
 			;
 			// pode ter um vazio
 
 
-FreeElem: TEXT;
 
-/*
 FreeElem	: FootNote
 			| Ref
 			| Xref
@@ -154,10 +154,14 @@ FreeElem	: FootNote
 			| BEIU
 			| InlineCode
 			| Acronym
+			
 			;
 
-BEIU	: BBEIU TEXT_V BEIU TEXT_V ENDARG
-		| 
+BEIU	: BBEIU OPT_BEIU ENDARG;
+
+OPT_BEIU: BEIU TEXT_V
+		| TEXT_V BEIU
+		| TEXT_V
 		;
 
 
@@ -209,14 +213,21 @@ int main()
 {
 
 	//Inicializações
-	report = init_Report();
+/*
+	report.indice = 0;
+	report.indice_fig = 0;
+	report.indice_tab = 0;
+	report.html=init(sizeof(char*),NULL);
+	report.latex=init(sizeof(char*),NULL);
+	report.seccoes=init(sizeof(char*),NULL);
+	report.autores=init(sizeof(Autor),NULL);
 
-  	/*int yyres = yyparse();
+
+  	int yyres = yyparse();
   	printf("YYRES: %d\n",yyres);
   	geraHTML(&report,NULL);
-  	geraLATEX(&report,NULL);
-  	*/return 0;
-
+  	geraLATEX(&report,NULL);*/
+  	return 0;
 }
 
 

@@ -1,6 +1,24 @@
  #include "preprocessador.h"
 
-//INICIALIZAÇÕES
+void addTitulo(Report *report, char*arg){
+	int len = (int)strlen(arg);
+	char* titulo = (char*) malloc(sizeof(char)*len+1);
+	strncpy(titulo,arg,len);
+	report->titulo=strdup(titulo);
+}
+
+void addSTitulo(Report *report, char*arg){
+	int len = (int)strlen(arg);
+	char* stitulo = (char*) malloc(sizeof(char)*len+1);
+	strncpy(stitulo,arg,len);
+	report->stitulo=strdup(stitulo);
+}
+
+void addAutor(Report* report, char*arg){
+	int len = (int)strlen(arg);
+	//strncpy(autor,arg,len);
+	//report->autor=strdup(arg);
+}
 
 Autor init_Autor(){
 	Autor autor;
@@ -8,107 +26,8 @@ Autor init_Autor(){
 	autor.email = init(sizeof(char*),NULL);
 	autor.url = init(sizeof(char*),NULL);
 	autor.affil = init(sizeof(char*),NULL);
-	autor.nome = NULL;
 	return autor;
 }
-Cell init_Cell(){
-	Cell cell;
-	int dim = 1;
-	char pos = 'e';
-	char* cell = NULL;
-}
-
-Row init_Row(){
-	Row row;
-	row.cells = init(sizeof(Cell),NULL);
-	return row;
-}
-
-Table init_Table(){
-	Table table;
-	table.rows = init(sizeof(Row),NULL);
-	return table;
-}
-
-Report init_Report(){
-	Report report;
-	report.autores = init(sizeof(Autor),NULL);
-	report.html = init(sizeof(char*),NULL);
-	report.latex = init(sizeof(char*),NULL);
-	report.lindice = ini(sizeof(IndiceCell),NULL);
-	report.lindice_fig = ini(sizeof(IndiceCell),NULL);
-	report.lindice_tab = ini(sizeof(IndiceCell),NULL);
-	report.titulo = NULL;
-	report.stitulo = NULL;
-	report.inst = NULL;
-	report.indice = 0;
-	report.indice_tab = 0;
-	report.indice_fig = 0;
-}
-
-Image init_Image(){
-	Image image;
-	image.scale = 1;
-	image.path = NULL;
-	image.caption = NULL;
-	return image;
-
-}
-
-
-IndiceCell init_IndiceCell(){
-	IndiceCell indicecell;
-	indicecell.label = NULL;
-	indicecell.texto = NULL;
-	return indicecell;
-
-}
-
-
-Keywords init_Keywords(){
-	Keywords keywords;
-	keywords.keywords = init(sizeof(char*),NULL);
-}
-
-//FrontMatter
-
-
-void addTitulo(Report *report, char*arg){
-	char* titulo = strdup(arg);
-	report->titulo=titulo;
-}
-
-void addSTitulo(Report *report, char*arg){
-	char* stitulo = strdup(arg);
-	report->stitulo=stitulo;
-}
-
-void addAutor(Report* report, Autor* autor){
-	report->autores->insertHead(autor);
-}
-
-
-void addData(Report* report){
-	//HTML
-	char* hascript = "<script type=\"text/javascript\">"
-	char* hct = "var currentTime = new Date()";
-	char* hmes = "var month = currentTime.getMonth() + 1";
-	char* hdia = "var day = currentTime.getDate()";
-	char* hano = "var year = currentTime.getFullYear()";
-	char* hwrite = "document.write(month + \"/\" + day + \"/\" + year)";
-	char* hfscript = "</script>";
-
-	
-	//LATEX
-
-	char* ldata = "\\date{\\today}";
-	
-}
-
-
-
-
-
 
 int nrDigits(int value){
 	if(value < 0)

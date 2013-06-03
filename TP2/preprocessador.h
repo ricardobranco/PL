@@ -11,14 +11,10 @@ typedef struct sreport
 	int indice;
 	int indice_fig;
 	int indice_tab;
-	int data;
-
 	List* autores;
+	List* seccoes;
 	List* html;
 	List* latex;
-	List* lindice_tab;
-	List* lindice_fig;
-	List* lindice; 
 }Report;
 
 typedef struct sAutor
@@ -30,14 +26,10 @@ typedef struct sAutor
 	List* affil;
 }Autor;
 
-typedef struct sKeywords
-{
-	List* keywords;
-}Keywords;
 
 typedef struct sImage
 {
-	float scale;
+	char* scale;
 	char* path;
 	char* caption;
 }Image;
@@ -54,36 +46,15 @@ typedef struct sRow
 
 typedef struct sCell
 {
-	int dim; //Dimensao da celula
-	char pos; //Cento Esquerda ou Direita
+	char pos;
 	char* cell;
 }Cell;
 
-
-typedef struct sIndiceCell
-{
-	char* label;
-	char* texto;
-
-}IndiceCell;
-
-
-//INICIALIZAÇÕES
 Autor init_Autor();
-Cell init_Cell();
-Row init_Row();
-Table init_Table();
-Image init_Image();
-IndiceCell init_IndiceCell();
-Image init_Image();
-Keywords init_Keywords();
-Report init_Report();
-//FrontMatter
+
 void addTitulo(Report*,char*);
 void addSTitulo(Report*, char*);
 void addAutor(Report*,char*);
-void addData(Report*);
-
 void addSeccao(Report*,char*,int,int);
 void addHRef(Report*,char*);
 void addItem(Report*,char*);
