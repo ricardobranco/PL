@@ -3,79 +3,36 @@
 #include <stdlib.h>
 
 
-//------------------- ACTUALIZAR BEGINS'S PARA O TEXT_VI ---------------------------
-
 %}
-
-%x BLOCOTEXTO BLOCOD BEG TEXT_VI
-text ([^\n\\,)]|(\\[\)}]))+
-text_v ([^\n\\)]|(\\[\)}]))+
-nid [a-z]{0,2}[0-9]+
+arg [^(),]
 email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
 url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
-btext ([^\}\\]|(\\\}))+
-img [a-zA-Z0-9_]+\.(jpg|jpeg|png)
+id [a-zA-Z]{0,2}[0-9]+
+texto ([^\\{}]|(\\[{}]))+ //REDEFINIR SE FOR MELHOR
 
 %%
 
-<<EOF>>				{return '$';}
-<*>[ \t\n]+   			{;}
 
-\)					{return ENDARG;}	
-\}					{return ENDBLOCK;}
-{nid}    			{yylval.valS = strdup(yytext);
-					return NID;}
-{email}				{yylval.valS = strdup(yytext);
-					return EMAIL;}
-{url}				{yylval.valS = strdup(yytext);
-					return URL;}
-
-,					{return SEP;}
-{text}				{yylval.valS = strdup(yytext);
-					return TEXT;}
-					
-
-\\titulo\(		{return BTITLE;}
-\\subtitulo\(	{return BSTITLE;}
-\\autor\(		{return BAUTHOR;}
-\\resumo\(\)\{	{BEGIN BLOCOTEXTO;
-				return BABS;}
-\\inst\(		{return BINST;}
-\\data\(\)	    {return BDATE;}
-\\agrad\(\)\{	{BEGIN BLOCOTEXTO;
-				return BAKNOW;}
-\\indice\(\)	{return BTOC;}
-\\indice\(figuras\) {return BLOF;}
-\\indice\(tabelas\) {return BLOT;}
-\\codigo\(\)\{	{BEGIN BLOCOD; return BCODE;}
-
-\\[beiu]+\( 	{return BBEIU;}
-\\body\(		{return BBODY;}
-\\ref\(			{return BREF;}
-\\xref\( 		{return BXREF;}
-\\citeref\(		{return BCiteR;}
-\\chapter\(		{BEGIN BEG;
-					return BCHAP;}
-\\paragraph\(	{return BParag;}
-\\acronym\(		{return BAcronym;}
-\\iterm\(		{return BIterm;}
-\\footnote\(	{return BFoteN;}
-\\linecode\(	{return BLineCode;}
-\\summary\(		{return BSUMMARY;}
+<<EOF>>	{return '$';}
+<*>[ \n\t]		{;}
+[(){}] 	{return yytext[0];} 
+,		{return sep;}
 
 
-\\fig
+\\titulo {return BTITLE;}
+\\stitulo {return BSTITLE;}
+\\autor {return BAUTHOR;}
 
-\\s[1-6]\(		{yylval.vali = yytext[2]-'0';
-				return BSEC;}
 
+{id}		{yylval.valS = strdup(yytext);
+			return id;}
+{arg} 		{yylval.valS = strdup(yytext);
+			return arg;}
+{url}		{yylval.valS = strdup(yytext);
+			return url;}			
+{email}		{yylval.valS = strdup(yytext);
+			return email;}
 
-<TEXT_VI>{text_v}	{return TEXT_V;}
-<BEG>\{			{BEGIN 0; return BEGI;}
-<BLOCOTEXTO>\\p\(\)		{return BREAK;}
-<BLOCOTEXTO>{btext} 	{return BTEXT;}
-<BLOCOD>{btext} 		{return CodeB;}
-<BLOCOTEXTO,BLOCOD>\}{btext}	{printf("FECHOU\n"); BEGIN 0;return ENDBLOCK;}		
 
 %%
 

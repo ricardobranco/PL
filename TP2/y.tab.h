@@ -39,120 +39,44 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     TEXT = 258,
-     ERROR = 259,
-     ENDARG = 260,
-     NID = 261,
-     SEP = 262,
-     EMAIL = 263,
-     URL = 264,
-     ENDBLOCK = 265,
-     BTEXT = 266,
-     BREAK = 267,
-     BCODE = 268,
-     CodeB = 269,
-     BCiteR = 270,
-     BIterm = 271,
-     BBEIU = 272,
-     BXREF = 273,
-     BFoteN = 274,
-     BAcronym = 275,
-     BLineCode = 276,
-     BEGI = 277,
-     BTITLE = 278,
-     BSTITLE = 279,
-     BAUTHOR = 280,
-     BEMAIL = 281,
-     BURL = 282,
-     BAFFIL = 283,
-     BABS = 284,
-     BDATE = 285,
-     BINST = 286,
-     BKEY = 287,
-     BAKNOW = 288,
-     BLOF = 289,
-     BLOT = 290,
-     BTOC = 291,
-     BBODY = 292,
-     BCHAP = 293,
-     BLIST = 294,
-     BSEC = 295,
-     BParag = 296,
-     BREF = 297,
-     TEXT_V = 298,
-     BSUMMARY = 299,
-     BBOLD = 300,
-     BUnderLine = 301,
-     BItalic = 302,
-     Path = 303,
-     BFig = 304,
-     BImg = 305,
-     BCAP = 306
+     arg = 258,
+     id = 259,
+     email = 260,
+     url = 261,
+     sep = 262,
+     BTITLE = 263,
+     BSTITLE = 264,
+     BAUTHOR = 265,
+     BURL = 266,
+     BAFFIL = 267,
+     BEMAIL = 268
    };
 #endif
 /* Tokens.  */
-#define TEXT 258
-#define ERROR 259
-#define ENDARG 260
-#define NID 261
-#define SEP 262
-#define EMAIL 263
-#define URL 264
-#define ENDBLOCK 265
-#define BTEXT 266
-#define BREAK 267
-#define BCODE 268
-#define CodeB 269
-#define BCiteR 270
-#define BIterm 271
-#define BBEIU 272
-#define BXREF 273
-#define BFoteN 274
-#define BAcronym 275
-#define BLineCode 276
-#define BEGI 277
-#define BTITLE 278
-#define BSTITLE 279
-#define BAUTHOR 280
-#define BEMAIL 281
-#define BURL 282
-#define BAFFIL 283
-#define BABS 284
-#define BDATE 285
-#define BINST 286
-#define BKEY 287
-#define BAKNOW 288
-#define BLOF 289
-#define BLOT 290
-#define BTOC 291
-#define BBODY 292
-#define BCHAP 293
-#define BLIST 294
-#define BSEC 295
-#define BParag 296
-#define BREF 297
-#define TEXT_V 298
-#define BSUMMARY 299
-#define BBOLD 300
-#define BUnderLine 301
-#define BItalic 302
-#define Path 303
-#define BFig 304
-#define BImg 305
-#define BCAP 306
+#define arg 258
+#define id 259
+#define email 260
+#define url 261
+#define sep 262
+#define BTITLE 263
+#define BSTITLE 264
+#define BAUTHOR 265
+#define BURL 266
+#define BAFFIL 267
+#define BEMAIL 268
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 17 "yacc.y"
+#line 12 "yacc.y"
 {
 	char* valS;
-	int vali;
+	int valI;
 }
 /* Line 1529 of yacc.c.  */
-#line 156 "y.tab.h"
+#line 80 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
