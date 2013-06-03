@@ -11,6 +11,8 @@ typedef struct sreport
 	int indice;
 	int indice_fig;
 	int indice_tab;
+	int data;
+
 	List* autores;
 	List* html;
 	List* latex;
@@ -80,7 +82,7 @@ Report init_Report();
 void addTitulo(Report*,char*);
 void addSTitulo(Report*, char*);
 void addAutor(Report*,char*);
-
+void addData(Report*);
 
 void addSeccao(Report*,char*,int,int);
 void addHRef(Report*,char*);

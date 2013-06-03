@@ -88,7 +88,22 @@ void addAutor(Report* report, Autor* autor){
 }
 
 
+void addData(Report* report){
+	//HTML
+	char* hascript = "<script type=\"text/javascript\">"
+	char* hct = "var currentTime = new Date()";
+	char* hmes = "var month = currentTime.getMonth() + 1";
+	char* hdia = "var day = currentTime.getDate()";
+	char* hano = "var year = currentTime.getFullYear()";
+	char* hwrite = "document.write(month + \"/\" + day + \"/\" + year)";
+	char* hfscript = "</script>";
 
+	
+	//LATEX
+
+	char* ldata = "\\date{\\today}";
+	
+}
 
 
 
