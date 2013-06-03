@@ -8,8 +8,8 @@ Autor autor;
 
 %}
 
-%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE CodeB BCiteR BIterm BBEIU BXREF BFoteN BAcronym BLineCode
-%token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC BBODY BCHAP BLIST BSEC BParag BREF
+%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE CodeB BCiteR BIterm BBEIU BXREF BFoteN BAcronym BLineCode BEGI
+%token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC BBODY BCHAP BLIST BSEC BParag BREF TEXT_V
 %start Report
 
 %union{
@@ -21,7 +21,7 @@ Autor autor;
 
 %%
 
-Report: FrontMatter '$' {return 0;};
+Report: FrontMatter Body'$' {return 0;};
 
 FrontMatter : Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot ;
 
@@ -97,42 +97,39 @@ Keys : TEXT SEP Keys
 //----------------------------
 
  
-Body : Bbody Chapterlist ENDARG ;
+Body : BBODY Chapterlist ENDARG ;
 
-
-Chapterlist : 	Chapter Chapterlist
-			|	Chapter
+Chapterlist : 	Chapterlist Chapter 
+			| 	Chapterlist SECTION
+			|	
 			;
 
-Chapter: BCHAP;
-			
-
-/*
-Chapter :	 C_Title	ElemList  ;
+Chapter :	 C_Title BEGI ElemList  ENDARG;
 
 
 C_Title: BCHAP 	TEXT   ENDARG;
 
 
-SECTION	:	S_Title  ElemList ;
 
+SECTION	:	 S_Title BEGI ElemList ENDARG 
+		;
 
 S_Title: BSEC  TEXT  ENDARG;
 
 
-ElemList	: Elem ElemList
-			| Elem
+ElemList	:  ElemList Elem
+			|  Elem
 			;
 
 
-Elem 	: Paragraph 	
-		| CodeBlock  	
-		| SECTION		
-		;
-		// pode ter um vazio
-		//	| Float 		
+
+Elem 	: CodeBlock 
+		| Paragraph
+		| SECTION	
+	//	| Float 		
 	//	| List		
-		//	| Summary 	
+	//	| Summary 
+		;	
 
 CodeBlock: BCODE CodeB ENDBLOCK;
 
@@ -140,16 +137,15 @@ CodeBlock: BCODE CodeB ENDBLOCK;
 Paragraph:	BParag	ParaContend ENDARG;
 
 
-ParaContend	: TEXT_Virg ParaContend
-			| FreeElem	ParaContend
+ParaContend	: ParaContend TEXT_V
+			| ParaContend FreeElem	
 			;
 			// pode ter um vazio
 
-TEXT_Virg 	: TEXT SEP TEXT_Virg
-			| TEXT
-			; 
-			// pode ter um vazio
 
+FreeElem: TEXT;
+
+/*
 FreeElem	: FootNote
 			| Ref
 			| Xref
@@ -160,7 +156,7 @@ FreeElem	: FootNote
 			| Acronym
 			;
 
-BEIU	: BBEIU TEXT_Virg BEIU TEXT_Virg ENDARG
+BEIU	: BBEIU TEXT_V BEIU TEXT_V ENDARG
 		| 
 		;
 
@@ -180,7 +176,7 @@ InlineCode: BLineCode TEXT ENDARG;
 
 Acronym	: BAcronym TEXT ENDARG;
 
-*/
+
 
 
 

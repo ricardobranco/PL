@@ -58,26 +58,28 @@
      BFoteN = 274,
      BAcronym = 275,
      BLineCode = 276,
-     BTITLE = 277,
-     BSTITLE = 278,
-     BAUTHOR = 279,
-     BEMAIL = 280,
-     BURL = 281,
-     BAFFIL = 282,
-     BABS = 283,
-     BDATE = 284,
-     BINST = 285,
-     BKEY = 286,
-     BAKNOW = 287,
-     BLOF = 288,
-     BLOT = 289,
-     BTOC = 290,
-     BBODY = 291,
-     BCHAP = 292,
-     BLIST = 293,
-     BSEC = 294,
-     BParag = 295,
-     BREF = 296
+     BEGI = 277,
+     BTITLE = 278,
+     BSTITLE = 279,
+     BAUTHOR = 280,
+     BEMAIL = 281,
+     BURL = 282,
+     BAFFIL = 283,
+     BABS = 284,
+     BDATE = 285,
+     BINST = 286,
+     BKEY = 287,
+     BAKNOW = 288,
+     BLOF = 289,
+     BLOT = 290,
+     BTOC = 291,
+     BBODY = 292,
+     BCHAP = 293,
+     BLIST = 294,
+     BSEC = 295,
+     BParag = 296,
+     BREF = 297,
+     TEXT_V = 298
    };
 #endif
 /* Tokens.  */
@@ -100,26 +102,28 @@
 #define BFoteN 274
 #define BAcronym 275
 #define BLineCode 276
-#define BTITLE 277
-#define BSTITLE 278
-#define BAUTHOR 279
-#define BEMAIL 280
-#define BURL 281
-#define BAFFIL 282
-#define BABS 283
-#define BDATE 284
-#define BINST 285
-#define BKEY 286
-#define BAKNOW 287
-#define BLOF 288
-#define BLOT 289
-#define BTOC 290
-#define BBODY 291
-#define BCHAP 292
-#define BLIST 293
-#define BSEC 294
-#define BParag 295
-#define BREF 296
+#define BEGI 277
+#define BTITLE 278
+#define BSTITLE 279
+#define BAUTHOR 280
+#define BEMAIL 281
+#define BURL 282
+#define BAFFIL 283
+#define BABS 284
+#define BDATE 285
+#define BINST 286
+#define BKEY 287
+#define BAKNOW 288
+#define BLOF 289
+#define BLOT 290
+#define BTOC 291
+#define BBODY 292
+#define BCHAP 293
+#define BLIST 294
+#define BSEC 295
+#define BParag 296
+#define BREF 297
+#define TEXT_V 298
 
 
 
@@ -132,7 +136,7 @@ typedef union YYSTYPE
 	int vali;
 }
 /* Line 1529 of yacc.c.  */
-#line 136 "y.tab.h"
+#line 140 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
