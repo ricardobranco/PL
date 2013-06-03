@@ -4,7 +4,7 @@ CFLAGS =
 LIBS = -ll -ly
 YACC = yacc.y
 PARSER = flex.fl
-FILES = flex.fl yacc.y linkedlist.c linkedlist.h makefile report.c report.h preprocessador.c preprocessador.o
+FILES = flex.fl yacc.y linkedlist.c linkedlist.h makefile report.c report.h preprocessador.c preprocessador.h
 OUTPUT = report
 
 
@@ -31,7 +31,7 @@ report.o: report.c report.h
 	$(CC) $(CFLAGS) -c report.c
 
 preprocessador.o: preprocessador.c preprocessador.h
-	$(CC) $(CFLAGS) -c preprocessador.o
+	$(CC) $(CFLAGS) -c preprocessador.c
 
 clean:
 	rm *.o
