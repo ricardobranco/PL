@@ -80,7 +80,14 @@
      BParag = 296,
      BREF = 297,
      TEXT_V = 298,
-     BSUMMARY = 299
+     BSUMMARY = 299,
+     BBOLD = 300,
+     BUnderLine = 301,
+     BItalic = 302,
+     Path = 303,
+     BFig = 304,
+     BImg = 305,
+     BCAP = 306
    };
 #endif
 /* Tokens.  */
@@ -126,6 +133,13 @@
 #define BREF 297
 #define TEXT_V 298
 #define BSUMMARY 299
+#define BBOLD 300
+#define BUnderLine 301
+#define BItalic 302
+#define Path 303
+#define BFig 304
+#define BImg 305
+#define BCAP 306
 
 
 
@@ -138,7 +152,7 @@ typedef union YYSTYPE
 	int vali;
 }
 /* Line 1529 of yacc.c.  */
-#line 142 "y.tab.h"
+#line 156 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

@@ -11,7 +11,7 @@ Image imagem;
 
 %token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE CodeB BCiteR BIterm BBEIU BXREF BFoteN BAcronym BLineCode BEGI
 %token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC BBODY BCHAP BLIST BSEC BParag BREF TEXT_V
-%token BSUMMARY
+%token BSUMMARY BBOLD BUnderLine BItalic Path BFig BImg BCAP
 %start Report
 
 %union{
@@ -68,7 +68,6 @@ ParaList : Paragraph BREAK ParaList;
 		 | Paragraph ;
 		 ;
 
-
 Date : BDATE ;
 
 Instituition : BINST TEXT ENDARG ;//{report.inst = strdup($2); } 
@@ -111,7 +110,7 @@ Chapter :	 C_Title BEGI ElemList  ENDARG;
 C_Title: BCHAP 	TEXT   ENDARG;
 
 
-SECTION	: S_Title  BEGI ElemList ENDARG;
+SECTION	: S_Title  BEGI ElemList ENDBLOCK;
 
 S_Title: BSEC  TEXT  ENDARG;
 
@@ -125,7 +124,7 @@ Elem 	: CodeBlock
 		| Paragraph
 		| SECTION	
 		| Summary 
-	//	| Float 		
+		| Float 		
 	//	| List		
 		;	
 
@@ -147,16 +146,35 @@ FreeElem	: FootNote
 			| Xref
 			| CitRef
 			| Iterm
-			| BEIU
+			| Bold
+			| Italic
+			| Underline
 			| InlineCode
 			| Acronym
 			;
 
-BEIU	: BBEIU OPT_BEIU ENDARG;
+Bold: BBOLD BCont ENDARG
 
-OPT_BEIU: BEIU TEXT_V
-		| TEXT_V BEIU
-		| TEXT_V
+BCont	: BCont TEXT
+		| BCont Italic
+		| BCont Underline
+		|
+		;
+
+Italic: BItalic ICont ENDARG
+
+ICont	: BCont TEXT
+		| BCont Bold
+		| BCont Underline
+		|
+		;
+
+Underline: BUnderLine UCont ENDARG
+
+UCont	: BCont TEXT
+		| BCont Bold
+		| BCont Italic
+		|
 		;
 
 
@@ -183,17 +201,20 @@ Acronym	: BAcronym TEXT ENDARG;
 
 
 
-
-
-
-/*
-
 Float	: Figure
-		| TABLE
+	//	| TABLE
 		;
 
 
-*/
+Figure	: BFig  Image Caption ENDARG;
+
+Image 	: BImg	Path  ENDARG;
+
+Caption	: BCAP TEXT ENDARG;
+
+
+
+
 
 
 
