@@ -1263,13 +1263,13 @@ case 37:
 /* rule 37 can match eol */
 YY_RULE_SETUP
 #line 76 "flex.fl"
-{printf("BLOCO:%s|\n",yytext);return BTEXT;}
+{return BTEXT;}
 	YY_BREAK
 case 38:
 /* rule 38 can match eol */
 YY_RULE_SETUP
 #line 77 "flex.fl"
-{printf("BLOCO:%s|\n",yytext);return CodeB;}
+{return CodeB;}
 	YY_BREAK
 case 39:
 /* rule 39 can match eol */

@@ -101,7 +101,7 @@ Keys : TEXT SEP Keys
 Body : BBODY Chapterlist ENDARG ;
 
 Chapterlist : 	Chapterlist Chapter 
-			| 	Chapterlist SECTION
+			| 	Chapterlist Section
 			|	
 			;
 
@@ -111,10 +111,10 @@ Chapter :	 C_Title BEGI ElemList  ENDARG;
 C_Title: BCHAP 	TEXT   ENDARG;
 
 
-SECTION	: S_Title  BEGI ElemList ENDARG;
+Section	: BSEC  TEXT  ENDARG ElemList ;
 
-S_Title: BSEC  TEXT  ENDARG;
-
+/*S_Title: BSEC  TEXT  ENDARG;
+*/
 
 ElemList	:  ElemList Elem
 			|  Elem
@@ -123,10 +123,10 @@ ElemList	:  ElemList Elem
 
 Elem 	: CodeBlock 
 		| Paragraph
-		| SECTION	
+		| Section	ENDARG
 		| Summary 
 	//	| Float 		
-	//	| List		
+	//	| List
 		;	
 
 CodeBlock: BCODE CodeB ENDBLOCK;
@@ -147,36 +147,36 @@ FreeElem	: FootNote
 			| Xref
 			| CitRef
 			| Iterm
-			| BEIU
+			//| BEIU
 			| InlineCode
 			| Acronym
 			;
 
-BEIU	: BBEIU OPT_BEIU ENDARG;
+//BEIU	: BBEIU OPT_BEIU ENDARG;
 
-OPT_BEIU: BEIU TEXT_V
+/*OPT_BEIU: BEIU TEXT_V
 		| TEXT_V BEIU
 		| TEXT_V
 		;
-
+*/
 
 //Confirmar se só leva TEXT_V ou é uma String especial
 
-Summary: BSUMMARY TEXT_V ENDARG;
+Summary: BSUMMARY BTEXT ENDARG;
 
-Ref 	: BREF TEXT ENDARG;
+Ref 	: BREF BTEXT ENDARG;
 
-Xref	: BXREF TEXT ENDARG;
+Xref	: BXREF BTEXT ENDARG;
 
-CitRef	: BCiteR TEXT ENDARG;
+CitRef	: BCiteR BTEXT ENDARG;
 
-Iterm	: BIterm TEXT ENDARG;
+Iterm	: BIterm BTEXT ENDARG;
 
-FootNote: BFoteN TEXT ENDARG;
+FootNote: BFoteN BTEXT ENDARG;
 
-InlineCode: BLineCode TEXT ENDARG;
+InlineCode: BLineCode BTEXT ENDARG;
 
-Acronym	: BAcronym TEXT ENDARG;
+Acronym	: BAcronym BTEXT ENDARG;
 
 
 
