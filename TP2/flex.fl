@@ -10,19 +10,23 @@ nid [a-z]{0,2}[0-9]+
 email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
 url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
 btext ([^\}\\]|(\\\}))+
+
 %%
 
 <<EOF>>				{return '$';}
 <*>[ \t\n]+   			{;}
 \)					{return ENDARG;}	
 \}					{return ENDBLOCK;}
-\{					{return BLIST}
-{nid}    			{return NID;}
-{email}				{return EMAIL;}
-{url}				{return URL;}
-,					{printf("SEPARADOR\n");return SEP;}
-{text}				{printf("STRING: %s|\n",yytext);return TEXT;}
-
+{nid}    			{yylval.valS = strdup(yytext);
+					return NID;}
+{email}				{yylval.valS = strdup(yytext);
+					return EMAIL;}
+{url}				{yylval.valS = strdup(yytext);
+					return URL;}
+,					{return SEP;}
+{text}				{yylval.valS = strdup(yytext);
+					return TEXT;}
+					
 
 \\titulo\(		{return BTITLE;}
 \\subtitulo\(	{return BSTITLE;}
@@ -36,7 +40,12 @@ btext ([^\}\\]|(\\\}))+
 \\indice\(\)	{return BTOC;}
 \\indice\(figuras\) {return BLOF;}
 \\indice\(tabelas\) {return BLOT;}
-\\codigo\(\)\{	{BEGIN BLOCOD; return CodeBlock;}
+\\codigo\(\)\{	{BEGIN BLOCOD; return BCODE;}
+\\[beiu]+\( 	{ return BBEIU;}
+\\ref\(			{return BREF;}
+\\xref( 		{return BXREF;}
+\\citeref\(		{return BCiteR;}
+\\fig
 
 \\s[1-6]\(		{yylval.vali = atoi(yytext[2]);
 				return SECTION;}
@@ -44,7 +53,7 @@ btext ([^\}\\]|(\\\}))+
 
 <BLOCOTEXTO>\\p\(\)		{return BREAK;}
 <BLOCOTEXTO>{btext} 	{printf("BLOCO:%s|\n",yytext);return BTEXT;}
-<BLOCOD>{btext} 	{printf("BLOCO:%s|\n",yytext);return BCOD;}
+<BLOCOD>{btext} 	{printf("BLOCO:%s|\n",yytext);return CodeB;}
 <BLOCOTEXTO,BLOCOD>\}{btext}	{printf("FECHOU\n"); BEGIN 0;return ENDBLOCK;}		
 
 %%

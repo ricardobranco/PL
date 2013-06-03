@@ -7,9 +7,9 @@ Report report;
 
 %}
 
-%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE
+%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE CodeB BCiteR
 
-%token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC BBODY BCHAP BLIST
+%token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC BBODY BCHAP BLIST BSEC BParag BREF
 %start Report
 
 %union{
@@ -22,15 +22,15 @@ Report report;
 
 %%
 
-Report: Breport FrontMatter '$' {return 0;};
+Report: /*Breport*/ FrontMatter '$' {return 0;};
 
-Breport : {yylval.vali=0; };
+//Breport : {yylval.vali=0; };
 
 FrontMatter : Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot ;
 
-Title : BTITLE TEXT ENDARG  {addTitulo(&report, $2);};
+Title : BTITLE TEXT ENDARG  ;//{addTitulo(&report, $2);};
 
-SubTitle : BSTITLE TEXT ENDARG {addSTitulo(&report, $2);};
+SubTitle : BSTITLE TEXT ENDARG ;//{addSTitulo(&report, $2);};
 		 | 
 		 ;
 
@@ -41,7 +41,7 @@ Authors : Author Authors
 Author : BAUTHOR Name AuthorOPT ENDARG ;
 
 
-Name : TEXT {init_Aut(&report, $1);};
+Name : TEXT ;//{init_Aut(&report, $1);};
 
 
 AuthorOPT : SEP Nident AuthorOPT {add};
@@ -62,11 +62,11 @@ Abstract : BABS ParaList ENDBLOCK
 
 Aknowledgements : BAKNOW ParaList ENDBLOCK
 
-ParaList : Paragraph BREAK ParaList;
-		 | Paragraph ;
+ParaList : Paragraph_ BREAK ParaList;
+		 | Paragraph_ ;
 		 ;
 
-Paragraph : BTEXT ;
+Paragraph_ : BTEXT ;
 
 Date : BDATE ;
 
@@ -120,27 +120,73 @@ ElemList	: Elem ElemList
 			;
 
 
-Elem 	: Paragraph 	Elem
-		| Float 		Elem
-		| List			Elem
-		| CodeBlock  	Elem
-		| SECTION		Elem
-		| Summary 		Elem
+Elem 	: Paragraph 	
+	//	| Float 		
+	//	| List			
+		| CodeBlock  	
+		| SECTION		
+	//	| Summary 
 		|
 		;
 
-CodeBlock: BCODE BCODE ENDBLOCK;
+CodeBlock: BCODE CodeB ENDBLOCK;
 
+
+Paragraph:	BParag	ParaContend ENDARG;
+
+
+ParaContend	: TEXT_Virg ParaContend
+			| FreeElem	ParaContend
+			|
+			;
+
+TEXT_Virg 	: TEXT SEP TEXT_Virg
+			| TEXT
+			|
+			; 
+
+
+FreeElem	: FootNote
+			| Ref
+			| Xref
+			| CitRef
+		//	| Iterm
+			| BEIU
+		//	| InlineCode
+		//	| Acroym
+			;
+
+BEIU	: BBEIU TEXT_Virg BEIU TEXT_Virg ENDARG
+		| 
+		;
+
+
+//Confirmar se só leva TEXT ou é uma String especial
+Ref 	: BREF TEXT ENDARG;
+
+Xref	: BXREF TEXT ENDARG;
+
+CitRef	: BCiteR TEXT ENDARG;
+
+
+
+
+
+
+
+
+
+	
 
  
-
+/*
 
 Float	: Figure
 		| TABLE
 		;
 
 
-
+*/
 
 
 
