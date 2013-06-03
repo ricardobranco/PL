@@ -8,8 +8,7 @@ Autor autor;
 
 %}
 
-%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE CodeB BCiteR
-
+%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE CodeB BCiteR BIterm BBEIU BXREF BFoteN
 %token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC BBODY BCHAP BLIST BSEC BParag BREF
 %start Report
 
@@ -150,7 +149,7 @@ FreeElem	: FootNote
 			| Ref
 			| Xref
 			| CitRef
-		//	| Iterm
+			| Iterm
 			| BEIU
 		//	| InlineCode
 		//	| Acroym
@@ -168,6 +167,9 @@ Xref	: BXREF TEXT ENDARG;
 
 CitRef	: BCiteR TEXT ENDARG;
 
+Iterm	: BIterm TEXT ENDARG;
+
+FootNote: BFoteN TEXT ENDARG;
 
 
 
@@ -176,9 +178,7 @@ CitRef	: BCiteR TEXT ENDARG;
 
 
 
-	
 
- 
 /*
 
 Float	: Figure
