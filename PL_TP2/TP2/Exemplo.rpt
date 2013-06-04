@@ -14,3 +14,30 @@
 	}
 }
 
+\indice()
+\indice(figuras)
+\indice(tabelas)
+
+
+\capitulo(Era uma vez, um){
+	\p{
+		1 capitulo.. mas is nada
+	}
+}
+\capitulo(TESTE A SERIO){
+
+	\codigo{
+		bloco de codigo /uma vez \\ \ fui passear
+
+		por uma terra brilhante
+
+		90kcs)88 ][] e ver se isto funca \} 
+		tenta meter aqui um cenas igual ao de fechar, para ver oque ele faz
+	}
+	
+
+}
+
+
+
+
