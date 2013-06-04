@@ -97,7 +97,7 @@ Keys : Keys SEP TEXT
 //----------------------------
 
  
-Body : BBODY Chapterlist ENDARG ;
+Body :  Chapterlist  ;
 
 Chapterlist : 	Chapterlist Chapter 
 			| 	Chapterlist Section

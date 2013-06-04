@@ -6,12 +6,12 @@
 %}
 %x INDICE
 
-arg ([^\(\)\,\\]|(\\[\\\(\)\{\}\,]))+
+arg ([^\(\)\,\\\{\}]|(\\[\\\(\)\{\}\,]))+
 email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
 url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
 id [a-zA-Z]{0,2}[0-9]+
-texto ([^\\{}]|(\\[{}]))+ //REDEFINIR SE FOR MELHOR
-
+texto ({arg}|,)+ 
+codigo ([^\}]|((\\})))+  ///Verificar
 %%
 
 
@@ -31,6 +31,8 @@ texto ([^\\{}]|(\\[{}]))+ //REDEFINIR SE FOR MELHOR
 \\indice		{BEGIN INDICE;	return BINDICE;}
 
 
+\\	
+
 
 
 
@@ -42,6 +44,8 @@ texto ([^\\{}]|(\\[{}]))+ //REDEFINIR SE FOR MELHOR
 			return email;}
 {arg} 		{yylval.valS = strdup(yytext);
 			return arg;}
+{texto}		{yylval.valS = strdup(yytext);
+			return texto;}
 
 
 

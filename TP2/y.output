@@ -5,6 +5,7 @@ Terminals which are not used
    BEMAIL
    BURL
    BAFFIL
+   BBODY
    BLIST
    C_Cel
 
@@ -72,7 +73,7 @@ Grammar
    35 Lot: BLOT
    36    | /* empty */
 
-   37 Body: BBODY Chapterlist ENDARG
+   37 Body: Chapterlist
 
    38 Chapterlist: Chapterlist Chapter
    39            | Chapterlist Section
@@ -206,8 +207,8 @@ $end (0) 0
 error (256)
 TEXT (258) 3 4 10 19 25 29 30 42 44 69 74 79 95
 ERROR (259)
-ENDARG (260) 3 4 8 25 27 37 41 42 44 54 68 73 78 83 84 85 86 87 88
-    89 90 93 94 95 98 102 106 107 113
+ENDARG (260) 3 4 8 25 27 41 42 44 54 68 73 78 83 84 85 86 87 88 89
+    90 93 94 95 98 102 106 107 113
 NID (261) 16
 SEP (262) 11 12 13 14 29 114
 EMAIL (263) 17
@@ -239,7 +240,7 @@ BAKNOW (288) 21
 BLOF (289) 33
 BLOT (290) 35
 BTOC (291) 31
-BBODY (292) 37
+BBODY (292)
 BCHAP (293) 42
 BLIST (294)
 BSEC (295) 44
@@ -432,9 +433,10 @@ state 3
 
     1 Report: FrontMatter . Body '$'
 
-    BBODY  shift, and go to state 7
+    $default  reduce using rule 40 (Chapterlist)
 
-    Body  go to state 8
+    Body         go to state 7
+    Chapterlist  go to state 8
 
 
 state 4
@@ -464,38 +466,46 @@ state 6
 
 state 7
 
-   37 Body: BBODY . Chapterlist ENDARG
+    1 Report: FrontMatter Body . '$'
 
-    $default  reduce using rule 40 (Chapterlist)
-
-    Chapterlist  go to state 12
+    '$'  shift, and go to state 12
 
 
 state 8
 
-    1 Report: FrontMatter Body . '$'
+   37 Body: Chapterlist .
+   38 Chapterlist: Chapterlist . Chapter
+   39            | Chapterlist . Section
 
-    '$'  shift, and go to state 13
+    BCHAP  shift, and go to state 13
+    BSEC   shift, and go to state 14
+
+    $default  reduce using rule 37 (Body)
+
+    Chapter  go to state 15
+    C_Title  go to state 16
+    Section  go to state 17
+    S_Title  go to state 18
 
 
 state 9
 
     4 SubTitle: BSTITLE . TEXT ENDARG
 
-    TEXT  shift, and go to state 14
+    TEXT  shift, and go to state 19
 
 
 state 10
 
     2 FrontMatter: Title SubTitle . Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot
 
-    BAUTHOR  shift, and go to state 15
+    BAUTHOR  shift, and go to state 20
 
     $default  reduce using rule 7 (Authors)
 
-    Authors  go to state 16
-    Author   go to state 17
-    Bauthor  go to state 18
+    Authors  go to state 21
+    Author   go to state 22
+    Bauthor  go to state 23
 
 
 state 11
@@ -507,1361 +517,1520 @@ state 11
 
 state 12
 
-   37 Body: BBODY Chapterlist . ENDARG
-   38 Chapterlist: Chapterlist . Chapter
-   39            | Chapterlist . Section
-
-    ENDARG  shift, and go to state 19
-    BCHAP   shift, and go to state 20
-    BSEC    shift, and go to state 21
-
-    Chapter  go to state 22
-    C_Title  go to state 23
-    Section  go to state 24
-    S_Title  go to state 25
-
-
-state 13
-
     1 Report: FrontMatter Body '$' .
 
     $default  reduce using rule 1 (Report)
 
 
-state 14
-
-    4 SubTitle: BSTITLE TEXT . ENDARG
-
-    ENDARG  shift, and go to state 26
-
-
-state 15
-
-    9 Bauthor: BAUTHOR .
-
-    $default  reduce using rule 9 (Bauthor)
-
-
-state 16
-
-    2 FrontMatter: Title SubTitle Authors . Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot
-
-    BDATE  shift, and go to state 27
-
-    Date  go to state 28
-
-
-state 17
-
-    6 Authors: Author . Authors
-
-    BAUTHOR  shift, and go to state 15
-
-    $default  reduce using rule 7 (Authors)
-
-    Authors  go to state 29
-    Author   go to state 17
-    Bauthor  go to state 18
-
-
-state 18
-
-    8 Author: Bauthor . Name AuthorOPT ENDARG
-
-    TEXT  shift, and go to state 30
-
-    Name  go to state 31
-
-
-state 19
-
-   37 Body: BBODY Chapterlist ENDARG .
-
-    $default  reduce using rule 37 (Body)
-
-
-state 20
+state 13
 
    42 C_Title: BCHAP . TEXT ENDARG
 
-    TEXT  shift, and go to state 32
+    TEXT  shift, and go to state 24
 
 
-state 21
+state 14
 
    44 S_Title: BSEC . TEXT ENDARG
 
-    TEXT  shift, and go to state 33
+    TEXT  shift, and go to state 25
 
 
-state 22
+state 15
 
    38 Chapterlist: Chapterlist Chapter .
 
     $default  reduce using rule 38 (Chapterlist)
 
 
-state 23
+state 16
 
    41 Chapter: C_Title . BEGI ElemList ENDARG
 
-    BEGI  shift, and go to state 34
+    BEGI  shift, and go to state 26
 
 
-state 24
+state 17
 
    39 Chapterlist: Chapterlist Section .
 
     $default  reduce using rule 39 (Chapterlist)
 
 
-state 25
+state 18
 
    43 Section: S_Title . BEGI ElemList ENDBLOCK
 
-    BEGI  shift, and go to state 35
+    BEGI  shift, and go to state 27
+
+
+state 19
+
+    4 SubTitle: BSTITLE TEXT . ENDARG
+
+    ENDARG  shift, and go to state 28
+
+
+state 20
+
+    9 Bauthor: BAUTHOR .
+
+    $default  reduce using rule 9 (Bauthor)
+
+
+state 21
+
+    2 FrontMatter: Title SubTitle Authors . Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot
+
+    BDATE  shift, and go to state 29
+
+    Date  go to state 30
+
+
+state 22
+
+    6 Authors: Author . Authors
+
+    BAUTHOR  shift, and go to state 20
+
+    $default  reduce using rule 7 (Authors)
+
+    Authors  go to state 31
+    Author   go to state 22
+    Bauthor  go to state 23
+
+
+state 23
+
+    8 Author: Bauthor . Name AuthorOPT ENDARG
+
+    TEXT  shift, and go to state 32
+
+    Name  go to state 33
+
+
+state 24
+
+   42 C_Title: BCHAP TEXT . ENDARG
+
+    ENDARG  shift, and go to state 34
+
+
+state 25
+
+   44 S_Title: BSEC TEXT . ENDARG
+
+    ENDARG  shift, and go to state 35
 
 
 state 26
+
+   41 Chapter: C_Title BEGI . ElemList ENDARG
+
+    BCODE     shift, and go to state 36
+    BSEC      shift, and go to state 14
+    BParag    shift, and go to state 37
+    BSUMMARY  shift, and go to state 38
+    BFig      shift, and go to state 39
+    BENUM     shift, and go to state 40
+    BItemize  shift, and go to state 41
+    BTAB      shift, and go to state 42
+
+    Section    go to state 43
+    S_Title    go to state 18
+    ElemList   go to state 44
+    Elem       go to state 45
+    CodeBlock  go to state 46
+    Paragraph  go to state 47
+    Summary    go to state 48
+    Float      go to state 49
+    Figure     go to state 50
+    List       go to state 51
+    Enumerate  go to state 52
+    Itemize    go to state 53
+    TABELA     go to state 54
+
+
+state 27
+
+   43 Section: S_Title BEGI . ElemList ENDBLOCK
+
+    BCODE     shift, and go to state 36
+    BSEC      shift, and go to state 14
+    BParag    shift, and go to state 37
+    BSUMMARY  shift, and go to state 38
+    BFig      shift, and go to state 39
+    BENUM     shift, and go to state 40
+    BItemize  shift, and go to state 41
+    BTAB      shift, and go to state 42
+
+    Section    go to state 43
+    S_Title    go to state 18
+    ElemList   go to state 55
+    Elem       go to state 45
+    CodeBlock  go to state 46
+    Paragraph  go to state 47
+    Summary    go to state 48
+    Float      go to state 49
+    Figure     go to state 50
+    List       go to state 51
+    Enumerate  go to state 52
+    Itemize    go to state 53
+    TABELA     go to state 54
+
+
+state 28
 
     4 SubTitle: BSTITLE TEXT ENDARG .
 
     $default  reduce using rule 4 (SubTitle)
 
 
-state 27
+state 29
 
    24 Date: BDATE .
 
     $default  reduce using rule 24 (Date)
 
 
-state 28
+state 30
 
     2 FrontMatter: Title SubTitle Authors Date . Instituition Keywords Abstract Aknowledgements Toc Lof Lot
 
-    BINST  shift, and go to state 36
+    BINST  shift, and go to state 56
 
     $default  reduce using rule 26 (Instituition)
 
-    Instituition  go to state 37
+    Instituition  go to state 57
 
 
-state 29
+state 31
 
     6 Authors: Author Authors .
 
     $default  reduce using rule 6 (Authors)
 
 
-state 30
+state 32
 
    10 Name: TEXT .
 
     $default  reduce using rule 10 (Name)
 
 
-state 31
+state 33
 
     8 Author: Bauthor Name . AuthorOPT ENDARG
 
-    SEP  shift, and go to state 38
+    SEP  shift, and go to state 58
 
     $default  reduce using rule 15 (AuthorOPT)
 
-    AuthorOPT  go to state 39
-
-
-state 32
-
-   42 C_Title: BCHAP TEXT . ENDARG
-
-    ENDARG  shift, and go to state 40
-
-
-state 33
-
-   44 S_Title: BSEC TEXT . ENDARG
-
-    ENDARG  shift, and go to state 41
+    AuthorOPT  go to state 59
 
 
 state 34
-
-   41 Chapter: C_Title BEGI . ElemList ENDARG
-
-    BCODE     shift, and go to state 42
-    BSEC      shift, and go to state 21
-    BParag    shift, and go to state 43
-    BSUMMARY  shift, and go to state 44
-    BFig      shift, and go to state 45
-    BENUM     shift, and go to state 46
-    BItemize  shift, and go to state 47
-    BTAB      shift, and go to state 48
-
-    Section    go to state 49
-    S_Title    go to state 25
-    ElemList   go to state 50
-    Elem       go to state 51
-    CodeBlock  go to state 52
-    Paragraph  go to state 53
-    Summary    go to state 54
-    Float      go to state 55
-    Figure     go to state 56
-    List       go to state 57
-    Enumerate  go to state 58
-    Itemize    go to state 59
-    TABELA     go to state 60
-
-
-state 35
-
-   43 Section: S_Title BEGI . ElemList ENDBLOCK
-
-    BCODE     shift, and go to state 42
-    BSEC      shift, and go to state 21
-    BParag    shift, and go to state 43
-    BSUMMARY  shift, and go to state 44
-    BFig      shift, and go to state 45
-    BENUM     shift, and go to state 46
-    BItemize  shift, and go to state 47
-    BTAB      shift, and go to state 48
-
-    Section    go to state 49
-    S_Title    go to state 25
-    ElemList   go to state 61
-    Elem       go to state 51
-    CodeBlock  go to state 52
-    Paragraph  go to state 53
-    Summary    go to state 54
-    Float      go to state 55
-    Figure     go to state 56
-    List       go to state 57
-    Enumerate  go to state 58
-    Itemize    go to state 59
-    TABELA     go to state 60
-
-
-state 36
-
-   25 Instituition: BINST . TEXT ENDARG
-
-    TEXT  shift, and go to state 62
-
-
-state 37
-
-    2 FrontMatter: Title SubTitle Authors Date Instituition . Keywords Abstract Aknowledgements Toc Lof Lot
-
-    BKEY  shift, and go to state 63
-
-    $default  reduce using rule 28 (Keywords)
-
-    Keywords  go to state 64
-
-
-state 38
-
-   11 AuthorOPT: SEP . Nident AuthorOPT
-   12          | SEP . Url AuthorOPT
-   13          | SEP . Email AuthorOPT
-   14          | SEP . Affilliation AuthorOPT
-
-    TEXT   shift, and go to state 65
-    NID    shift, and go to state 66
-    EMAIL  shift, and go to state 67
-    URL    shift, and go to state 68
-
-    Nident        go to state 69
-    Email         go to state 70
-    Url           go to state 71
-    Affilliation  go to state 72
-
-
-state 39
-
-    8 Author: Bauthor Name AuthorOPT . ENDARG
-
-    ENDARG  shift, and go to state 73
-
-
-state 40
 
    42 C_Title: BCHAP TEXT ENDARG .
 
     $default  reduce using rule 42 (C_Title)
 
 
-state 41
+state 35
 
    44 S_Title: BSEC TEXT ENDARG .
 
     $default  reduce using rule 44 (S_Title)
 
 
-state 42
+state 36
 
    53 CodeBlock: BCODE . CodeB ENDBLOCK
 
-    CodeB  shift, and go to state 74
+    CodeB  shift, and go to state 60
 
 
-state 43
+state 37
 
    54 Paragraph: BParag . ParaContend ENDARG
 
     $default  reduce using rule 57 (ParaContend)
 
-    ParaContend  go to state 75
+    ParaContend  go to state 61
 
 
-state 44
+state 38
 
    83 Summary: BSUMMARY . BTEXT ENDARG
 
-    BTEXT  shift, and go to state 76
+    BTEXT  shift, and go to state 62
 
 
-state 45
+state 39
 
    93 Figure: BFig . Image Caption ENDARG
 
-    BImg  shift, and go to state 77
+    BImg  shift, and go to state 63
 
-    Image  go to state 78
+    Image  go to state 64
 
 
-state 46
+state 40
 
    98 Enumerate: BENUM . C_ENUM ENDARG
 
     $default  reduce using rule 101 (C_ENUM)
 
-    C_ENUM  go to state 79
+    C_ENUM  go to state 65
 
 
-state 47
+state 41
 
   102 Itemize: BItemize . C_Item ENDARG
 
     $default  reduce using rule 105 (C_Item)
 
-    C_Item  go to state 80
+    C_Item  go to state 66
 
 
-state 48
+state 42
 
   107 TABELA: BTAB . Caption C_Tabela ENDARG
 
-    BCAP  shift, and go to state 81
+    BCAP  shift, and go to state 67
 
-    Caption  go to state 82
+    Caption  go to state 68
 
 
-state 49
+state 43
 
    49 Elem: Section .
 
     $default  reduce using rule 49 (Elem)
 
 
-state 50
+state 44
 
    41 Chapter: C_Title BEGI ElemList . ENDARG
    45 ElemList: ElemList . Elem
 
-    ENDARG    shift, and go to state 83
-    BCODE     shift, and go to state 42
-    BSEC      shift, and go to state 21
-    BParag    shift, and go to state 43
-    BSUMMARY  shift, and go to state 44
-    BFig      shift, and go to state 45
-    BENUM     shift, and go to state 46
-    BItemize  shift, and go to state 47
-    BTAB      shift, and go to state 48
+    ENDARG    shift, and go to state 69
+    BCODE     shift, and go to state 36
+    BSEC      shift, and go to state 14
+    BParag    shift, and go to state 37
+    BSUMMARY  shift, and go to state 38
+    BFig      shift, and go to state 39
+    BENUM     shift, and go to state 40
+    BItemize  shift, and go to state 41
+    BTAB      shift, and go to state 42
 
-    Section    go to state 49
-    S_Title    go to state 25
-    Elem       go to state 84
-    CodeBlock  go to state 52
-    Paragraph  go to state 53
-    Summary    go to state 54
-    Float      go to state 55
-    Figure     go to state 56
-    List       go to state 57
-    Enumerate  go to state 58
-    Itemize    go to state 59
-    TABELA     go to state 60
+    Section    go to state 43
+    S_Title    go to state 18
+    Elem       go to state 70
+    CodeBlock  go to state 46
+    Paragraph  go to state 47
+    Summary    go to state 48
+    Float      go to state 49
+    Figure     go to state 50
+    List       go to state 51
+    Enumerate  go to state 52
+    Itemize    go to state 53
+    TABELA     go to state 54
 
 
-state 51
+state 45
 
    46 ElemList: Elem .
 
     $default  reduce using rule 46 (ElemList)
 
 
-state 52
+state 46
 
    47 Elem: CodeBlock .
 
     $default  reduce using rule 47 (Elem)
 
 
-state 53
+state 47
 
    48 Elem: Paragraph .
 
     $default  reduce using rule 48 (Elem)
 
 
-state 54
+state 48
 
    50 Elem: Summary .
 
     $default  reduce using rule 50 (Elem)
 
 
-state 55
+state 49
 
    51 Elem: Float .
 
     $default  reduce using rule 51 (Elem)
 
 
-state 56
+state 50
 
    91 Float: Figure .
 
     $default  reduce using rule 91 (Float)
 
 
-state 57
+state 51
 
    52 Elem: List .
 
     $default  reduce using rule 52 (Elem)
 
 
-state 58
+state 52
 
    96 List: Enumerate .
 
     $default  reduce using rule 96 (List)
 
 
-state 59
+state 53
 
    97 List: Itemize .
 
     $default  reduce using rule 97 (List)
 
 
-state 60
+state 54
 
    92 Float: TABELA .
 
     $default  reduce using rule 92 (Float)
 
 
-state 61
+state 55
 
    43 Section: S_Title BEGI ElemList . ENDBLOCK
    45 ElemList: ElemList . Elem
 
-    ENDBLOCK  shift, and go to state 85
-    BCODE     shift, and go to state 42
-    BSEC      shift, and go to state 21
-    BParag    shift, and go to state 43
-    BSUMMARY  shift, and go to state 44
-    BFig      shift, and go to state 45
-    BENUM     shift, and go to state 46
-    BItemize  shift, and go to state 47
-    BTAB      shift, and go to state 48
+    ENDBLOCK  shift, and go to state 71
+    BCODE     shift, and go to state 36
+    BSEC      shift, and go to state 14
+    BParag    shift, and go to state 37
+    BSUMMARY  shift, and go to state 38
+    BFig      shift, and go to state 39
+    BENUM     shift, and go to state 40
+    BItemize  shift, and go to state 41
+    BTAB      shift, and go to state 42
 
-    Section    go to state 49
-    S_Title    go to state 25
-    Elem       go to state 84
-    CodeBlock  go to state 52
-    Paragraph  go to state 53
-    Summary    go to state 54
-    Float      go to state 55
-    Figure     go to state 56
-    List       go to state 57
-    Enumerate  go to state 58
-    Itemize    go to state 59
-    TABELA     go to state 60
-
-
-state 62
-
-   25 Instituition: BINST TEXT . ENDARG
-
-    ENDARG  shift, and go to state 86
+    Section    go to state 43
+    S_Title    go to state 18
+    Elem       go to state 70
+    CodeBlock  go to state 46
+    Paragraph  go to state 47
+    Summary    go to state 48
+    Float      go to state 49
+    Figure     go to state 50
+    List       go to state 51
+    Enumerate  go to state 52
+    Itemize    go to state 53
+    TABELA     go to state 54
 
 
-state 63
+state 56
 
-   27 Keywords: BKEY . Keys ENDARG
+   25 Instituition: BINST . TEXT ENDARG
 
-    TEXT  shift, and go to state 87
-
-    Keys  go to state 88
+    TEXT  shift, and go to state 72
 
 
-state 64
+state 57
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords . Abstract Aknowledgements Toc Lof Lot
+    2 FrontMatter: Title SubTitle Authors Date Instituition . Keywords Abstract Aknowledgements Toc Lof Lot
 
-    BABS  shift, and go to state 89
+    BKEY  shift, and go to state 73
 
-    Abstract  go to state 90
+    $default  reduce using rule 28 (Keywords)
 
-
-state 65
-
-   19 Affilliation: TEXT .
-
-    $default  reduce using rule 19 (Affilliation)
+    Keywords  go to state 74
 
 
-state 66
+state 58
 
-   16 Nident: NID .
+   11 AuthorOPT: SEP . Nident AuthorOPT
+   12          | SEP . Url AuthorOPT
+   13          | SEP . Email AuthorOPT
+   14          | SEP . Affilliation AuthorOPT
 
-    $default  reduce using rule 16 (Nident)
+    TEXT   shift, and go to state 75
+    NID    shift, and go to state 76
+    EMAIL  shift, and go to state 77
+    URL    shift, and go to state 78
 
-
-state 67
-
-   17 Email: EMAIL .
-
-    $default  reduce using rule 17 (Email)
-
-
-state 68
-
-   18 Url: URL .
-
-    $default  reduce using rule 18 (Url)
+    Nident        go to state 79
+    Email         go to state 80
+    Url           go to state 81
+    Affilliation  go to state 82
 
 
-state 69
+state 59
 
-   11 AuthorOPT: SEP Nident . AuthorOPT
+    8 Author: Bauthor Name AuthorOPT . ENDARG
 
-    SEP  shift, and go to state 38
-
-    $default  reduce using rule 15 (AuthorOPT)
-
-    AuthorOPT  go to state 91
+    ENDARG  shift, and go to state 83
 
 
-state 70
-
-   13 AuthorOPT: SEP Email . AuthorOPT
-
-    SEP  shift, and go to state 38
-
-    $default  reduce using rule 15 (AuthorOPT)
-
-    AuthorOPT  go to state 92
-
-
-state 71
-
-   12 AuthorOPT: SEP Url . AuthorOPT
-
-    SEP  shift, and go to state 38
-
-    $default  reduce using rule 15 (AuthorOPT)
-
-    AuthorOPT  go to state 93
-
-
-state 72
-
-   14 AuthorOPT: SEP Affilliation . AuthorOPT
-
-    SEP  shift, and go to state 38
-
-    $default  reduce using rule 15 (AuthorOPT)
-
-    AuthorOPT  go to state 94
-
-
-state 73
-
-    8 Author: Bauthor Name AuthorOPT ENDARG .
-
-    $default  reduce using rule 8 (Author)
-
-
-state 74
+state 60
 
    53 CodeBlock: BCODE CodeB . ENDBLOCK
 
-    ENDBLOCK  shift, and go to state 95
+    ENDBLOCK  shift, and go to state 84
 
 
-state 75
+state 61
 
    54 Paragraph: BParag ParaContend . ENDARG
    55 ParaContend: ParaContend . TEXT_V
    56            | ParaContend . FreeElem
 
-    ENDARG      shift, and go to state 96
-    BCiteR      shift, and go to state 97
-    BIterm      shift, and go to state 98
-    BXREF       shift, and go to state 99
-    BFoteN      shift, and go to state 100
-    BAcronym    shift, and go to state 101
-    BLineCode   shift, and go to state 102
-    BREF        shift, and go to state 103
-    TEXT_V      shift, and go to state 104
-    BBOLD       shift, and go to state 105
-    BUnderLine  shift, and go to state 106
-    BItalic     shift, and go to state 107
+    ENDARG      shift, and go to state 85
+    BCiteR      shift, and go to state 86
+    BIterm      shift, and go to state 87
+    BXREF       shift, and go to state 88
+    BFoteN      shift, and go to state 89
+    BAcronym    shift, and go to state 90
+    BLineCode   shift, and go to state 91
+    BREF        shift, and go to state 92
+    TEXT_V      shift, and go to state 93
+    BBOLD       shift, and go to state 94
+    BUnderLine  shift, and go to state 95
+    BItalic     shift, and go to state 96
 
-    FreeElem    go to state 108
-    Bold        go to state 109
-    Italic      go to state 110
-    Underline   go to state 111
-    Ref         go to state 112
-    Xref        go to state 113
-    CitRef      go to state 114
-    Iterm       go to state 115
-    FootNote    go to state 116
-    InlineCode  go to state 117
-    Acronym     go to state 118
+    FreeElem    go to state 97
+    Bold        go to state 98
+    Italic      go to state 99
+    Underline   go to state 100
+    Ref         go to state 101
+    Xref        go to state 102
+    CitRef      go to state 103
+    Iterm       go to state 104
+    FootNote    go to state 105
+    InlineCode  go to state 106
+    Acronym     go to state 107
 
 
-state 76
+state 62
 
    83 Summary: BSUMMARY BTEXT . ENDARG
 
-    ENDARG  shift, and go to state 119
+    ENDARG  shift, and go to state 108
 
 
-state 77
+state 63
 
    94 Image: BImg . Path ENDARG
 
-    Path  shift, and go to state 120
+    Path  shift, and go to state 109
 
 
-state 78
+state 64
 
    93 Figure: BFig Image . Caption ENDARG
 
-    BCAP  shift, and go to state 81
+    BCAP  shift, and go to state 67
 
-    Caption  go to state 121
+    Caption  go to state 110
 
 
-state 79
+state 65
 
    98 Enumerate: BENUM C_ENUM . ENDARG
    99 C_ENUM: C_ENUM . Item
   100       | C_ENUM . Itemize
 
-    ENDARG    shift, and go to state 122
-    BItemize  shift, and go to state 47
-    BItem     shift, and go to state 123
+    ENDARG    shift, and go to state 111
+    BItemize  shift, and go to state 41
+    BItem     shift, and go to state 112
 
-    Itemize  go to state 124
-    Item     go to state 125
+    Itemize  go to state 113
+    Item     go to state 114
 
 
-state 80
+state 66
 
   102 Itemize: BItemize C_Item . ENDARG
   103 C_Item: C_Item . Item
   104       | C_Item . Enumerate
 
-    ENDARG  shift, and go to state 126
-    BENUM   shift, and go to state 46
-    BItem   shift, and go to state 123
+    ENDARG  shift, and go to state 115
+    BENUM   shift, and go to state 40
+    BItem   shift, and go to state 112
 
-    Enumerate  go to state 127
-    Item       go to state 128
+    Enumerate  go to state 116
+    Item       go to state 117
 
 
-state 81
+state 67
 
    95 Caption: BCAP . TEXT ENDARG
 
-    TEXT  shift, and go to state 129
+    TEXT  shift, and go to state 118
 
 
-state 82
+state 68
 
   107 TABELA: BTAB Caption . C_Tabela ENDARG
 
-    BLinha  shift, and go to state 130
+    BLinha  shift, and go to state 119
 
-    C_Tabela  go to state 131
-    Linha     go to state 132
+    C_Tabela  go to state 120
+    Linha     go to state 121
 
 
-state 83
+state 69
 
    41 Chapter: C_Title BEGI ElemList ENDARG .
 
     $default  reduce using rule 41 (Chapter)
 
 
-state 84
+state 70
 
    45 ElemList: ElemList Elem .
 
     $default  reduce using rule 45 (ElemList)
 
 
-state 85
+state 71
 
    43 Section: S_Title BEGI ElemList ENDBLOCK .
 
     $default  reduce using rule 43 (Section)
 
 
-state 86
+state 72
 
-   25 Instituition: BINST TEXT ENDARG .
+   25 Instituition: BINST TEXT . ENDARG
 
-    $default  reduce using rule 25 (Instituition)
-
-
-state 87
-
-   30 Keys: TEXT .
-
-    $default  reduce using rule 30 (Keys)
+    ENDARG  shift, and go to state 122
 
 
-state 88
+state 73
 
-   27 Keywords: BKEY Keys . ENDARG
-   29 Keys: Keys . SEP TEXT
+   27 Keywords: BKEY . Keys ENDARG
 
-    ENDARG  shift, and go to state 133
-    SEP     shift, and go to state 134
+    TEXT  shift, and go to state 123
 
-
-state 89
-
-   20 Abstract: BABS . ParaList ENDBLOCK
-
-    BParag  shift, and go to state 43
-
-    ParaList   go to state 135
-    Paragraph  go to state 136
+    Keys  go to state 124
 
 
-state 90
+state 74
 
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract . Aknowledgements Toc Lof Lot
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords . Abstract Aknowledgements Toc Lof Lot
 
-    BAKNOW  shift, and go to state 137
+    BABS  shift, and go to state 125
 
-    Aknowledgements  go to state 138
-
-
-state 91
-
-   11 AuthorOPT: SEP Nident AuthorOPT .
-
-    $default  reduce using rule 11 (AuthorOPT)
+    Abstract  go to state 126
 
 
-state 92
+state 75
 
-   13 AuthorOPT: SEP Email AuthorOPT .
+   19 Affilliation: TEXT .
 
-    $default  reduce using rule 13 (AuthorOPT)
-
-
-state 93
-
-   12 AuthorOPT: SEP Url AuthorOPT .
-
-    $default  reduce using rule 12 (AuthorOPT)
+    $default  reduce using rule 19 (Affilliation)
 
 
-state 94
+state 76
 
-   14 AuthorOPT: SEP Affilliation AuthorOPT .
+   16 Nident: NID .
 
-    $default  reduce using rule 14 (AuthorOPT)
+    $default  reduce using rule 16 (Nident)
 
 
-state 95
+state 77
+
+   17 Email: EMAIL .
+
+    $default  reduce using rule 17 (Email)
+
+
+state 78
+
+   18 Url: URL .
+
+    $default  reduce using rule 18 (Url)
+
+
+state 79
+
+   11 AuthorOPT: SEP Nident . AuthorOPT
+
+    SEP  shift, and go to state 58
+
+    $default  reduce using rule 15 (AuthorOPT)
+
+    AuthorOPT  go to state 127
+
+
+state 80
+
+   13 AuthorOPT: SEP Email . AuthorOPT
+
+    SEP  shift, and go to state 58
+
+    $default  reduce using rule 15 (AuthorOPT)
+
+    AuthorOPT  go to state 128
+
+
+state 81
+
+   12 AuthorOPT: SEP Url . AuthorOPT
+
+    SEP  shift, and go to state 58
+
+    $default  reduce using rule 15 (AuthorOPT)
+
+    AuthorOPT  go to state 129
+
+
+state 82
+
+   14 AuthorOPT: SEP Affilliation . AuthorOPT
+
+    SEP  shift, and go to state 58
+
+    $default  reduce using rule 15 (AuthorOPT)
+
+    AuthorOPT  go to state 130
+
+
+state 83
+
+    8 Author: Bauthor Name AuthorOPT ENDARG .
+
+    $default  reduce using rule 8 (Author)
+
+
+state 84
 
    53 CodeBlock: BCODE CodeB ENDBLOCK .
 
     $default  reduce using rule 53 (CodeBlock)
 
 
-state 96
+state 85
 
    54 Paragraph: BParag ParaContend ENDARG .
 
     $default  reduce using rule 54 (Paragraph)
 
 
-state 97
+state 86
 
    86 CitRef: BCiteR . BTEXT ENDARG
 
-    BTEXT  shift, and go to state 139
+    BTEXT  shift, and go to state 131
 
 
-state 98
+state 87
 
    87 Iterm: BIterm . BTEXT ENDARG
 
-    BTEXT  shift, and go to state 140
+    BTEXT  shift, and go to state 132
 
 
-state 99
+state 88
 
    85 Xref: BXREF . BTEXT ENDARG
 
-    BTEXT  shift, and go to state 141
+    BTEXT  shift, and go to state 133
 
 
-state 100
+state 89
 
    88 FootNote: BFoteN . BTEXT ENDARG
 
-    BTEXT  shift, and go to state 142
+    BTEXT  shift, and go to state 134
 
 
-state 101
+state 90
 
    90 Acronym: BAcronym . BTEXT ENDARG
 
-    BTEXT  shift, and go to state 143
+    BTEXT  shift, and go to state 135
 
 
-state 102
+state 91
 
    89 InlineCode: BLineCode . BTEXT ENDARG
 
-    BTEXT  shift, and go to state 144
+    BTEXT  shift, and go to state 136
 
 
-state 103
+state 92
 
    84 Ref: BREF . BTEXT ENDARG
 
-    BTEXT  shift, and go to state 145
+    BTEXT  shift, and go to state 137
 
 
-state 104
+state 93
 
    55 ParaContend: ParaContend TEXT_V .
 
     $default  reduce using rule 55 (ParaContend)
 
 
-state 105
+state 94
 
    68 Bold: BBOLD . BCont ENDARG
 
     $default  reduce using rule 72 (BCont)
 
-    BCont  go to state 146
+    BCont  go to state 138
 
 
-state 106
+state 95
 
    78 Underline: BUnderLine . UCont ENDARG
 
     $default  reduce using rule 82 (UCont)
 
-    UCont  go to state 147
+    UCont  go to state 139
 
 
-state 107
+state 96
 
    73 Italic: BItalic . ICont ENDARG
 
     $default  reduce using rule 77 (ICont)
 
-    ICont  go to state 148
+    ICont  go to state 140
 
 
-state 108
+state 97
 
    56 ParaContend: ParaContend FreeElem .
 
     $default  reduce using rule 56 (ParaContend)
 
 
-state 109
+state 98
 
    63 FreeElem: Bold .
 
     $default  reduce using rule 63 (FreeElem)
 
 
-state 110
+state 99
 
    64 FreeElem: Italic .
 
     $default  reduce using rule 64 (FreeElem)
 
 
-state 111
+state 100
 
    65 FreeElem: Underline .
 
     $default  reduce using rule 65 (FreeElem)
 
 
-state 112
+state 101
 
    59 FreeElem: Ref .
 
     $default  reduce using rule 59 (FreeElem)
 
 
-state 113
+state 102
 
    60 FreeElem: Xref .
 
     $default  reduce using rule 60 (FreeElem)
 
 
-state 114
+state 103
 
    61 FreeElem: CitRef .
 
     $default  reduce using rule 61 (FreeElem)
 
 
-state 115
+state 104
 
    62 FreeElem: Iterm .
 
     $default  reduce using rule 62 (FreeElem)
 
 
-state 116
+state 105
 
    58 FreeElem: FootNote .
 
     $default  reduce using rule 58 (FreeElem)
 
 
-state 117
+state 106
 
    66 FreeElem: InlineCode .
 
     $default  reduce using rule 66 (FreeElem)
 
 
-state 118
+state 107
 
    67 FreeElem: Acronym .
 
     $default  reduce using rule 67 (FreeElem)
 
 
-state 119
+state 108
 
    83 Summary: BSUMMARY BTEXT ENDARG .
 
     $default  reduce using rule 83 (Summary)
 
 
-state 120
+state 109
 
    94 Image: BImg Path . ENDARG
 
-    ENDARG  shift, and go to state 149
+    ENDARG  shift, and go to state 141
 
 
-state 121
+state 110
 
    93 Figure: BFig Image Caption . ENDARG
 
-    ENDARG  shift, and go to state 150
+    ENDARG  shift, and go to state 142
 
 
-state 122
+state 111
 
    98 Enumerate: BENUM C_ENUM ENDARG .
 
     $default  reduce using rule 98 (Enumerate)
 
 
-state 123
+state 112
 
   106 Item: BItem . ParaContend ENDARG
 
     $default  reduce using rule 57 (ParaContend)
 
-    ParaContend  go to state 151
+    ParaContend  go to state 143
 
 
-state 124
+state 113
 
   100 C_ENUM: C_ENUM Itemize .
 
     $default  reduce using rule 100 (C_ENUM)
 
 
-state 125
+state 114
 
    99 C_ENUM: C_ENUM Item .
 
     $default  reduce using rule 99 (C_ENUM)
 
 
-state 126
+state 115
 
   102 Itemize: BItemize C_Item ENDARG .
 
     $default  reduce using rule 102 (Itemize)
 
 
-state 127
+state 116
 
   104 C_Item: C_Item Enumerate .
 
     $default  reduce using rule 104 (C_Item)
 
 
-state 128
+state 117
 
   103 C_Item: C_Item Item .
 
     $default  reduce using rule 103 (C_Item)
 
 
-state 129
+state 118
 
    95 Caption: BCAP TEXT . ENDARG
 
-    ENDARG  shift, and go to state 152
+    ENDARG  shift, and go to state 144
 
 
-state 130
+state 119
 
   110 Linha: BLinha . Celulas ENDBLOCK
 
-    BCel  shift, and go to state 153
+    BCel  shift, and go to state 145
 
-    Celulas  go to state 154
-    Cel      go to state 155
+    Celulas  go to state 146
+    Cel      go to state 147
 
 
-state 131
+state 120
 
   107 TABELA: BTAB Caption C_Tabela . ENDARG
   108 C_Tabela: C_Tabela . Linha
 
-    ENDARG  shift, and go to state 156
-    BLinha  shift, and go to state 130
+    ENDARG  shift, and go to state 148
+    BLinha  shift, and go to state 119
 
-    Linha  go to state 157
+    Linha  go to state 149
 
 
-state 132
+state 121
 
   109 C_Tabela: Linha .
 
     $default  reduce using rule 109 (C_Tabela)
 
 
+state 122
+
+   25 Instituition: BINST TEXT ENDARG .
+
+    $default  reduce using rule 25 (Instituition)
+
+
+state 123
+
+   30 Keys: TEXT .
+
+    $default  reduce using rule 30 (Keys)
+
+
+state 124
+
+   27 Keywords: BKEY Keys . ENDARG
+   29 Keys: Keys . SEP TEXT
+
+    ENDARG  shift, and go to state 150
+    SEP     shift, and go to state 151
+
+
+state 125
+
+   20 Abstract: BABS . ParaList ENDBLOCK
+
+    BParag  shift, and go to state 37
+
+    ParaList   go to state 152
+    Paragraph  go to state 153
+
+
+state 126
+
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract . Aknowledgements Toc Lof Lot
+
+    BAKNOW  shift, and go to state 154
+
+    Aknowledgements  go to state 155
+
+
+state 127
+
+   11 AuthorOPT: SEP Nident AuthorOPT .
+
+    $default  reduce using rule 11 (AuthorOPT)
+
+
+state 128
+
+   13 AuthorOPT: SEP Email AuthorOPT .
+
+    $default  reduce using rule 13 (AuthorOPT)
+
+
+state 129
+
+   12 AuthorOPT: SEP Url AuthorOPT .
+
+    $default  reduce using rule 12 (AuthorOPT)
+
+
+state 130
+
+   14 AuthorOPT: SEP Affilliation AuthorOPT .
+
+    $default  reduce using rule 14 (AuthorOPT)
+
+
+state 131
+
+   86 CitRef: BCiteR BTEXT . ENDARG
+
+    ENDARG  shift, and go to state 156
+
+
+state 132
+
+   87 Iterm: BIterm BTEXT . ENDARG
+
+    ENDARG  shift, and go to state 157
+
+
 state 133
 
-   27 Keywords: BKEY Keys ENDARG .
+   85 Xref: BXREF BTEXT . ENDARG
 
-    $default  reduce using rule 27 (Keywords)
+    ENDARG  shift, and go to state 158
 
 
 state 134
 
-   29 Keys: Keys SEP . TEXT
+   88 FootNote: BFoteN BTEXT . ENDARG
 
-    TEXT  shift, and go to state 158
+    ENDARG  shift, and go to state 159
 
 
 state 135
 
-   20 Abstract: BABS ParaList . ENDBLOCK
+   90 Acronym: BAcronym BTEXT . ENDARG
 
-    ENDBLOCK  shift, and go to state 159
+    ENDARG  shift, and go to state 160
 
 
 state 136
 
-   22 ParaList: Paragraph . BREAK ParaList
-   23         | Paragraph .
+   89 InlineCode: BLineCode BTEXT . ENDARG
 
-    BREAK  shift, and go to state 160
-
-    $default  reduce using rule 23 (ParaList)
+    ENDARG  shift, and go to state 161
 
 
 state 137
 
-   21 Aknowledgements: BAKNOW . ParaList ENDBLOCK
+   84 Ref: BREF BTEXT . ENDARG
 
-    BParag  shift, and go to state 43
-
-    ParaList   go to state 161
-    Paragraph  go to state 136
+    ENDARG  shift, and go to state 162
 
 
 state 138
-
-    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements . Toc Lof Lot
-
-    BTOC  shift, and go to state 162
-
-    $default  reduce using rule 32 (Toc)
-
-    Toc  go to state 163
-
-
-state 139
-
-   86 CitRef: BCiteR BTEXT . ENDARG
-
-    ENDARG  shift, and go to state 164
-
-
-state 140
-
-   87 Iterm: BIterm BTEXT . ENDARG
-
-    ENDARG  shift, and go to state 165
-
-
-state 141
-
-   85 Xref: BXREF BTEXT . ENDARG
-
-    ENDARG  shift, and go to state 166
-
-
-state 142
-
-   88 FootNote: BFoteN BTEXT . ENDARG
-
-    ENDARG  shift, and go to state 167
-
-
-state 143
-
-   90 Acronym: BAcronym BTEXT . ENDARG
-
-    ENDARG  shift, and go to state 168
-
-
-state 144
-
-   89 InlineCode: BLineCode BTEXT . ENDARG
-
-    ENDARG  shift, and go to state 169
-
-
-state 145
-
-   84 Ref: BREF BTEXT . ENDARG
-
-    ENDARG  shift, and go to state 170
-
-
-state 146
 
    68 Bold: BBOLD BCont . ENDARG
    69 BCont: BCont . TEXT
    70      | BCont . Italic
    71      | BCont . Underline
 
-    TEXT        shift, and go to state 171
-    ENDARG      shift, and go to state 172
-    BUnderLine  shift, and go to state 106
-    BItalic     shift, and go to state 107
+    TEXT        shift, and go to state 163
+    ENDARG      shift, and go to state 164
+    BUnderLine  shift, and go to state 95
+    BItalic     shift, and go to state 96
 
-    Italic     go to state 173
-    Underline  go to state 174
+    Italic     go to state 165
+    Underline  go to state 166
 
 
-state 147
+state 139
 
    78 Underline: BUnderLine UCont . ENDARG
    79 UCont: UCont . TEXT
    80      | UCont . Bold
    81      | UCont . Italic
 
-    TEXT     shift, and go to state 175
-    ENDARG   shift, and go to state 176
-    BBOLD    shift, and go to state 105
-    BItalic  shift, and go to state 107
+    TEXT     shift, and go to state 167
+    ENDARG   shift, and go to state 168
+    BBOLD    shift, and go to state 94
+    BItalic  shift, and go to state 96
 
-    Bold    go to state 177
-    Italic  go to state 178
+    Bold    go to state 169
+    Italic  go to state 170
 
 
-state 148
+state 140
 
    73 Italic: BItalic ICont . ENDARG
    74 ICont: ICont . TEXT
    75      | ICont . Bold
    76      | ICont . Underline
 
-    TEXT        shift, and go to state 179
-    ENDARG      shift, and go to state 180
-    BBOLD       shift, and go to state 105
-    BUnderLine  shift, and go to state 106
+    TEXT        shift, and go to state 171
+    ENDARG      shift, and go to state 172
+    BBOLD       shift, and go to state 94
+    BUnderLine  shift, and go to state 95
 
-    Bold       go to state 181
-    Underline  go to state 182
+    Bold       go to state 173
+    Underline  go to state 174
 
 
-state 149
+state 141
 
    94 Image: BImg Path ENDARG .
 
     $default  reduce using rule 94 (Image)
 
 
-state 150
+state 142
 
    93 Figure: BFig Image Caption ENDARG .
 
     $default  reduce using rule 93 (Figure)
 
 
-state 151
+state 143
 
    55 ParaContend: ParaContend . TEXT_V
    56            | ParaContend . FreeElem
   106 Item: BItem ParaContend . ENDARG
 
-    ENDARG      shift, and go to state 183
-    BCiteR      shift, and go to state 97
-    BIterm      shift, and go to state 98
-    BXREF       shift, and go to state 99
-    BFoteN      shift, and go to state 100
-    BAcronym    shift, and go to state 101
-    BLineCode   shift, and go to state 102
-    BREF        shift, and go to state 103
-    TEXT_V      shift, and go to state 104
-    BBOLD       shift, and go to state 105
-    BUnderLine  shift, and go to state 106
-    BItalic     shift, and go to state 107
+    ENDARG      shift, and go to state 175
+    BCiteR      shift, and go to state 86
+    BIterm      shift, and go to state 87
+    BXREF       shift, and go to state 88
+    BFoteN      shift, and go to state 89
+    BAcronym    shift, and go to state 90
+    BLineCode   shift, and go to state 91
+    BREF        shift, and go to state 92
+    TEXT_V      shift, and go to state 93
+    BBOLD       shift, and go to state 94
+    BUnderLine  shift, and go to state 95
+    BItalic     shift, and go to state 96
 
-    FreeElem    go to state 108
-    Bold        go to state 109
-    Italic      go to state 110
-    Underline   go to state 111
-    Ref         go to state 112
-    Xref        go to state 113
-    CitRef      go to state 114
-    Iterm       go to state 115
-    FootNote    go to state 116
-    InlineCode  go to state 117
-    Acronym     go to state 118
+    FreeElem    go to state 97
+    Bold        go to state 98
+    Italic      go to state 99
+    Underline   go to state 100
+    Ref         go to state 101
+    Xref        go to state 102
+    CitRef      go to state 103
+    Iterm       go to state 104
+    FootNote    go to state 105
+    InlineCode  go to state 106
+    Acronym     go to state 107
 
 
-state 152
+state 144
 
    95 Caption: BCAP TEXT ENDARG .
 
     $default  reduce using rule 95 (Caption)
 
 
-state 153
+state 145
 
   113 Cel: BCel . OPT_Cel ENDARG '{' ParaContend '}'
 
-    DIM  shift, and go to state 184
-    POS  shift, and go to state 185
+    DIM  shift, and go to state 176
+    POS  shift, and go to state 177
 
     $default  reduce using rule 117 (OPT_Cel_um)
 
-    OPT_Cel     go to state 186
-    OPT_Cel_um  go to state 187
+    OPT_Cel     go to state 178
+    OPT_Cel_um  go to state 179
 
 
-state 154
+state 146
 
   110 Linha: BLinha Celulas . ENDBLOCK
   111 Celulas: Celulas . Cel
 
-    ENDBLOCK  shift, and go to state 188
-    BCel      shift, and go to state 153
+    ENDBLOCK  shift, and go to state 180
+    BCel      shift, and go to state 145
 
-    Cel  go to state 189
+    Cel  go to state 181
 
 
-state 155
+state 147
 
   112 Celulas: Cel .
 
     $default  reduce using rule 112 (Celulas)
 
 
-state 156
+state 148
 
   107 TABELA: BTAB Caption C_Tabela ENDARG .
 
     $default  reduce using rule 107 (TABELA)
 
 
-state 157
+state 149
 
   108 C_Tabela: C_Tabela Linha .
 
     $default  reduce using rule 108 (C_Tabela)
 
 
+state 150
+
+   27 Keywords: BKEY Keys ENDARG .
+
+    $default  reduce using rule 27 (Keywords)
+
+
+state 151
+
+   29 Keys: Keys SEP . TEXT
+
+    TEXT  shift, and go to state 182
+
+
+state 152
+
+   20 Abstract: BABS ParaList . ENDBLOCK
+
+    ENDBLOCK  shift, and go to state 183
+
+
+state 153
+
+   22 ParaList: Paragraph . BREAK ParaList
+   23         | Paragraph .
+
+    BREAK  shift, and go to state 184
+
+    $default  reduce using rule 23 (ParaList)
+
+
+state 154
+
+   21 Aknowledgements: BAKNOW . ParaList ENDBLOCK
+
+    BParag  shift, and go to state 37
+
+    ParaList   go to state 185
+    Paragraph  go to state 153
+
+
+state 155
+
+    2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements . Toc Lof Lot
+
+    BTOC  shift, and go to state 186
+
+    $default  reduce using rule 32 (Toc)
+
+    Toc  go to state 187
+
+
+state 156
+
+   86 CitRef: BCiteR BTEXT ENDARG .
+
+    $default  reduce using rule 86 (CitRef)
+
+
+state 157
+
+   87 Iterm: BIterm BTEXT ENDARG .
+
+    $default  reduce using rule 87 (Iterm)
+
+
 state 158
+
+   85 Xref: BXREF BTEXT ENDARG .
+
+    $default  reduce using rule 85 (Xref)
+
+
+state 159
+
+   88 FootNote: BFoteN BTEXT ENDARG .
+
+    $default  reduce using rule 88 (FootNote)
+
+
+state 160
+
+   90 Acronym: BAcronym BTEXT ENDARG .
+
+    $default  reduce using rule 90 (Acronym)
+
+
+state 161
+
+   89 InlineCode: BLineCode BTEXT ENDARG .
+
+    $default  reduce using rule 89 (InlineCode)
+
+
+state 162
+
+   84 Ref: BREF BTEXT ENDARG .
+
+    $default  reduce using rule 84 (Ref)
+
+
+state 163
+
+   69 BCont: BCont TEXT .
+
+    $default  reduce using rule 69 (BCont)
+
+
+state 164
+
+   68 Bold: BBOLD BCont ENDARG .
+
+    $default  reduce using rule 68 (Bold)
+
+
+state 165
+
+   70 BCont: BCont Italic .
+
+    $default  reduce using rule 70 (BCont)
+
+
+state 166
+
+   71 BCont: BCont Underline .
+
+    $default  reduce using rule 71 (BCont)
+
+
+state 167
+
+   79 UCont: UCont TEXT .
+
+    $default  reduce using rule 79 (UCont)
+
+
+state 168
+
+   78 Underline: BUnderLine UCont ENDARG .
+
+    $default  reduce using rule 78 (Underline)
+
+
+state 169
+
+   80 UCont: UCont Bold .
+
+    $default  reduce using rule 80 (UCont)
+
+
+state 170
+
+   81 UCont: UCont Italic .
+
+    $default  reduce using rule 81 (UCont)
+
+
+state 171
+
+   74 ICont: ICont TEXT .
+
+    $default  reduce using rule 74 (ICont)
+
+
+state 172
+
+   73 Italic: BItalic ICont ENDARG .
+
+    $default  reduce using rule 73 (Italic)
+
+
+state 173
+
+   75 ICont: ICont Bold .
+
+    $default  reduce using rule 75 (ICont)
+
+
+state 174
+
+   76 ICont: ICont Underline .
+
+    $default  reduce using rule 76 (ICont)
+
+
+state 175
+
+  106 Item: BItem ParaContend ENDARG .
+
+    $default  reduce using rule 106 (Item)
+
+
+state 176
+
+  116 OPT_Cel_um: DIM .
+
+    $default  reduce using rule 116 (OPT_Cel_um)
+
+
+state 177
+
+  114 OPT_Cel: POS . SEP OPT_Cel_um
+
+    SEP  shift, and go to state 188
+
+
+state 178
+
+  113 Cel: BCel OPT_Cel . ENDARG '{' ParaContend '}'
+
+    ENDARG  shift, and go to state 189
+
+
+state 179
+
+  115 OPT_Cel: OPT_Cel_um .
+
+    $default  reduce using rule 115 (OPT_Cel)
+
+
+state 180
+
+  110 Linha: BLinha Celulas ENDBLOCK .
+
+    $default  reduce using rule 110 (Linha)
+
+
+state 181
+
+  111 Celulas: Celulas Cel .
+
+    $default  reduce using rule 111 (Celulas)
+
+
+state 182
 
    29 Keys: Keys SEP TEXT .
 
     $default  reduce using rule 29 (Keys)
 
 
-state 159
+state 183
 
    20 Abstract: BABS ParaList ENDBLOCK .
 
     $default  reduce using rule 20 (Abstract)
 
 
-state 160
+state 184
 
    22 ParaList: Paragraph BREAK . ParaList
 
-    BParag  shift, and go to state 43
+    BParag  shift, and go to state 37
 
     ParaList   go to state 190
-    Paragraph  go to state 136
+    Paragraph  go to state 153
 
 
-state 161
+state 185
 
    21 Aknowledgements: BAKNOW ParaList . ENDBLOCK
 
     ENDBLOCK  shift, and go to state 191
 
 
-state 162
+state 186
 
    31 Toc: BTOC .
 
     $default  reduce using rule 31 (Toc)
 
 
-state 163
+state 187
 
     2 FrontMatter: Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc . Lof Lot
 
@@ -1872,186 +2041,22 @@ state 163
     Lof  go to state 193
 
 
-state 164
-
-   86 CitRef: BCiteR BTEXT ENDARG .
-
-    $default  reduce using rule 86 (CitRef)
-
-
-state 165
-
-   87 Iterm: BIterm BTEXT ENDARG .
-
-    $default  reduce using rule 87 (Iterm)
-
-
-state 166
-
-   85 Xref: BXREF BTEXT ENDARG .
-
-    $default  reduce using rule 85 (Xref)
-
-
-state 167
-
-   88 FootNote: BFoteN BTEXT ENDARG .
-
-    $default  reduce using rule 88 (FootNote)
-
-
-state 168
-
-   90 Acronym: BAcronym BTEXT ENDARG .
-
-    $default  reduce using rule 90 (Acronym)
-
-
-state 169
-
-   89 InlineCode: BLineCode BTEXT ENDARG .
-
-    $default  reduce using rule 89 (InlineCode)
-
-
-state 170
-
-   84 Ref: BREF BTEXT ENDARG .
-
-    $default  reduce using rule 84 (Ref)
-
-
-state 171
-
-   69 BCont: BCont TEXT .
-
-    $default  reduce using rule 69 (BCont)
-
-
-state 172
-
-   68 Bold: BBOLD BCont ENDARG .
-
-    $default  reduce using rule 68 (Bold)
-
-
-state 173
-
-   70 BCont: BCont Italic .
-
-    $default  reduce using rule 70 (BCont)
-
-
-state 174
-
-   71 BCont: BCont Underline .
-
-    $default  reduce using rule 71 (BCont)
-
-
-state 175
-
-   79 UCont: UCont TEXT .
-
-    $default  reduce using rule 79 (UCont)
-
-
-state 176
-
-   78 Underline: BUnderLine UCont ENDARG .
-
-    $default  reduce using rule 78 (Underline)
-
-
-state 177
-
-   80 UCont: UCont Bold .
-
-    $default  reduce using rule 80 (UCont)
-
-
-state 178
-
-   81 UCont: UCont Italic .
-
-    $default  reduce using rule 81 (UCont)
-
-
-state 179
-
-   74 ICont: ICont TEXT .
-
-    $default  reduce using rule 74 (ICont)
-
-
-state 180
-
-   73 Italic: BItalic ICont ENDARG .
-
-    $default  reduce using rule 73 (Italic)
-
-
-state 181
-
-   75 ICont: ICont Bold .
-
-    $default  reduce using rule 75 (ICont)
-
-
-state 182
-
-   76 ICont: ICont Underline .
-
-    $default  reduce using rule 76 (ICont)
-
-
-state 183
-
-  106 Item: BItem ParaContend ENDARG .
-
-    $default  reduce using rule 106 (Item)
-
-
-state 184
-
-  116 OPT_Cel_um: DIM .
-
-    $default  reduce using rule 116 (OPT_Cel_um)
-
-
-state 185
-
-  114 OPT_Cel: POS . SEP OPT_Cel_um
-
-    SEP  shift, and go to state 194
-
-
-state 186
-
-  113 Cel: BCel OPT_Cel . ENDARG '{' ParaContend '}'
-
-    ENDARG  shift, and go to state 195
-
-
-state 187
-
-  115 OPT_Cel: OPT_Cel_um .
-
-    $default  reduce using rule 115 (OPT_Cel)
-
-
 state 188
 
-  110 Linha: BLinha Celulas ENDBLOCK .
+  114 OPT_Cel: POS SEP . OPT_Cel_um
 
-    $default  reduce using rule 110 (Linha)
+    DIM  shift, and go to state 176
+
+    $default  reduce using rule 117 (OPT_Cel_um)
+
+    OPT_Cel_um  go to state 194
 
 
 state 189
 
-  111 Celulas: Celulas Cel .
+  113 Cel: BCel OPT_Cel ENDARG . '{' ParaContend '}'
 
-    $default  reduce using rule 111 (Celulas)
+    '{'  shift, and go to state 195
 
 
 state 190
@@ -2088,20 +2093,18 @@ state 193
 
 state 194
 
-  114 OPT_Cel: POS SEP . OPT_Cel_um
+  114 OPT_Cel: POS SEP OPT_Cel_um .
 
-    DIM  shift, and go to state 184
-
-    $default  reduce using rule 117 (OPT_Cel_um)
-
-    OPT_Cel_um  go to state 198
+    $default  reduce using rule 114 (OPT_Cel)
 
 
 state 195
 
-  113 Cel: BCel OPT_Cel ENDARG . '{' ParaContend '}'
+  113 Cel: BCel OPT_Cel ENDARG '{' . ParaContend '}'
 
-    '{'  shift, and go to state 199
+    $default  reduce using rule 57 (ParaContend)
+
+    ParaContend  go to state 198
 
 
 state 196
@@ -2120,53 +2123,37 @@ state 197
 
 state 198
 
-  114 OPT_Cel: POS SEP OPT_Cel_um .
-
-    $default  reduce using rule 114 (OPT_Cel)
-
-
-state 199
-
-  113 Cel: BCel OPT_Cel ENDARG '{' . ParaContend '}'
-
-    $default  reduce using rule 57 (ParaContend)
-
-    ParaContend  go to state 200
-
-
-state 200
-
    55 ParaContend: ParaContend . TEXT_V
    56            | ParaContend . FreeElem
   113 Cel: BCel OPT_Cel ENDARG '{' ParaContend . '}'
 
-    BCiteR      shift, and go to state 97
-    BIterm      shift, and go to state 98
-    BXREF       shift, and go to state 99
-    BFoteN      shift, and go to state 100
-    BAcronym    shift, and go to state 101
-    BLineCode   shift, and go to state 102
-    BREF        shift, and go to state 103
-    TEXT_V      shift, and go to state 104
-    BBOLD       shift, and go to state 105
-    BUnderLine  shift, and go to state 106
-    BItalic     shift, and go to state 107
-    '}'         shift, and go to state 201
+    BCiteR      shift, and go to state 86
+    BIterm      shift, and go to state 87
+    BXREF       shift, and go to state 88
+    BFoteN      shift, and go to state 89
+    BAcronym    shift, and go to state 90
+    BLineCode   shift, and go to state 91
+    BREF        shift, and go to state 92
+    TEXT_V      shift, and go to state 93
+    BBOLD       shift, and go to state 94
+    BUnderLine  shift, and go to state 95
+    BItalic     shift, and go to state 96
+    '}'         shift, and go to state 199
 
-    FreeElem    go to state 108
-    Bold        go to state 109
-    Italic      go to state 110
-    Underline   go to state 111
-    Ref         go to state 112
-    Xref        go to state 113
-    CitRef      go to state 114
-    Iterm       go to state 115
-    FootNote    go to state 116
-    InlineCode  go to state 117
-    Acronym     go to state 118
+    FreeElem    go to state 97
+    Bold        go to state 98
+    Italic      go to state 99
+    Underline   go to state 100
+    Ref         go to state 101
+    Xref        go to state 102
+    CitRef      go to state 103
+    Iterm       go to state 104
+    FootNote    go to state 105
+    InlineCode  go to state 106
+    Acronym     go to state 107
 
 
-state 201
+state 199
 
   113 Cel: BCel OPT_Cel ENDARG '{' ParaContend '}' .
 

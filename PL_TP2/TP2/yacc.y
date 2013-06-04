@@ -9,8 +9,10 @@ Autor autor;
 %}
 
 
-%token arg id email url sep
+%token arg id email url sep texto codigo
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
+%token BSUMMARY BBOLD BParag BREF BCODE BIterm BFoteN BLineCode BUnderLine BAcronym 
+%token BItalic BXREF BCiteR BCHAP
 %token IFIGURE ITABLE
 
 %type<valS> arg id email url sep
@@ -24,7 +26,7 @@ Autor autor;
 
 %%
 
-Report : FrontMatter '$' {return 0;};
+Report : FrontMatter Body'$' {return 0;};
 
 FrontMatter : Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice;
 
@@ -90,6 +92,10 @@ Aknowledgements : BAKNOW '{' ParaList '}'
 				|
 				; 
 
+ParaList : ParaList Paragraph ;
+		 | Paragraph 
+		 ;
+
 Indice : Toc ;
 
 Toc : BINDICE '(' ')' Lof
@@ -102,10 +108,95 @@ Lot : BINDICE '(' ITABLE ')'
 	|
 	;
 
+//---------------------------------
 
 
-//CONCLUIR
-ParaList : ;
+Body: ChapterList;
+
+ChapterList	: ChapterList Chapter
+			| Chapter
+			;
+
+Chapter : C_Title '{' ElemList '}';
+
+C_Title : BCHAP  '('  texto ')';
+
+ElemList:  ElemList Elem
+		|  Elem
+		;
+
+Elem 	: CodeBlock 
+		| Paragraph
+	//	| Section	
+		| Summary 
+	//	| Float 		
+	//	| List
+		;	
+
+CodeBlock: BCODE '{' codigo '}';
+
+Paragraph:	BParag	'(' ParaContend ')' ;
+
+ParaContend	: ParaContend texto
+			| ParaContend FreeElem	
+			|
+			;
+
+FreeElem	: FootNote
+			| Ref
+			| Xref
+			| CitRef
+			| Iterm
+			| Bold
+			| Italic
+			| Underline
+			| InlineCode
+			| Acronym
+			;
+
+Summary: BSUMMARY '(' texto ')' ;
+
+Ref : BREF '(' texto ')';
+
+Xref: BXREF '(' texto ')';
+
+CitRef	: BCiteR '(' texto ')';
+
+Iterm	: BIterm '(' texto ')';
+
+FootNote: BFoteN '(' texto ')';
+
+InlineCode: BLineCode '(' texto ')';
+
+Acronym	: BAcronym '(' texto ')';
+
+Bold: BBOLD '(' BCont ')'
+
+BCont	: BCont texto
+		| BCont Italic
+		| BCont Underline
+		|
+		;
+
+Italic: BItalic '(' ICont ')'
+
+ICont	: ICont texto
+		| ICont Bold
+		| ICont Underline
+		|
+		;
+
+Underline: BUnderLine '(' UCont ')'
+
+UCont	: UCont texto
+		| UCont Bold
+		| UCont Italic
+		|
+		;
+
+
+
+
 
 
 
@@ -129,20 +220,6 @@ int main()
   	
 
 
-
-	//Inicializações
-/*
-	report.indice = 0;
-	report.indice_fig = 0;
-	report.indice_tab = 0;
-	report.html=init(sizeof(char*),NULL);
-	report.latex=init(sizeof(char*),NULL);
-	report.seccoes=init(sizeof(char*),NULL);
-	report.autores=init(sizeof(Autor),NULL);
-
-
-  	geraHTML(&report,NULL);
-  	geraLATEX(&report,NULL);*/
   	return 0;
 }
 
