@@ -153,6 +153,7 @@
 //VARIAVEIS GLOBAIS
 Report report;
 Autor autor;
+List* chars;
 
 
 /* Enabling traces.  */
@@ -175,13 +176,13 @@ Autor autor;
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 20 "yacc.y"
+#line 21 "yacc.y"
 {
 	char* valS;
 	int valI;
 }
 /* Line 193 of yacc.c.  */
-#line 185 "y.tab.c"
+#line 186 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -194,7 +195,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 198 "y.tab.c"
+#line 199 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -516,16 +517,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    29,    29,    31,    33,    35,    36,    38,    39,    42,
-      44,    46,    49,    50,    53,    54,    57,    58,    61,    62,
-      65,    67,    69,    71,    73,    75,    76,    79,    80,    83,
-      84,    87,    89,    91,    92,    95,    96,    99,   101,   102,
-     104,   105,   107,   108,   114,   116,   117,   120,   122,   124,
-     125,   128,   129,   131,   136,   138,   140,   141,   142,   145,
-     146,   147,   148,   149,   150,   151,   152,   153,   154,   157,
-     159,   161,   163,   165,   167,   169,   171,   173,   175,   176,
-     177,   178,   181,   183,   184,   185,   186,   189,   191,   192,
-     193,   194
+       0,    30,    30,    32,    34,    36,    37,    39,    40,    43,
+      45,    47,    50,    51,    54,    55,    58,    59,    62,    63,
+      66,    68,    70,    72,    74,    76,    77,    80,    81,    84,
+      85,    88,    90,    92,    93,    96,    97,   100,   102,   103,
+     105,   106,   108,   109,   115,   117,   118,   121,   123,   125,
+     126,   129,   130,   132,   137,   139,   141,   142,   143,   146,
+     147,   148,   149,   150,   151,   152,   153,   154,   155,   158,
+     160,   162,   164,   166,   168,   170,   172,   174,   176,   177,
+     178,   179,   182,   184,   185,   186,   187,   190,   192,   193,
+     194,   195
 };
 #endif
 
@@ -1554,93 +1555,93 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 29 "yacc.y"
+#line 30 "yacc.y"
     {return 0;}
     break;
 
   case 4:
-#line 33 "yacc.y"
+#line 34 "yacc.y"
     {addTitulo(&report, (yyvsp[(3) - (4)].valS));}
     break;
 
   case 5:
-#line 35 "yacc.y"
+#line 36 "yacc.y"
     {addSTitulo(&report, (yyvsp[(3) - (4)].valS));}
     break;
 
   case 7:
-#line 38 "yacc.y"
-    {addAutor(&report,&autor);}
-    break;
-
-  case 8:
 #line 39 "yacc.y"
     {addAutor(&report,&autor);}
     break;
 
+  case 8:
+#line 40 "yacc.y"
+    {addAutor(&report,&autor);}
+    break;
+
   case 10:
-#line 44 "yacc.y"
+#line 45 "yacc.y"
     {autor = init_Autor();}
     break;
 
   case 11:
-#line 46 "yacc.y"
+#line 47 "yacc.y"
     {autor.anome = (yyvsp[(1) - (1)].valS);}
     break;
 
   case 20:
-#line 65 "yacc.y"
+#line 66 "yacc.y"
     {autor.aid = (yyvsp[(2) - (2)].valS);}
     break;
 
   case 21:
-#line 67 "yacc.y"
+#line 68 "yacc.y"
     {autor.aemail = (yyvsp[(2) - (2)].valS);}
     break;
 
   case 22:
-#line 69 "yacc.y"
+#line 70 "yacc.y"
     {autor.aurl = (yyvsp[(2) - (2)].valS);}
     break;
 
   case 23:
-#line 71 "yacc.y"
+#line 72 "yacc.y"
     {autor.aaffil = (yyvsp[(2) - (2)].valS);}
     break;
 
   case 24:
-#line 73 "yacc.y"
+#line 74 "yacc.y"
     {report.data = 1;}
     break;
 
   case 25:
-#line 75 "yacc.y"
+#line 76 "yacc.y"
     {report.inst = (yyvsp[(3) - (4)].valS);}
     break;
 
   case 31:
-#line 87 "yacc.y"
+#line 88 "yacc.y"
     {addKey(&report,(yyvsp[(1) - (1)].valS));}
     break;
 
   case 38:
-#line 101 "yacc.y"
+#line 102 "yacc.y"
     {report.indice = 1;}
     break;
 
   case 40:
-#line 104 "yacc.y"
+#line 105 "yacc.y"
     {report.indice_fig = 1;}
     break;
 
   case 42:
-#line 107 "yacc.y"
+#line 108 "yacc.y"
     {report.indice_tab = 1;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1644 "y.tab.c"
+#line 1645 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1854,7 +1855,7 @@ yyreturn:
 }
 
 
-#line 204 "yacc.y"
+#line 205 "yacc.y"
 
 
 

@@ -6,6 +6,7 @@
 //VARIAVEIS GLOBAIS
 Report report;
 Autor autor;
+List* chars;
 %}
 
 
