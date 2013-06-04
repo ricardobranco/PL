@@ -81,356 +81,398 @@ Grammar
    42 Lot: BINDICE '(' ITABLE ')'
    43    | /* empty */
 
-   44 Body: ChapterList
+   44 Body: BBody ChapterList
 
-   45 ChapterList: ChapterList Chapter
-   46            | Chapter
+   45 BBody: /* empty */
 
-   47 Chapter: C_Title '{' ElemList '}'
+   46 ChapterList: ChapterList Chapter
+   47            | Chapter
 
-   48 C_Title: BCHAP '(' texto ')'
+   48 Chapter: C_Title '{' ElemList '}'
 
-   49 ElemList: ElemList Elem
-   50         | Elem
+   49 C_Title: BCHAP '(' texto ')'
 
-   51 Elem: CodeBlock
-   52     | Paragraph
-   53     | Section
-   54     | Summary
-   55     | Float
-   56     | List
+   50 ElemList: ElemList Elem
+   51         | Elem
 
-   57 CodeBlock: BCODE '{' codigo '}'
+   52 Elem: CodeBlock
+   53     | Paragraph
+   54     | Section
+   55     | Summary
+   56     | Float
+   57     | List
 
-   58 Section: S_Title '{' ElemList '}'
+   58 CodeBlock: BCODE '{' codigo '}'
 
-   59 S_Title: BSEC '(' texto ')'
+   59 Section: S_Title '{' ElemList '}'
 
-   60 Paragraph: BParag '{' ParaContend '}'
+   60 S_Title: BSEC '(' texto ')'
 
-   61 ParaContend: ParaContend texto
-   62            | ParaContend FreeElem
-   63            | /* empty */
+   61 Paragraph: BParag '{' ParaContend '}'
 
-   64 FreeElem: FootNote
-   65         | Ref
-   66         | Xref
-   67         | CitRef
-   68         | Href
-   69         | Iterm
-   70         | Bold
-   71         | Italic
-   72         | Underline
-   73         | InlineCode
-   74         | Acronym
+   62 BParag: BPARAG
 
-   75 Summary: BSUMMARY '(' texto ')'
+   63 ParaContend: ParaContend texto
+   64            | ParaContend FreeElem
+   65            | /* empty */
 
-   76 Ref: BREF '(' texto sep texto ')'
+   66 FreeElem: FootNote
+   67         | Ref
+   68         | Xref
+   69         | CitRef
+   70         | Href
+   71         | Iterm
+   72         | Bold
+   73         | Italic
+   74         | Underline
+   75         | InlineCode
+   76         | Acronym
 
-   77 Href: BHREF '(' texto sep url ')'
+   77 Summary: BSUMMARY '(' texto ')'
 
-   78 Xref: BXREF '(' texto ')'
+   78 Ref: BREF '(' texto sep texto ')'
 
-   79 CitRef: BCiteR '(' texto ')'
+   79 Href: BHREF '(' texto sep url ')'
 
-   80 Iterm: BIterm '(' texto ')'
+   80 Xref: BXREF '(' texto ')'
 
-   81 FootNote: BFoteN '(' texto ')'
+   81 CitRef: BCiteR '(' texto ')'
 
-   82 InlineCode: BLineCode '(' texto ')'
+   82 Iterm: BIterm '(' texto ')'
 
-   83 Acronym: BAcronym '(' texto ')'
+   83 FootNote: BFoteN '(' texto ')'
 
-   84 Bold: BBOLD '(' BCont ')'
+   84 InlineCode: BLineCode '(' linha ')'
 
-   85 BCont: BCont texto
-   86      | BCont Italic
-   87      | BCont Underline
-   88      | /* empty */
+   85 Acronym: BAcronym '(' texto ')'
 
-   89 Italic: BItalic '(' ICont ')'
+   86 Bold: Bbold '(' BCont ')'
 
-   90 ICont: ICont texto
-   91      | ICont Bold
-   92      | ICont Underline
-   93      | /* empty */
+   87 Bbold: BBOLD
 
-   94 Underline: BUnderLine '(' UCont ')'
+   88 BCont: BCont texto
+   89      | BCont Italic
+   90      | BCont Underline
+   91      | /* empty */
 
-   95 UCont: UCont texto
-   96      | UCont Bold
-   97      | UCont Italic
-   98      | /* empty */
+   92 Italic: BItalic '(' ICont ')'
 
-   99 Float: Figure
-  100      | TABELA
+   93 BItalic: BITALIC
 
-  101 Figure: BFig '(' Image Caption ')'
+   94 ICont: ICont texto
+   95      | ICont Bold
+   96      | ICont Underline
+   97      | /* empty */
 
-  102 Image: BImg '(' Path ')'
+   98 Underline: BUnderLine '(' UCont ')'
 
-  103 Path: texto
+   99 BUnderLine: BUNDERLINE
 
-  104 Caption: BCAP '(' texto ')'
+  100 UCont: UCont texto
+  101      | UCont Bold
+  102      | UCont Italic
+  103      | /* empty */
 
-  105 List: Enumerate
-  106     | Itemize
+  104 Float: Figure
+  105      | Table
 
-  107 Enumerate: BENUM '(' C_ENUM ')'
+  106 Figure: BFig '(' Image Caption ')'
 
-  108 C_ENUM: C_ENUM Item
-  109       | C_ENUM Itemize
-  110       | /* empty */
+  107 BFig: BFIG
 
-  111 Itemize: BItemize '(' C_Item ')'
+  108 Image: BImg '(' Path ')'
 
-  112 C_Item: C_Item Item
-  113       | C_Item Enumerate
-  114       | /* empty */
+  109 Path: texto
 
-  115 Item: BItem '(' ParaContend ')'
+  110 Caption: BCAP '(' texto ')'
 
-  116 TABELA: BTAB '(' Caption C_Tabela ')'
+  111 List: Enumerate
+  112     | Itemize
 
-  117 C_Tabela: C_Tabela Linha
-  118         | Linha
+  113 Enumerate: BENUM '(' C_ENUM ')'
 
-  119 Linha: BLinha '{' Celulas '}'
+  114 C_ENUM: C_ENUM Item
+  115       | C_ENUM Itemize
+  116       | /* empty */
 
-  120 Celulas: Celulas Cel
-  121        | Cel
+  117 Itemize: BItemize '(' C_Item ')'
 
-  122 Cel: BCel '(' OPT_Cel ')' '{' ParaContend '}'
+  118 C_Item: C_Item Item
+  119       | C_Item Enumerate
+  120       | /* empty */
 
-  123 OPT_Cel: POS sep OPT_Cel_um
-  124        | OPT_Cel_um
+  121 Item: BItem '(' ParaContend ')'
 
-  125 POS: carater
+  122 Table: BTab '(' T_Caption C_Tabela ')'
 
-  126 OPT_Cel_um: DIM
-  127           | /* empty */
+  123 T_Caption: BCAP '(' texto ')'
 
-  128 DIM: inteiro
+  124 BTab: BTAB
+
+  125 C_Tabela: C_Tabela Linha
+  126         | Linha
+
+  127 Linha: BLinha '{' Celulas '}'
+
+  128 BLinha: BLINHA
+
+  129 Celulas: Celulas Cel
+  130        | Cel
+
+  131 Cel: BCel '(' OPT_Cel ')' '{' texto '}'
+
+  132 BCel: BCEL
+
+  133 OPT_Cel: POS sep OPT_Cel_um
+  134        | OPT_Cel_um
+
+  135 POS: carater
+
+  136 OPT_Cel_um: Dim
+  137           | /* empty */
+
+  138 Dim: inteiro
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 '$' (36) 1
-'(' (40) 4 5 9 24 25 27 38 40 42 48 59 75 76 77 78 79 80 81 82 83 84
-    89 94 101 102 104 107 111 115 116 122
-')' (41) 4 5 9 24 25 27 38 40 42 48 59 75 76 77 78 79 80 81 82 83 84
-    89 94 101 102 104 107 111 115 116 122
-'{' (123) 32 33 47 57 58 60 119 122
-'}' (125) 32 33 47 57 58 60 119 122
+'(' (40) 4 5 9 24 25 27 38 40 42 49 60 77 78 79 80 81 82 83 84 85 86
+    92 98 106 108 110 113 117 121 122 123 131
+')' (41) 4 5 9 24 25 27 38 40 42 49 60 77 78 79 80 81 82 83 84 85 86
+    92 98 106 108 110 113 117 121 122 123 131
+'{' (123) 32 33 48 58 59 61 127 131
+'}' (125) 32 33 48 58 59 61 127 131
 error (256)
 arg (258) 4 5 11 23 25 31
 id (259) 20
 email (260) 21
-url (261) 22 77
-sep (262) 20 21 22 23 29 76 77 123
-texto (263) 48 59 61 75 76 77 78 79 80 81 82 83 85 90 95 103 104
-codigo (264) 57
-carater (265) 125
-inteiro (266) 128
-BTITLE (267) 4
-BSTITLE (268) 5
-BAUTHOR (269) 10
-BURL (270)
-BAFFIL (271)
-BEMAIL (272)
-BDATE (273) 24
-BINST (274) 25
-BKEY (275) 27
-BABS (276) 32
-BAKNOW (277) 33
-BINDICE (278) 38 40 42
-BSUMMARY (279) 75
-BBOLD (280) 84
-BParag (281) 60
-BREF (282) 76
-BCODE (283) 57
-BIterm (284) 80
-BFoteN (285) 81
-BLineCode (286) 82
-BUnderLine (287) 94
-BAcronym (288) 83
-BItalic (289) 89
-BXREF (290) 78
-BHREF (291) 77
-BCiteR (292) 79
-BCHAP (293) 48
-BSEC (294) 59
-BFig (295) 101
-BImg (296) 102
-BENUM (297) 107
-BCAP (298) 104
-BLinha (299) 119
-BItem (300) 115
-BTAB (301) 116
-BCel (302) 122
-BItemize (303) 111
-IFIGURE (304) 40
-ITABLE (305) 42
+url (261) 22 79
+sep (262) 20 21 22 23 29 78 79 133
+texto (263) 49 60 63 77 78 79 80 81 82 83 85 88 94 100 109 110 123
+    131
+codigo (264) 58
+carater (265) 135
+inteiro (266) 138
+linha (267) 84
+BTITLE (268) 4
+BSTITLE (269) 5
+BAUTHOR (270) 10
+BURL (271)
+BAFFIL (272)
+BEMAIL (273)
+BDATE (274) 24
+BINST (275) 25
+BKEY (276) 27
+BABS (277) 32
+BAKNOW (278) 33
+BINDICE (279) 38 40 42
+BSUMMARY (280) 77
+BBOLD (281) 87
+BPARAG (282) 62
+BREF (283) 78
+BCODE (284) 58
+BIterm (285) 82
+BFoteN (286) 83
+BLineCode (287) 84
+BUNDERLINE (288) 99
+BAcronym (289) 85
+BITALIC (290) 93
+BXREF (291) 80
+BHREF (292) 79
+BCiteR (293) 81
+BCHAP (294) 49
+BSEC (295) 60
+BFIG (296) 107
+BImg (297) 108
+BENUM (298) 113
+BCAP (299) 110 123
+BLINHA (300) 128
+BItem (301) 121
+BTAB (302) 124
+BCEL (303) 132
+BItemize (304) 117
+IFIGURE (305) 40
+ITABLE (306) 42
 
 
 Nonterminals, with rules where they appear
 
-$accept (56)
+$accept (57)
     on left: 0
-Report (57)
+Report (58)
     on left: 1, on right: 0
-FrontMatter (58)
+FrontMatter (59)
     on left: 2, on right: 1
-BFMatter (59)
+BFMatter (60)
     on left: 3, on right: 2
-Title (60)
+Title (61)
     on left: 4, on right: 2
-STitle (61)
+STitle (62)
     on left: 5 6, on right: 2
-Authores (62)
+Authores (63)
     on left: 7 8, on right: 2 7
-Author (63)
+Author (64)
     on left: 9, on right: 7 8
-Bauthor (64)
+Bauthor (65)
     on left: 10, on right: 9
-Nome (65)
+Nome (66)
     on left: 11, on right: 9
-OPT_Author (66)
+OPT_Author (67)
     on left: 12 13, on right: 9
-OPT_A_UM (67)
+OPT_A_UM (68)
     on left: 14 15, on right: 12 13
-OPT_A_Dois (68)
+OPT_A_Dois (69)
     on left: 16 17, on right: 14 15
-OPT_A_Tres (69)
+OPT_A_Tres (70)
     on left: 18 19, on right: 16 17
-Nident (70)
+Nident (71)
     on left: 20, on right: 12
-Email (71)
+Email (72)
     on left: 21, on right: 14
-Url (72)
+Url (73)
     on left: 22, on right: 16
-Affiliation (73)
+Affiliation (74)
     on left: 23, on right: 18
-Date (74)
+Date (75)
     on left: 24, on right: 2
-Institution (75)
+Institution (76)
     on left: 25 26, on right: 2
-Keywords (76)
+Keywords (77)
     on left: 27 28, on right: 2
-Keys (77)
+Keys (78)
     on left: 29 30, on right: 27 29
-Key (78)
+Key (79)
     on left: 31, on right: 29 30
-Abstract (79)
+Abstract (80)
     on left: 32, on right: 2
-Aknowledgements (80)
+Aknowledgements (81)
     on left: 33 34, on right: 2
-ParaList (81)
+ParaList (82)
     on left: 35 36, on right: 32 33 35
-Indice (82)
+Indice (83)
     on left: 37, on right: 2
-Toc (83)
+Toc (84)
     on left: 38 39, on right: 37
-Lof (84)
+Lof (85)
     on left: 40 41, on right: 38 39
-Lot (85)
+Lot (86)
     on left: 42 43, on right: 40 41
-Body (86)
+Body (87)
     on left: 44, on right: 1
-ChapterList (87)
-    on left: 45 46, on right: 44 45
-Chapter (88)
-    on left: 47, on right: 45 46
-C_Title (89)
-    on left: 48, on right: 47
-ElemList (90)
-    on left: 49 50, on right: 47 49 58
-Elem (91)
-    on left: 51 52 53 54 55 56, on right: 49 50
-CodeBlock (92)
-    on left: 57, on right: 51
-Section (93)
-    on left: 58, on right: 53
-S_Title (94)
-    on left: 59, on right: 58
-Paragraph (95)
-    on left: 60, on right: 35 36 52
-ParaContend (96)
-    on left: 61 62 63, on right: 60 61 62 115 122
-FreeElem (97)
-    on left: 64 65 66 67 68 69 70 71 72 73 74, on right: 62
-Summary (98)
-    on left: 75, on right: 54
-Ref (99)
-    on left: 76, on right: 65
-Href (100)
-    on left: 77, on right: 68
-Xref (101)
-    on left: 78, on right: 66
-CitRef (102)
-    on left: 79, on right: 67
-Iterm (103)
-    on left: 80, on right: 69
-FootNote (104)
-    on left: 81, on right: 64
-InlineCode (105)
-    on left: 82, on right: 73
-Acronym (106)
-    on left: 83, on right: 74
-Bold (107)
-    on left: 84, on right: 70 91 96
-BCont (108)
-    on left: 85 86 87 88, on right: 84 85 86 87
-Italic (109)
-    on left: 89, on right: 71 86 97
-ICont (110)
-    on left: 90 91 92 93, on right: 89 90 91 92
-Underline (111)
-    on left: 94, on right: 72 87 92
-UCont (112)
-    on left: 95 96 97 98, on right: 94 95 96 97
-Float (113)
-    on left: 99 100, on right: 55
-Figure (114)
-    on left: 101, on right: 99
-Image (115)
-    on left: 102, on right: 101
-Path (116)
-    on left: 103, on right: 102
-Caption (117)
-    on left: 104, on right: 101 116
-List (118)
-    on left: 105 106, on right: 56
-Enumerate (119)
-    on left: 107, on right: 105 113
-C_ENUM (120)
-    on left: 108 109 110, on right: 107 108 109
-Itemize (121)
-    on left: 111, on right: 106 109
-C_Item (122)
-    on left: 112 113 114, on right: 111 112 113
-Item (123)
-    on left: 115, on right: 108 112
-TABELA (124)
-    on left: 116, on right: 100
-C_Tabela (125)
-    on left: 117 118, on right: 116 117
-Linha (126)
-    on left: 119, on right: 117 118
-Celulas (127)
-    on left: 120 121, on right: 119 120
-Cel (128)
-    on left: 122, on right: 120 121
-OPT_Cel (129)
-    on left: 123 124, on right: 122
-POS (130)
-    on left: 125, on right: 123
-OPT_Cel_um (131)
-    on left: 126 127, on right: 123 124
-DIM (132)
-    on left: 128, on right: 126
+BBody (88)
+    on left: 45, on right: 44
+ChapterList (89)
+    on left: 46 47, on right: 44 46
+Chapter (90)
+    on left: 48, on right: 46 47
+C_Title (91)
+    on left: 49, on right: 48
+ElemList (92)
+    on left: 50 51, on right: 48 50 59
+Elem (93)
+    on left: 52 53 54 55 56 57, on right: 50 51
+CodeBlock (94)
+    on left: 58, on right: 52
+Section (95)
+    on left: 59, on right: 54
+S_Title (96)
+    on left: 60, on right: 59
+Paragraph (97)
+    on left: 61, on right: 35 36 53
+BParag (98)
+    on left: 62, on right: 61
+ParaContend (99)
+    on left: 63 64 65, on right: 61 63 64 121
+FreeElem (100)
+    on left: 66 67 68 69 70 71 72 73 74 75 76, on right: 64
+Summary (101)
+    on left: 77, on right: 55
+Ref (102)
+    on left: 78, on right: 67
+Href (103)
+    on left: 79, on right: 70
+Xref (104)
+    on left: 80, on right: 68
+CitRef (105)
+    on left: 81, on right: 69
+Iterm (106)
+    on left: 82, on right: 71
+FootNote (107)
+    on left: 83, on right: 66
+InlineCode (108)
+    on left: 84, on right: 75
+Acronym (109)
+    on left: 85, on right: 76
+Bold (110)
+    on left: 86, on right: 72 95 101
+Bbold (111)
+    on left: 87, on right: 86
+BCont (112)
+    on left: 88 89 90 91, on right: 86 88 89 90
+Italic (113)
+    on left: 92, on right: 73 89 102
+BItalic (114)
+    on left: 93, on right: 92
+ICont (115)
+    on left: 94 95 96 97, on right: 92 94 95 96
+Underline (116)
+    on left: 98, on right: 74 90 96
+BUnderLine (117)
+    on left: 99, on right: 98
+UCont (118)
+    on left: 100 101 102 103, on right: 98 100 101 102
+Float (119)
+    on left: 104 105, on right: 56
+Figure (120)
+    on left: 106, on right: 104
+BFig (121)
+    on left: 107, on right: 106
+Image (122)
+    on left: 108, on right: 106
+Path (123)
+    on left: 109, on right: 108
+Caption (124)
+    on left: 110, on right: 106
+List (125)
+    on left: 111 112, on right: 57
+Enumerate (126)
+    on left: 113, on right: 111 119
+C_ENUM (127)
+    on left: 114 115 116, on right: 113 114 115
+Itemize (128)
+    on left: 117, on right: 112 115
+C_Item (129)
+    on left: 118 119 120, on right: 117 118 119
+Item (130)
+    on left: 121, on right: 114 118
+Table (131)
+    on left: 122, on right: 105
+T_Caption (132)
+    on left: 123, on right: 122
+BTab (133)
+    on left: 124, on right: 122
+C_Tabela (134)
+    on left: 125 126, on right: 122 125
+Linha (135)
+    on left: 127, on right: 125 126
+BLinha (136)
+    on left: 128, on right: 127
+Celulas (137)
+    on left: 129 130, on right: 127 129
+Cel (138)
+    on left: 131, on right: 129 130
+BCel (139)
+    on left: 132, on right: 131
+OPT_Cel (140)
+    on left: 133 134, on right: 131
+POS (141)
+    on left: 135, on right: 133
+OPT_Cel_um (142)
+    on left: 136 137, on right: 133 134
+Dim (143)
+    on left: 138, on right: 136
 
 
 state 0
@@ -455,21 +497,19 @@ state 2
 
     1 Report: FrontMatter . Body '$'
 
-    BCHAP  shift, and go to state 5
+    $default  reduce using rule 45 (BBody)
 
-    Body         go to state 6
-    ChapterList  go to state 7
-    Chapter      go to state 8
-    C_Title      go to state 9
+    Body   go to state 5
+    BBody  go to state 6
 
 
 state 3
 
     2 FrontMatter: BFMatter . Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice
 
-    BTITLE  shift, and go to state 10
+    BTITLE  shift, and go to state 7
 
-    Title  go to state 11
+    Title  go to state 8
 
 
 state 4
@@ -481,2183 +521,2281 @@ state 4
 
 state 5
 
-   48 C_Title: BCHAP . '(' texto ')'
+    1 Report: FrontMatter Body . '$'
 
-    '('  shift, and go to state 12
+    '$'  shift, and go to state 9
 
 
 state 6
 
-    1 Report: FrontMatter Body . '$'
+   44 Body: BBody . ChapterList
 
-    '$'  shift, and go to state 13
+    BCHAP  shift, and go to state 10
+
+    ChapterList  go to state 11
+    Chapter      go to state 12
+    C_Title      go to state 13
 
 
 state 7
 
-   44 Body: ChapterList .
-   45 ChapterList: ChapterList . Chapter
+    4 Title: BTITLE . '(' arg ')'
 
-    BCHAP  shift, and go to state 5
-
-    $default  reduce using rule 44 (Body)
-
-    Chapter  go to state 14
-    C_Title  go to state 9
+    '('  shift, and go to state 14
 
 
 state 8
 
-   46 ChapterList: Chapter .
-
-    $default  reduce using rule 46 (ChapterList)
-
-
-state 9
-
-   47 Chapter: C_Title . '{' ElemList '}'
-
-    '{'  shift, and go to state 15
-
-
-state 10
-
-    4 Title: BTITLE . '(' arg ')'
-
-    '('  shift, and go to state 16
-
-
-state 11
-
     2 FrontMatter: BFMatter Title . STitle Authores Date Institution Keywords Abstract Aknowledgements Indice
 
-    BSTITLE  shift, and go to state 17
+    BSTITLE  shift, and go to state 15
 
     $default  reduce using rule 6 (STitle)
 
-    STitle  go to state 18
+    STitle  go to state 16
 
 
-state 12
-
-   48 C_Title: BCHAP '(' . texto ')'
-
-    texto  shift, and go to state 19
-
-
-state 13
+state 9
 
     1 Report: FrontMatter Body '$' .
 
     $default  reduce using rule 1 (Report)
 
 
+state 10
+
+   49 C_Title: BCHAP . '(' texto ')'
+
+    '('  shift, and go to state 17
+
+
+state 11
+
+   44 Body: BBody ChapterList .
+   46 ChapterList: ChapterList . Chapter
+
+    BCHAP  shift, and go to state 10
+
+    $default  reduce using rule 44 (Body)
+
+    Chapter  go to state 18
+    C_Title  go to state 13
+
+
+state 12
+
+   47 ChapterList: Chapter .
+
+    $default  reduce using rule 47 (ChapterList)
+
+
+state 13
+
+   48 Chapter: C_Title . '{' ElemList '}'
+
+    '{'  shift, and go to state 19
+
+
 state 14
 
-   45 ChapterList: ChapterList Chapter .
+    4 Title: BTITLE '(' . arg ')'
 
-    $default  reduce using rule 45 (ChapterList)
+    arg  shift, and go to state 20
 
 
 state 15
 
-   47 Chapter: C_Title '{' . ElemList '}'
+    5 STitle: BSTITLE . '(' arg ')'
 
-    BSUMMARY  shift, and go to state 20
-    BParag    shift, and go to state 21
-    BCODE     shift, and go to state 22
-    BSEC      shift, and go to state 23
-    BFig      shift, and go to state 24
-    BENUM     shift, and go to state 25
-    BTAB      shift, and go to state 26
-    BItemize  shift, and go to state 27
-
-    ElemList   go to state 28
-    Elem       go to state 29
-    CodeBlock  go to state 30
-    Section    go to state 31
-    S_Title    go to state 32
-    Paragraph  go to state 33
-    Summary    go to state 34
-    Float      go to state 35
-    Figure     go to state 36
-    List       go to state 37
-    Enumerate  go to state 38
-    Itemize    go to state 39
-    TABELA     go to state 40
+    '('  shift, and go to state 21
 
 
 state 16
 
-    4 Title: BTITLE '(' . arg ')'
+    2 FrontMatter: BFMatter Title STitle . Authores Date Institution Keywords Abstract Aknowledgements Indice
 
-    arg  shift, and go to state 41
+    BAUTHOR  shift, and go to state 22
+
+    Authores  go to state 23
+    Author    go to state 24
+    Bauthor   go to state 25
 
 
 state 17
 
-    5 STitle: BSTITLE . '(' arg ')'
+   49 C_Title: BCHAP '(' . texto ')'
 
-    '('  shift, and go to state 42
+    texto  shift, and go to state 26
 
 
 state 18
 
-    2 FrontMatter: BFMatter Title STitle . Authores Date Institution Keywords Abstract Aknowledgements Indice
+   46 ChapterList: ChapterList Chapter .
 
-    BAUTHOR  shift, and go to state 43
-
-    Authores  go to state 44
-    Author    go to state 45
-    Bauthor   go to state 46
+    $default  reduce using rule 46 (ChapterList)
 
 
 state 19
 
-   48 C_Title: BCHAP '(' texto . ')'
+   48 Chapter: C_Title '{' . ElemList '}'
 
-    ')'  shift, and go to state 47
+    BSUMMARY  shift, and go to state 27
+    BPARAG    shift, and go to state 28
+    BCODE     shift, and go to state 29
+    BSEC      shift, and go to state 30
+    BFIG      shift, and go to state 31
+    BENUM     shift, and go to state 32
+    BTAB      shift, and go to state 33
+    BItemize  shift, and go to state 34
+
+    ElemList   go to state 35
+    Elem       go to state 36
+    CodeBlock  go to state 37
+    Section    go to state 38
+    S_Title    go to state 39
+    Paragraph  go to state 40
+    BParag     go to state 41
+    Summary    go to state 42
+    Float      go to state 43
+    Figure     go to state 44
+    BFig       go to state 45
+    List       go to state 46
+    Enumerate  go to state 47
+    Itemize    go to state 48
+    Table      go to state 49
+    BTab       go to state 50
 
 
 state 20
 
-   75 Summary: BSUMMARY . '(' texto ')'
+    4 Title: BTITLE '(' arg . ')'
 
-    '('  shift, and go to state 48
+    ')'  shift, and go to state 51
 
 
 state 21
 
-   60 Paragraph: BParag . '{' ParaContend '}'
+    5 STitle: BSTITLE '(' . arg ')'
 
-    '{'  shift, and go to state 49
+    arg  shift, and go to state 52
 
 
 state 22
-
-   57 CodeBlock: BCODE . '{' codigo '}'
-
-    '{'  shift, and go to state 50
-
-
-state 23
-
-   59 S_Title: BSEC . '(' texto ')'
-
-    '('  shift, and go to state 51
-
-
-state 24
-
-  101 Figure: BFig . '(' Image Caption ')'
-
-    '('  shift, and go to state 52
-
-
-state 25
-
-  107 Enumerate: BENUM . '(' C_ENUM ')'
-
-    '('  shift, and go to state 53
-
-
-state 26
-
-  116 TABELA: BTAB . '(' Caption C_Tabela ')'
-
-    '('  shift, and go to state 54
-
-
-state 27
-
-  111 Itemize: BItemize . '(' C_Item ')'
-
-    '('  shift, and go to state 55
-
-
-state 28
-
-   47 Chapter: C_Title '{' ElemList . '}'
-   49 ElemList: ElemList . Elem
-
-    BSUMMARY  shift, and go to state 20
-    BParag    shift, and go to state 21
-    BCODE     shift, and go to state 22
-    BSEC      shift, and go to state 23
-    BFig      shift, and go to state 24
-    BENUM     shift, and go to state 25
-    BTAB      shift, and go to state 26
-    BItemize  shift, and go to state 27
-    '}'       shift, and go to state 56
-
-    Elem       go to state 57
-    CodeBlock  go to state 30
-    Section    go to state 31
-    S_Title    go to state 32
-    Paragraph  go to state 33
-    Summary    go to state 34
-    Float      go to state 35
-    Figure     go to state 36
-    List       go to state 37
-    Enumerate  go to state 38
-    Itemize    go to state 39
-    TABELA     go to state 40
-
-
-state 29
-
-   50 ElemList: Elem .
-
-    $default  reduce using rule 50 (ElemList)
-
-
-state 30
-
-   51 Elem: CodeBlock .
-
-    $default  reduce using rule 51 (Elem)
-
-
-state 31
-
-   53 Elem: Section .
-
-    $default  reduce using rule 53 (Elem)
-
-
-state 32
-
-   58 Section: S_Title . '{' ElemList '}'
-
-    '{'  shift, and go to state 58
-
-
-state 33
-
-   52 Elem: Paragraph .
-
-    $default  reduce using rule 52 (Elem)
-
-
-state 34
-
-   54 Elem: Summary .
-
-    $default  reduce using rule 54 (Elem)
-
-
-state 35
-
-   55 Elem: Float .
-
-    $default  reduce using rule 55 (Elem)
-
-
-state 36
-
-   99 Float: Figure .
-
-    $default  reduce using rule 99 (Float)
-
-
-state 37
-
-   56 Elem: List .
-
-    $default  reduce using rule 56 (Elem)
-
-
-state 38
-
-  105 List: Enumerate .
-
-    $default  reduce using rule 105 (List)
-
-
-state 39
-
-  106 List: Itemize .
-
-    $default  reduce using rule 106 (List)
-
-
-state 40
-
-  100 Float: TABELA .
-
-    $default  reduce using rule 100 (Float)
-
-
-state 41
-
-    4 Title: BTITLE '(' arg . ')'
-
-    ')'  shift, and go to state 59
-
-
-state 42
-
-    5 STitle: BSTITLE '(' . arg ')'
-
-    arg  shift, and go to state 60
-
-
-state 43
 
    10 Bauthor: BAUTHOR .
 
     $default  reduce using rule 10 (Bauthor)
 
 
-state 44
+state 23
 
     2 FrontMatter: BFMatter Title STitle Authores . Date Institution Keywords Abstract Aknowledgements Indice
     7 Authores: Authores . Author
 
-    BAUTHOR  shift, and go to state 43
-    BDATE    shift, and go to state 61
+    BAUTHOR  shift, and go to state 22
+    BDATE    shift, and go to state 53
 
-    Author   go to state 62
-    Bauthor  go to state 46
-    Date     go to state 63
+    Author   go to state 54
+    Bauthor  go to state 25
+    Date     go to state 55
 
 
-state 45
+state 24
 
     8 Authores: Author .
 
     $default  reduce using rule 8 (Authores)
 
 
-state 46
+state 25
 
     9 Author: Bauthor . '(' Nome OPT_Author ')'
 
-    '('  shift, and go to state 64
+    '('  shift, and go to state 56
+
+
+state 26
+
+   49 C_Title: BCHAP '(' texto . ')'
+
+    ')'  shift, and go to state 57
+
+
+state 27
+
+   77 Summary: BSUMMARY . '(' texto ')'
+
+    '('  shift, and go to state 58
+
+
+state 28
+
+   62 BParag: BPARAG .
+
+    $default  reduce using rule 62 (BParag)
+
+
+state 29
+
+   58 CodeBlock: BCODE . '{' codigo '}'
+
+    '{'  shift, and go to state 59
+
+
+state 30
+
+   60 S_Title: BSEC . '(' texto ')'
+
+    '('  shift, and go to state 60
+
+
+state 31
+
+  107 BFig: BFIG .
+
+    $default  reduce using rule 107 (BFig)
+
+
+state 32
+
+  113 Enumerate: BENUM . '(' C_ENUM ')'
+
+    '('  shift, and go to state 61
+
+
+state 33
+
+  124 BTab: BTAB .
+
+    $default  reduce using rule 124 (BTab)
+
+
+state 34
+
+  117 Itemize: BItemize . '(' C_Item ')'
+
+    '('  shift, and go to state 62
+
+
+state 35
+
+   48 Chapter: C_Title '{' ElemList . '}'
+   50 ElemList: ElemList . Elem
+
+    BSUMMARY  shift, and go to state 27
+    BPARAG    shift, and go to state 28
+    BCODE     shift, and go to state 29
+    BSEC      shift, and go to state 30
+    BFIG      shift, and go to state 31
+    BENUM     shift, and go to state 32
+    BTAB      shift, and go to state 33
+    BItemize  shift, and go to state 34
+    '}'       shift, and go to state 63
+
+    Elem       go to state 64
+    CodeBlock  go to state 37
+    Section    go to state 38
+    S_Title    go to state 39
+    Paragraph  go to state 40
+    BParag     go to state 41
+    Summary    go to state 42
+    Float      go to state 43
+    Figure     go to state 44
+    BFig       go to state 45
+    List       go to state 46
+    Enumerate  go to state 47
+    Itemize    go to state 48
+    Table      go to state 49
+    BTab       go to state 50
+
+
+state 36
+
+   51 ElemList: Elem .
+
+    $default  reduce using rule 51 (ElemList)
+
+
+state 37
+
+   52 Elem: CodeBlock .
+
+    $default  reduce using rule 52 (Elem)
+
+
+state 38
+
+   54 Elem: Section .
+
+    $default  reduce using rule 54 (Elem)
+
+
+state 39
+
+   59 Section: S_Title . '{' ElemList '}'
+
+    '{'  shift, and go to state 65
+
+
+state 40
+
+   53 Elem: Paragraph .
+
+    $default  reduce using rule 53 (Elem)
+
+
+state 41
+
+   61 Paragraph: BParag . '{' ParaContend '}'
+
+    '{'  shift, and go to state 66
+
+
+state 42
+
+   55 Elem: Summary .
+
+    $default  reduce using rule 55 (Elem)
+
+
+state 43
+
+   56 Elem: Float .
+
+    $default  reduce using rule 56 (Elem)
+
+
+state 44
+
+  104 Float: Figure .
+
+    $default  reduce using rule 104 (Float)
+
+
+state 45
+
+  106 Figure: BFig . '(' Image Caption ')'
+
+    '('  shift, and go to state 67
+
+
+state 46
+
+   57 Elem: List .
+
+    $default  reduce using rule 57 (Elem)
 
 
 state 47
 
-   48 C_Title: BCHAP '(' texto ')' .
+  111 List: Enumerate .
 
-    $default  reduce using rule 48 (C_Title)
+    $default  reduce using rule 111 (List)
 
 
 state 48
 
-   75 Summary: BSUMMARY '(' . texto ')'
+  112 List: Itemize .
 
-    texto  shift, and go to state 65
+    $default  reduce using rule 112 (List)
 
 
 state 49
 
-   60 Paragraph: BParag '{' . ParaContend '}'
+  105 Float: Table .
 
-    $default  reduce using rule 63 (ParaContend)
-
-    ParaContend  go to state 66
+    $default  reduce using rule 105 (Float)
 
 
 state 50
 
-   57 CodeBlock: BCODE '{' . codigo '}'
+  122 Table: BTab . '(' T_Caption C_Tabela ')'
 
-    codigo  shift, and go to state 67
+    '('  shift, and go to state 68
 
 
 state 51
-
-   59 S_Title: BSEC '(' . texto ')'
-
-    texto  shift, and go to state 68
-
-
-state 52
-
-  101 Figure: BFig '(' . Image Caption ')'
-
-    BImg  shift, and go to state 69
-
-    Image  go to state 70
-
-
-state 53
-
-  107 Enumerate: BENUM '(' . C_ENUM ')'
-
-    $default  reduce using rule 110 (C_ENUM)
-
-    C_ENUM  go to state 71
-
-
-state 54
-
-  116 TABELA: BTAB '(' . Caption C_Tabela ')'
-
-    BCAP  shift, and go to state 72
-
-    Caption  go to state 73
-
-
-state 55
-
-  111 Itemize: BItemize '(' . C_Item ')'
-
-    $default  reduce using rule 114 (C_Item)
-
-    C_Item  go to state 74
-
-
-state 56
-
-   47 Chapter: C_Title '{' ElemList '}' .
-
-    $default  reduce using rule 47 (Chapter)
-
-
-state 57
-
-   49 ElemList: ElemList Elem .
-
-    $default  reduce using rule 49 (ElemList)
-
-
-state 58
-
-   58 Section: S_Title '{' . ElemList '}'
-
-    BSUMMARY  shift, and go to state 20
-    BParag    shift, and go to state 21
-    BCODE     shift, and go to state 22
-    BSEC      shift, and go to state 23
-    BFig      shift, and go to state 24
-    BENUM     shift, and go to state 25
-    BTAB      shift, and go to state 26
-    BItemize  shift, and go to state 27
-
-    ElemList   go to state 75
-    Elem       go to state 29
-    CodeBlock  go to state 30
-    Section    go to state 31
-    S_Title    go to state 32
-    Paragraph  go to state 33
-    Summary    go to state 34
-    Float      go to state 35
-    Figure     go to state 36
-    List       go to state 37
-    Enumerate  go to state 38
-    Itemize    go to state 39
-    TABELA     go to state 40
-
-
-state 59
 
     4 Title: BTITLE '(' arg ')' .
 
     $default  reduce using rule 4 (Title)
 
 
-state 60
+state 52
 
     5 STitle: BSTITLE '(' arg . ')'
 
-    ')'  shift, and go to state 76
+    ')'  shift, and go to state 69
 
 
-state 61
+state 53
 
    24 Date: BDATE . '(' ')'
 
-    '('  shift, and go to state 77
+    '('  shift, and go to state 70
 
 
-state 62
+state 54
 
     7 Authores: Authores Author .
 
     $default  reduce using rule 7 (Authores)
 
 
-state 63
+state 55
 
     2 FrontMatter: BFMatter Title STitle Authores Date . Institution Keywords Abstract Aknowledgements Indice
 
-    BINST  shift, and go to state 78
+    BINST  shift, and go to state 71
 
     $default  reduce using rule 26 (Institution)
 
-    Institution  go to state 79
+    Institution  go to state 72
+
+
+state 56
+
+    9 Author: Bauthor '(' . Nome OPT_Author ')'
+
+    arg  shift, and go to state 73
+
+    Nome  go to state 74
+
+
+state 57
+
+   49 C_Title: BCHAP '(' texto ')' .
+
+    $default  reduce using rule 49 (C_Title)
+
+
+state 58
+
+   77 Summary: BSUMMARY '(' . texto ')'
+
+    texto  shift, and go to state 75
+
+
+state 59
+
+   58 CodeBlock: BCODE '{' . codigo '}'
+
+    codigo  shift, and go to state 76
+
+
+state 60
+
+   60 S_Title: BSEC '(' . texto ')'
+
+    texto  shift, and go to state 77
+
+
+state 61
+
+  113 Enumerate: BENUM '(' . C_ENUM ')'
+
+    $default  reduce using rule 116 (C_ENUM)
+
+    C_ENUM  go to state 78
+
+
+state 62
+
+  117 Itemize: BItemize '(' . C_Item ')'
+
+    $default  reduce using rule 120 (C_Item)
+
+    C_Item  go to state 79
+
+
+state 63
+
+   48 Chapter: C_Title '{' ElemList '}' .
+
+    $default  reduce using rule 48 (Chapter)
 
 
 state 64
 
-    9 Author: Bauthor '(' . Nome OPT_Author ')'
+   50 ElemList: ElemList Elem .
 
-    arg  shift, and go to state 80
-
-    Nome  go to state 81
+    $default  reduce using rule 50 (ElemList)
 
 
 state 65
 
-   75 Summary: BSUMMARY '(' texto . ')'
+   59 Section: S_Title '{' . ElemList '}'
 
-    ')'  shift, and go to state 82
+    BSUMMARY  shift, and go to state 27
+    BPARAG    shift, and go to state 28
+    BCODE     shift, and go to state 29
+    BSEC      shift, and go to state 30
+    BFIG      shift, and go to state 31
+    BENUM     shift, and go to state 32
+    BTAB      shift, and go to state 33
+    BItemize  shift, and go to state 34
+
+    ElemList   go to state 80
+    Elem       go to state 36
+    CodeBlock  go to state 37
+    Section    go to state 38
+    S_Title    go to state 39
+    Paragraph  go to state 40
+    BParag     go to state 41
+    Summary    go to state 42
+    Float      go to state 43
+    Figure     go to state 44
+    BFig       go to state 45
+    List       go to state 46
+    Enumerate  go to state 47
+    Itemize    go to state 48
+    Table      go to state 49
+    BTab       go to state 50
 
 
 state 66
 
-   60 Paragraph: BParag '{' ParaContend . '}'
-   61 ParaContend: ParaContend . texto
-   62            | ParaContend . FreeElem
+   61 Paragraph: BParag '{' . ParaContend '}'
 
-    texto       shift, and go to state 83
-    BBOLD       shift, and go to state 84
-    BREF        shift, and go to state 85
-    BIterm      shift, and go to state 86
-    BFoteN      shift, and go to state 87
-    BLineCode   shift, and go to state 88
-    BUnderLine  shift, and go to state 89
-    BAcronym    shift, and go to state 90
-    BItalic     shift, and go to state 91
-    BXREF       shift, and go to state 92
-    BHREF       shift, and go to state 93
-    BCiteR      shift, and go to state 94
-    '}'         shift, and go to state 95
+    $default  reduce using rule 65 (ParaContend)
 
-    FreeElem    go to state 96
-    Ref         go to state 97
-    Href        go to state 98
-    Xref        go to state 99
-    CitRef      go to state 100
-    Iterm       go to state 101
-    FootNote    go to state 102
-    InlineCode  go to state 103
-    Acronym     go to state 104
-    Bold        go to state 105
-    Italic      go to state 106
-    Underline   go to state 107
+    ParaContend  go to state 81
 
 
 state 67
 
-   57 CodeBlock: BCODE '{' codigo . '}'
+  106 Figure: BFig '(' . Image Caption ')'
 
-    '}'  shift, and go to state 108
+    BImg  shift, and go to state 82
+
+    Image  go to state 83
 
 
 state 68
 
-   59 S_Title: BSEC '(' texto . ')'
+  122 Table: BTab '(' . T_Caption C_Tabela ')'
 
-    ')'  shift, and go to state 109
+    BCAP  shift, and go to state 84
+
+    T_Caption  go to state 85
 
 
 state 69
-
-  102 Image: BImg . '(' Path ')'
-
-    '('  shift, and go to state 110
-
-
-state 70
-
-  101 Figure: BFig '(' Image . Caption ')'
-
-    BCAP  shift, and go to state 72
-
-    Caption  go to state 111
-
-
-state 71
-
-  107 Enumerate: BENUM '(' C_ENUM . ')'
-  108 C_ENUM: C_ENUM . Item
-  109       | C_ENUM . Itemize
-
-    BItem     shift, and go to state 112
-    BItemize  shift, and go to state 27
-    ')'       shift, and go to state 113
-
-    Itemize  go to state 114
-    Item     go to state 115
-
-
-state 72
-
-  104 Caption: BCAP . '(' texto ')'
-
-    '('  shift, and go to state 116
-
-
-state 73
-
-  116 TABELA: BTAB '(' Caption . C_Tabela ')'
-
-    BLinha  shift, and go to state 117
-
-    C_Tabela  go to state 118
-    Linha     go to state 119
-
-
-state 74
-
-  111 Itemize: BItemize '(' C_Item . ')'
-  112 C_Item: C_Item . Item
-  113       | C_Item . Enumerate
-
-    BENUM  shift, and go to state 25
-    BItem  shift, and go to state 112
-    ')'    shift, and go to state 120
-
-    Enumerate  go to state 121
-    Item       go to state 122
-
-
-state 75
-
-   49 ElemList: ElemList . Elem
-   58 Section: S_Title '{' ElemList . '}'
-
-    BSUMMARY  shift, and go to state 20
-    BParag    shift, and go to state 21
-    BCODE     shift, and go to state 22
-    BSEC      shift, and go to state 23
-    BFig      shift, and go to state 24
-    BENUM     shift, and go to state 25
-    BTAB      shift, and go to state 26
-    BItemize  shift, and go to state 27
-    '}'       shift, and go to state 123
-
-    Elem       go to state 57
-    CodeBlock  go to state 30
-    Section    go to state 31
-    S_Title    go to state 32
-    Paragraph  go to state 33
-    Summary    go to state 34
-    Float      go to state 35
-    Figure     go to state 36
-    List       go to state 37
-    Enumerate  go to state 38
-    Itemize    go to state 39
-    TABELA     go to state 40
-
-
-state 76
 
     5 STitle: BSTITLE '(' arg ')' .
 
     $default  reduce using rule 5 (STitle)
 
 
-state 77
+state 70
 
    24 Date: BDATE '(' . ')'
 
-    ')'  shift, and go to state 124
+    ')'  shift, and go to state 86
 
 
-state 78
+state 71
 
    25 Institution: BINST . '(' arg ')'
 
-    '('  shift, and go to state 125
+    '('  shift, and go to state 87
 
 
-state 79
+state 72
 
     2 FrontMatter: BFMatter Title STitle Authores Date Institution . Keywords Abstract Aknowledgements Indice
 
-    BKEY  shift, and go to state 126
+    BKEY  shift, and go to state 88
 
     $default  reduce using rule 28 (Keywords)
 
-    Keywords  go to state 127
+    Keywords  go to state 89
 
 
-state 80
+state 73
 
    11 Nome: arg .
 
     $default  reduce using rule 11 (Nome)
 
 
-state 81
+state 74
 
     9 Author: Bauthor '(' Nome . OPT_Author ')'
 
-    sep  shift, and go to state 128
+    sep  shift, and go to state 90
 
     $default  reduce using rule 19 (OPT_A_Tres)
 
-    OPT_Author   go to state 129
-    OPT_A_UM     go to state 130
-    OPT_A_Dois   go to state 131
-    OPT_A_Tres   go to state 132
-    Nident       go to state 133
-    Email        go to state 134
-    Url          go to state 135
-    Affiliation  go to state 136
+    OPT_Author   go to state 91
+    OPT_A_UM     go to state 92
+    OPT_A_Dois   go to state 93
+    OPT_A_Tres   go to state 94
+    Nident       go to state 95
+    Email        go to state 96
+    Url          go to state 97
+    Affiliation  go to state 98
+
+
+state 75
+
+   77 Summary: BSUMMARY '(' texto . ')'
+
+    ')'  shift, and go to state 99
+
+
+state 76
+
+   58 CodeBlock: BCODE '{' codigo . '}'
+
+    '}'  shift, and go to state 100
+
+
+state 77
+
+   60 S_Title: BSEC '(' texto . ')'
+
+    ')'  shift, and go to state 101
+
+
+state 78
+
+  113 Enumerate: BENUM '(' C_ENUM . ')'
+  114 C_ENUM: C_ENUM . Item
+  115       | C_ENUM . Itemize
+
+    BItem     shift, and go to state 102
+    BItemize  shift, and go to state 34
+    ')'       shift, and go to state 103
+
+    Itemize  go to state 104
+    Item     go to state 105
+
+
+state 79
+
+  117 Itemize: BItemize '(' C_Item . ')'
+  118 C_Item: C_Item . Item
+  119       | C_Item . Enumerate
+
+    BENUM  shift, and go to state 32
+    BItem  shift, and go to state 102
+    ')'    shift, and go to state 106
+
+    Enumerate  go to state 107
+    Item       go to state 108
+
+
+state 80
+
+   50 ElemList: ElemList . Elem
+   59 Section: S_Title '{' ElemList . '}'
+
+    BSUMMARY  shift, and go to state 27
+    BPARAG    shift, and go to state 28
+    BCODE     shift, and go to state 29
+    BSEC      shift, and go to state 30
+    BFIG      shift, and go to state 31
+    BENUM     shift, and go to state 32
+    BTAB      shift, and go to state 33
+    BItemize  shift, and go to state 34
+    '}'       shift, and go to state 109
+
+    Elem       go to state 64
+    CodeBlock  go to state 37
+    Section    go to state 38
+    S_Title    go to state 39
+    Paragraph  go to state 40
+    BParag     go to state 41
+    Summary    go to state 42
+    Float      go to state 43
+    Figure     go to state 44
+    BFig       go to state 45
+    List       go to state 46
+    Enumerate  go to state 47
+    Itemize    go to state 48
+    Table      go to state 49
+    BTab       go to state 50
+
+
+state 81
+
+   61 Paragraph: BParag '{' ParaContend . '}'
+   63 ParaContend: ParaContend . texto
+   64            | ParaContend . FreeElem
+
+    texto       shift, and go to state 110
+    BBOLD       shift, and go to state 111
+    BREF        shift, and go to state 112
+    BIterm      shift, and go to state 113
+    BFoteN      shift, and go to state 114
+    BLineCode   shift, and go to state 115
+    BUNDERLINE  shift, and go to state 116
+    BAcronym    shift, and go to state 117
+    BITALIC     shift, and go to state 118
+    BXREF       shift, and go to state 119
+    BHREF       shift, and go to state 120
+    BCiteR      shift, and go to state 121
+    '}'         shift, and go to state 122
+
+    FreeElem    go to state 123
+    Ref         go to state 124
+    Href        go to state 125
+    Xref        go to state 126
+    CitRef      go to state 127
+    Iterm       go to state 128
+    FootNote    go to state 129
+    InlineCode  go to state 130
+    Acronym     go to state 131
+    Bold        go to state 132
+    Bbold       go to state 133
+    Italic      go to state 134
+    BItalic     go to state 135
+    Underline   go to state 136
+    BUnderLine  go to state 137
 
 
 state 82
 
-   75 Summary: BSUMMARY '(' texto ')' .
-
-    $default  reduce using rule 75 (Summary)
-
-
-state 83
-
-   61 ParaContend: ParaContend texto .
-
-    $default  reduce using rule 61 (ParaContend)
-
-
-state 84
-
-   84 Bold: BBOLD . '(' BCont ')'
-
-    '('  shift, and go to state 137
-
-
-state 85
-
-   76 Ref: BREF . '(' texto sep texto ')'
+  108 Image: BImg . '(' Path ')'
 
     '('  shift, and go to state 138
 
 
-state 86
+state 83
 
-   80 Iterm: BIterm . '(' texto ')'
+  106 Figure: BFig '(' Image . Caption ')'
 
-    '('  shift, and go to state 139
+    BCAP  shift, and go to state 139
 
-
-state 87
-
-   81 FootNote: BFoteN . '(' texto ')'
-
-    '('  shift, and go to state 140
+    Caption  go to state 140
 
 
-state 88
+state 84
 
-   82 InlineCode: BLineCode . '(' texto ')'
+  123 T_Caption: BCAP . '(' texto ')'
 
     '('  shift, and go to state 141
 
 
-state 89
+state 85
 
-   94 Underline: BUnderLine . '(' UCont ')'
+  122 Table: BTab '(' T_Caption . C_Tabela ')'
 
-    '('  shift, and go to state 142
+    BLINHA  shift, and go to state 142
 
+    C_Tabela  go to state 143
+    Linha     go to state 144
+    BLinha    go to state 145
 
-state 90
 
-   83 Acronym: BAcronym . '(' texto ')'
-
-    '('  shift, and go to state 143
-
-
-state 91
-
-   89 Italic: BItalic . '(' ICont ')'
-
-    '('  shift, and go to state 144
-
-
-state 92
-
-   78 Xref: BXREF . '(' texto ')'
-
-    '('  shift, and go to state 145
-
-
-state 93
-
-   77 Href: BHREF . '(' texto sep url ')'
-
-    '('  shift, and go to state 146
-
-
-state 94
-
-   79 CitRef: BCiteR . '(' texto ')'
-
-    '('  shift, and go to state 147
-
-
-state 95
-
-   60 Paragraph: BParag '{' ParaContend '}' .
-
-    $default  reduce using rule 60 (Paragraph)
-
-
-state 96
-
-   62 ParaContend: ParaContend FreeElem .
-
-    $default  reduce using rule 62 (ParaContend)
-
-
-state 97
-
-   65 FreeElem: Ref .
-
-    $default  reduce using rule 65 (FreeElem)
-
-
-state 98
-
-   68 FreeElem: Href .
-
-    $default  reduce using rule 68 (FreeElem)
-
-
-state 99
-
-   66 FreeElem: Xref .
-
-    $default  reduce using rule 66 (FreeElem)
-
-
-state 100
-
-   67 FreeElem: CitRef .
-
-    $default  reduce using rule 67 (FreeElem)
-
-
-state 101
-
-   69 FreeElem: Iterm .
-
-    $default  reduce using rule 69 (FreeElem)
-
-
-state 102
-
-   64 FreeElem: FootNote .
-
-    $default  reduce using rule 64 (FreeElem)
-
-
-state 103
-
-   73 FreeElem: InlineCode .
-
-    $default  reduce using rule 73 (FreeElem)
-
-
-state 104
-
-   74 FreeElem: Acronym .
-
-    $default  reduce using rule 74 (FreeElem)
-
-
-state 105
-
-   70 FreeElem: Bold .
-
-    $default  reduce using rule 70 (FreeElem)
-
-
-state 106
-
-   71 FreeElem: Italic .
-
-    $default  reduce using rule 71 (FreeElem)
-
-
-state 107
-
-   72 FreeElem: Underline .
-
-    $default  reduce using rule 72 (FreeElem)
-
-
-state 108
-
-   57 CodeBlock: BCODE '{' codigo '}' .
-
-    $default  reduce using rule 57 (CodeBlock)
-
-
-state 109
-
-   59 S_Title: BSEC '(' texto ')' .
-
-    $default  reduce using rule 59 (S_Title)
-
-
-state 110
-
-  102 Image: BImg '(' . Path ')'
-
-    texto  shift, and go to state 148
-
-    Path  go to state 149
-
-
-state 111
-
-  101 Figure: BFig '(' Image Caption . ')'
-
-    ')'  shift, and go to state 150
-
-
-state 112
-
-  115 Item: BItem . '(' ParaContend ')'
-
-    '('  shift, and go to state 151
-
-
-state 113
-
-  107 Enumerate: BENUM '(' C_ENUM ')' .
-
-    $default  reduce using rule 107 (Enumerate)
-
-
-state 114
-
-  109 C_ENUM: C_ENUM Itemize .
-
-    $default  reduce using rule 109 (C_ENUM)
-
-
-state 115
-
-  108 C_ENUM: C_ENUM Item .
-
-    $default  reduce using rule 108 (C_ENUM)
-
-
-state 116
-
-  104 Caption: BCAP '(' . texto ')'
-
-    texto  shift, and go to state 152
-
-
-state 117
-
-  119 Linha: BLinha . '{' Celulas '}'
-
-    '{'  shift, and go to state 153
-
-
-state 118
-
-  116 TABELA: BTAB '(' Caption C_Tabela . ')'
-  117 C_Tabela: C_Tabela . Linha
-
-    BLinha  shift, and go to state 117
-    ')'     shift, and go to state 154
-
-    Linha  go to state 155
-
-
-state 119
-
-  118 C_Tabela: Linha .
-
-    $default  reduce using rule 118 (C_Tabela)
-
-
-state 120
-
-  111 Itemize: BItemize '(' C_Item ')' .
-
-    $default  reduce using rule 111 (Itemize)
-
-
-state 121
-
-  113 C_Item: C_Item Enumerate .
-
-    $default  reduce using rule 113 (C_Item)
-
-
-state 122
-
-  112 C_Item: C_Item Item .
-
-    $default  reduce using rule 112 (C_Item)
-
-
-state 123
-
-   58 Section: S_Title '{' ElemList '}' .
-
-    $default  reduce using rule 58 (Section)
-
-
-state 124
+state 86
 
    24 Date: BDATE '(' ')' .
 
     $default  reduce using rule 24 (Date)
 
 
-state 125
+state 87
 
    25 Institution: BINST '(' . arg ')'
 
-    arg  shift, and go to state 156
+    arg  shift, and go to state 146
 
 
-state 126
+state 88
 
    27 Keywords: BKEY . '(' Keys ')'
 
-    '('  shift, and go to state 157
+    '('  shift, and go to state 147
 
 
-state 127
+state 89
 
     2 FrontMatter: BFMatter Title STitle Authores Date Institution Keywords . Abstract Aknowledgements Indice
 
-    BABS  shift, and go to state 158
+    BABS  shift, and go to state 148
 
-    Abstract  go to state 159
+    Abstract  go to state 149
 
 
-state 128
+state 90
 
    20 Nident: sep . id
    21 Email: sep . email
    22 Url: sep . url
    23 Affiliation: sep . arg
 
-    arg    shift, and go to state 160
-    id     shift, and go to state 161
-    email  shift, and go to state 162
-    url    shift, and go to state 163
+    arg    shift, and go to state 150
+    id     shift, and go to state 151
+    email  shift, and go to state 152
+    url    shift, and go to state 153
 
 
-state 129
+state 91
 
     9 Author: Bauthor '(' Nome OPT_Author . ')'
 
-    ')'  shift, and go to state 164
+    ')'  shift, and go to state 154
 
 
-state 130
+state 92
 
    13 OPT_Author: OPT_A_UM .
 
     $default  reduce using rule 13 (OPT_Author)
 
 
-state 131
+state 93
 
    15 OPT_A_UM: OPT_A_Dois .
 
     $default  reduce using rule 15 (OPT_A_UM)
 
 
-state 132
+state 94
 
    17 OPT_A_Dois: OPT_A_Tres .
 
     $default  reduce using rule 17 (OPT_A_Dois)
 
 
-state 133
+state 95
 
    12 OPT_Author: Nident . OPT_A_UM
 
-    sep  shift, and go to state 165
+    sep  shift, and go to state 155
 
     $default  reduce using rule 19 (OPT_A_Tres)
 
-    OPT_A_UM     go to state 166
-    OPT_A_Dois   go to state 131
-    OPT_A_Tres   go to state 132
-    Email        go to state 134
-    Url          go to state 135
-    Affiliation  go to state 136
+    OPT_A_UM     go to state 156
+    OPT_A_Dois   go to state 93
+    OPT_A_Tres   go to state 94
+    Email        go to state 96
+    Url          go to state 97
+    Affiliation  go to state 98
 
 
-state 134
+state 96
 
    14 OPT_A_UM: Email . OPT_A_Dois
 
-    sep  shift, and go to state 167
+    sep  shift, and go to state 157
 
     $default  reduce using rule 19 (OPT_A_Tres)
 
-    OPT_A_Dois   go to state 168
-    OPT_A_Tres   go to state 132
-    Url          go to state 135
-    Affiliation  go to state 136
+    OPT_A_Dois   go to state 158
+    OPT_A_Tres   go to state 94
+    Url          go to state 97
+    Affiliation  go to state 98
 
 
-state 135
+state 97
 
    16 OPT_A_Dois: Url . OPT_A_Tres
 
-    sep  shift, and go to state 169
+    sep  shift, and go to state 159
 
     $default  reduce using rule 19 (OPT_A_Tres)
 
-    OPT_A_Tres   go to state 170
-    Affiliation  go to state 136
+    OPT_A_Tres   go to state 160
+    Affiliation  go to state 98
 
 
-state 136
+state 98
 
    18 OPT_A_Tres: Affiliation .
 
     $default  reduce using rule 18 (OPT_A_Tres)
 
 
+state 99
+
+   77 Summary: BSUMMARY '(' texto ')' .
+
+    $default  reduce using rule 77 (Summary)
+
+
+state 100
+
+   58 CodeBlock: BCODE '{' codigo '}' .
+
+    $default  reduce using rule 58 (CodeBlock)
+
+
+state 101
+
+   60 S_Title: BSEC '(' texto ')' .
+
+    $default  reduce using rule 60 (S_Title)
+
+
+state 102
+
+  121 Item: BItem . '(' ParaContend ')'
+
+    '('  shift, and go to state 161
+
+
+state 103
+
+  113 Enumerate: BENUM '(' C_ENUM ')' .
+
+    $default  reduce using rule 113 (Enumerate)
+
+
+state 104
+
+  115 C_ENUM: C_ENUM Itemize .
+
+    $default  reduce using rule 115 (C_ENUM)
+
+
+state 105
+
+  114 C_ENUM: C_ENUM Item .
+
+    $default  reduce using rule 114 (C_ENUM)
+
+
+state 106
+
+  117 Itemize: BItemize '(' C_Item ')' .
+
+    $default  reduce using rule 117 (Itemize)
+
+
+state 107
+
+  119 C_Item: C_Item Enumerate .
+
+    $default  reduce using rule 119 (C_Item)
+
+
+state 108
+
+  118 C_Item: C_Item Item .
+
+    $default  reduce using rule 118 (C_Item)
+
+
+state 109
+
+   59 Section: S_Title '{' ElemList '}' .
+
+    $default  reduce using rule 59 (Section)
+
+
+state 110
+
+   63 ParaContend: ParaContend texto .
+
+    $default  reduce using rule 63 (ParaContend)
+
+
+state 111
+
+   87 Bbold: BBOLD .
+
+    $default  reduce using rule 87 (Bbold)
+
+
+state 112
+
+   78 Ref: BREF . '(' texto sep texto ')'
+
+    '('  shift, and go to state 162
+
+
+state 113
+
+   82 Iterm: BIterm . '(' texto ')'
+
+    '('  shift, and go to state 163
+
+
+state 114
+
+   83 FootNote: BFoteN . '(' texto ')'
+
+    '('  shift, and go to state 164
+
+
+state 115
+
+   84 InlineCode: BLineCode . '(' linha ')'
+
+    '('  shift, and go to state 165
+
+
+state 116
+
+   99 BUnderLine: BUNDERLINE .
+
+    $default  reduce using rule 99 (BUnderLine)
+
+
+state 117
+
+   85 Acronym: BAcronym . '(' texto ')'
+
+    '('  shift, and go to state 166
+
+
+state 118
+
+   93 BItalic: BITALIC .
+
+    $default  reduce using rule 93 (BItalic)
+
+
+state 119
+
+   80 Xref: BXREF . '(' texto ')'
+
+    '('  shift, and go to state 167
+
+
+state 120
+
+   79 Href: BHREF . '(' texto sep url ')'
+
+    '('  shift, and go to state 168
+
+
+state 121
+
+   81 CitRef: BCiteR . '(' texto ')'
+
+    '('  shift, and go to state 169
+
+
+state 122
+
+   61 Paragraph: BParag '{' ParaContend '}' .
+
+    $default  reduce using rule 61 (Paragraph)
+
+
+state 123
+
+   64 ParaContend: ParaContend FreeElem .
+
+    $default  reduce using rule 64 (ParaContend)
+
+
+state 124
+
+   67 FreeElem: Ref .
+
+    $default  reduce using rule 67 (FreeElem)
+
+
+state 125
+
+   70 FreeElem: Href .
+
+    $default  reduce using rule 70 (FreeElem)
+
+
+state 126
+
+   68 FreeElem: Xref .
+
+    $default  reduce using rule 68 (FreeElem)
+
+
+state 127
+
+   69 FreeElem: CitRef .
+
+    $default  reduce using rule 69 (FreeElem)
+
+
+state 128
+
+   71 FreeElem: Iterm .
+
+    $default  reduce using rule 71 (FreeElem)
+
+
+state 129
+
+   66 FreeElem: FootNote .
+
+    $default  reduce using rule 66 (FreeElem)
+
+
+state 130
+
+   75 FreeElem: InlineCode .
+
+    $default  reduce using rule 75 (FreeElem)
+
+
+state 131
+
+   76 FreeElem: Acronym .
+
+    $default  reduce using rule 76 (FreeElem)
+
+
+state 132
+
+   72 FreeElem: Bold .
+
+    $default  reduce using rule 72 (FreeElem)
+
+
+state 133
+
+   86 Bold: Bbold . '(' BCont ')'
+
+    '('  shift, and go to state 170
+
+
+state 134
+
+   73 FreeElem: Italic .
+
+    $default  reduce using rule 73 (FreeElem)
+
+
+state 135
+
+   92 Italic: BItalic . '(' ICont ')'
+
+    '('  shift, and go to state 171
+
+
+state 136
+
+   74 FreeElem: Underline .
+
+    $default  reduce using rule 74 (FreeElem)
+
+
 state 137
 
-   84 Bold: BBOLD '(' . BCont ')'
+   98 Underline: BUnderLine . '(' UCont ')'
 
-    $default  reduce using rule 88 (BCont)
-
-    BCont  go to state 171
+    '('  shift, and go to state 172
 
 
 state 138
 
-   76 Ref: BREF '(' . texto sep texto ')'
+  108 Image: BImg '(' . Path ')'
 
-    texto  shift, and go to state 172
+    texto  shift, and go to state 173
+
+    Path  go to state 174
 
 
 state 139
 
-   80 Iterm: BIterm '(' . texto ')'
+  110 Caption: BCAP . '(' texto ')'
 
-    texto  shift, and go to state 173
+    '('  shift, and go to state 175
 
 
 state 140
 
-   81 FootNote: BFoteN '(' . texto ')'
+  106 Figure: BFig '(' Image Caption . ')'
 
-    texto  shift, and go to state 174
+    ')'  shift, and go to state 176
 
 
 state 141
 
-   82 InlineCode: BLineCode '(' . texto ')'
-
-    texto  shift, and go to state 175
-
-
-state 142
-
-   94 Underline: BUnderLine '(' . UCont ')'
-
-    $default  reduce using rule 98 (UCont)
-
-    UCont  go to state 176
-
-
-state 143
-
-   83 Acronym: BAcronym '(' . texto ')'
+  123 T_Caption: BCAP '(' . texto ')'
 
     texto  shift, and go to state 177
 
 
+state 142
+
+  128 BLinha: BLINHA .
+
+    $default  reduce using rule 128 (BLinha)
+
+
+state 143
+
+  122 Table: BTab '(' T_Caption C_Tabela . ')'
+  125 C_Tabela: C_Tabela . Linha
+
+    BLINHA  shift, and go to state 142
+    ')'     shift, and go to state 178
+
+    Linha   go to state 179
+    BLinha  go to state 145
+
+
 state 144
 
-   89 Italic: BItalic '(' . ICont ')'
+  126 C_Tabela: Linha .
 
-    $default  reduce using rule 93 (ICont)
-
-    ICont  go to state 178
+    $default  reduce using rule 126 (C_Tabela)
 
 
 state 145
 
-   78 Xref: BXREF '(' . texto ')'
+  127 Linha: BLinha . '{' Celulas '}'
 
-    texto  shift, and go to state 179
+    '{'  shift, and go to state 180
 
 
 state 146
 
-   77 Href: BHREF '(' . texto sep url ')'
+   25 Institution: BINST '(' arg . ')'
 
-    texto  shift, and go to state 180
+    ')'  shift, and go to state 181
 
 
 state 147
 
-   79 CitRef: BCiteR '(' . texto ')'
+   27 Keywords: BKEY '(' . Keys ')'
 
-    texto  shift, and go to state 181
+    arg  shift, and go to state 182
+
+    Keys  go to state 183
+    Key   go to state 184
 
 
 state 148
 
-  103 Path: texto .
+   32 Abstract: BABS . '{' ParaList '}'
 
-    $default  reduce using rule 103 (Path)
+    '{'  shift, and go to state 185
 
 
 state 149
 
-  102 Image: BImg '(' Path . ')'
-
-    ')'  shift, and go to state 182
-
-
-state 150
-
-  101 Figure: BFig '(' Image Caption ')' .
-
-    $default  reduce using rule 101 (Figure)
-
-
-state 151
-
-  115 Item: BItem '(' . ParaContend ')'
-
-    $default  reduce using rule 63 (ParaContend)
-
-    ParaContend  go to state 183
-
-
-state 152
-
-  104 Caption: BCAP '(' texto . ')'
-
-    ')'  shift, and go to state 184
-
-
-state 153
-
-  119 Linha: BLinha '{' . Celulas '}'
-
-    BCel  shift, and go to state 185
-
-    Celulas  go to state 186
-    Cel      go to state 187
-
-
-state 154
-
-  116 TABELA: BTAB '(' Caption C_Tabela ')' .
-
-    $default  reduce using rule 116 (TABELA)
-
-
-state 155
-
-  117 C_Tabela: C_Tabela Linha .
-
-    $default  reduce using rule 117 (C_Tabela)
-
-
-state 156
-
-   25 Institution: BINST '(' arg . ')'
-
-    ')'  shift, and go to state 188
-
-
-state 157
-
-   27 Keywords: BKEY '(' . Keys ')'
-
-    arg  shift, and go to state 189
-
-    Keys  go to state 190
-    Key   go to state 191
-
-
-state 158
-
-   32 Abstract: BABS . '{' ParaList '}'
-
-    '{'  shift, and go to state 192
-
-
-state 159
-
     2 FrontMatter: BFMatter Title STitle Authores Date Institution Keywords Abstract . Aknowledgements Indice
 
-    BAKNOW  shift, and go to state 193
+    BAKNOW  shift, and go to state 186
 
     $default  reduce using rule 34 (Aknowledgements)
 
-    Aknowledgements  go to state 194
+    Aknowledgements  go to state 187
 
 
-state 160
+state 150
 
    23 Affiliation: sep arg .
 
     $default  reduce using rule 23 (Affiliation)
 
 
-state 161
+state 151
 
    20 Nident: sep id .
 
     $default  reduce using rule 20 (Nident)
 
 
-state 162
+state 152
 
    21 Email: sep email .
 
     $default  reduce using rule 21 (Email)
 
 
-state 163
+state 153
 
    22 Url: sep url .
 
     $default  reduce using rule 22 (Url)
 
 
-state 164
+state 154
 
     9 Author: Bauthor '(' Nome OPT_Author ')' .
 
     $default  reduce using rule 9 (Author)
 
 
-state 165
+state 155
 
    21 Email: sep . email
    22 Url: sep . url
    23 Affiliation: sep . arg
 
-    arg    shift, and go to state 160
-    email  shift, and go to state 162
-    url    shift, and go to state 163
+    arg    shift, and go to state 150
+    email  shift, and go to state 152
+    url    shift, and go to state 153
 
 
-state 166
+state 156
 
    12 OPT_Author: Nident OPT_A_UM .
 
     $default  reduce using rule 12 (OPT_Author)
 
 
-state 167
+state 157
 
    22 Url: sep . url
    23 Affiliation: sep . arg
 
-    arg  shift, and go to state 160
-    url  shift, and go to state 163
+    arg  shift, and go to state 150
+    url  shift, and go to state 153
 
 
-state 168
+state 158
 
    14 OPT_A_UM: Email OPT_A_Dois .
 
     $default  reduce using rule 14 (OPT_A_UM)
 
 
-state 169
+state 159
 
    23 Affiliation: sep . arg
 
-    arg  shift, and go to state 160
+    arg  shift, and go to state 150
 
 
-state 170
+state 160
 
    16 OPT_A_Dois: Url OPT_A_Tres .
 
     $default  reduce using rule 16 (OPT_A_Dois)
 
 
+state 161
+
+  121 Item: BItem '(' . ParaContend ')'
+
+    $default  reduce using rule 65 (ParaContend)
+
+    ParaContend  go to state 188
+
+
+state 162
+
+   78 Ref: BREF '(' . texto sep texto ')'
+
+    texto  shift, and go to state 189
+
+
+state 163
+
+   82 Iterm: BIterm '(' . texto ')'
+
+    texto  shift, and go to state 190
+
+
+state 164
+
+   83 FootNote: BFoteN '(' . texto ')'
+
+    texto  shift, and go to state 191
+
+
+state 165
+
+   84 InlineCode: BLineCode '(' . linha ')'
+
+    linha  shift, and go to state 192
+
+
+state 166
+
+   85 Acronym: BAcronym '(' . texto ')'
+
+    texto  shift, and go to state 193
+
+
+state 167
+
+   80 Xref: BXREF '(' . texto ')'
+
+    texto  shift, and go to state 194
+
+
+state 168
+
+   79 Href: BHREF '(' . texto sep url ')'
+
+    texto  shift, and go to state 195
+
+
+state 169
+
+   81 CitRef: BCiteR '(' . texto ')'
+
+    texto  shift, and go to state 196
+
+
+state 170
+
+   86 Bold: Bbold '(' . BCont ')'
+
+    $default  reduce using rule 91 (BCont)
+
+    BCont  go to state 197
+
+
 state 171
 
-   84 Bold: BBOLD '(' BCont . ')'
-   85 BCont: BCont . texto
-   86      | BCont . Italic
-   87      | BCont . Underline
+   92 Italic: BItalic '(' . ICont ')'
 
-    texto       shift, and go to state 195
-    BUnderLine  shift, and go to state 89
-    BItalic     shift, and go to state 91
-    ')'         shift, and go to state 196
+    $default  reduce using rule 97 (ICont)
 
-    Italic     go to state 197
-    Underline  go to state 198
+    ICont  go to state 198
 
 
 state 172
 
-   76 Ref: BREF '(' texto . sep texto ')'
+   98 Underline: BUnderLine '(' . UCont ')'
 
-    sep  shift, and go to state 199
+    $default  reduce using rule 103 (UCont)
+
+    UCont  go to state 199
 
 
 state 173
 
-   80 Iterm: BIterm '(' texto . ')'
+  109 Path: texto .
 
-    ')'  shift, and go to state 200
+    $default  reduce using rule 109 (Path)
 
 
 state 174
 
-   81 FootNote: BFoteN '(' texto . ')'
+  108 Image: BImg '(' Path . ')'
 
-    ')'  shift, and go to state 201
+    ')'  shift, and go to state 200
 
 
 state 175
 
-   82 InlineCode: BLineCode '(' texto . ')'
+  110 Caption: BCAP '(' . texto ')'
 
-    ')'  shift, and go to state 202
+    texto  shift, and go to state 201
 
 
 state 176
 
-   94 Underline: BUnderLine '(' UCont . ')'
-   95 UCont: UCont . texto
-   96      | UCont . Bold
-   97      | UCont . Italic
+  106 Figure: BFig '(' Image Caption ')' .
 
-    texto    shift, and go to state 203
-    BBOLD    shift, and go to state 84
-    BItalic  shift, and go to state 91
-    ')'      shift, and go to state 204
-
-    Bold    go to state 205
-    Italic  go to state 206
+    $default  reduce using rule 106 (Figure)
 
 
 state 177
 
-   83 Acronym: BAcronym '(' texto . ')'
+  123 T_Caption: BCAP '(' texto . ')'
 
-    ')'  shift, and go to state 207
+    ')'  shift, and go to state 202
 
 
 state 178
 
-   89 Italic: BItalic '(' ICont . ')'
-   90 ICont: ICont . texto
-   91      | ICont . Bold
-   92      | ICont . Underline
+  122 Table: BTab '(' T_Caption C_Tabela ')' .
 
-    texto       shift, and go to state 208
-    BBOLD       shift, and go to state 84
-    BUnderLine  shift, and go to state 89
-    ')'         shift, and go to state 209
-
-    Bold       go to state 210
-    Underline  go to state 211
+    $default  reduce using rule 122 (Table)
 
 
 state 179
 
-   78 Xref: BXREF '(' texto . ')'
+  125 C_Tabela: C_Tabela Linha .
 
-    ')'  shift, and go to state 212
+    $default  reduce using rule 125 (C_Tabela)
 
 
 state 180
 
-   77 Href: BHREF '(' texto . sep url ')'
+  127 Linha: BLinha '{' . Celulas '}'
 
-    sep  shift, and go to state 213
+    BCEL  shift, and go to state 203
+
+    Celulas  go to state 204
+    Cel      go to state 205
+    BCel     go to state 206
 
 
 state 181
-
-   79 CitRef: BCiteR '(' texto . ')'
-
-    ')'  shift, and go to state 214
-
-
-state 182
-
-  102 Image: BImg '(' Path ')' .
-
-    $default  reduce using rule 102 (Image)
-
-
-state 183
-
-   61 ParaContend: ParaContend . texto
-   62            | ParaContend . FreeElem
-  115 Item: BItem '(' ParaContend . ')'
-
-    texto       shift, and go to state 83
-    BBOLD       shift, and go to state 84
-    BREF        shift, and go to state 85
-    BIterm      shift, and go to state 86
-    BFoteN      shift, and go to state 87
-    BLineCode   shift, and go to state 88
-    BUnderLine  shift, and go to state 89
-    BAcronym    shift, and go to state 90
-    BItalic     shift, and go to state 91
-    BXREF       shift, and go to state 92
-    BHREF       shift, and go to state 93
-    BCiteR      shift, and go to state 94
-    ')'         shift, and go to state 215
-
-    FreeElem    go to state 96
-    Ref         go to state 97
-    Href        go to state 98
-    Xref        go to state 99
-    CitRef      go to state 100
-    Iterm       go to state 101
-    FootNote    go to state 102
-    InlineCode  go to state 103
-    Acronym     go to state 104
-    Bold        go to state 105
-    Italic      go to state 106
-    Underline   go to state 107
-
-
-state 184
-
-  104 Caption: BCAP '(' texto ')' .
-
-    $default  reduce using rule 104 (Caption)
-
-
-state 185
-
-  122 Cel: BCel . '(' OPT_Cel ')' '{' ParaContend '}'
-
-    '('  shift, and go to state 216
-
-
-state 186
-
-  119 Linha: BLinha '{' Celulas . '}'
-  120 Celulas: Celulas . Cel
-
-    BCel  shift, and go to state 185
-    '}'   shift, and go to state 217
-
-    Cel  go to state 218
-
-
-state 187
-
-  121 Celulas: Cel .
-
-    $default  reduce using rule 121 (Celulas)
-
-
-state 188
 
    25 Institution: BINST '(' arg ')' .
 
     $default  reduce using rule 25 (Institution)
 
 
-state 189
+state 182
 
    31 Key: arg .
 
     $default  reduce using rule 31 (Key)
 
 
-state 190
+state 183
 
    27 Keywords: BKEY '(' Keys . ')'
    29 Keys: Keys . sep Key
 
-    sep  shift, and go to state 219
-    ')'  shift, and go to state 220
+    sep  shift, and go to state 207
+    ')'  shift, and go to state 208
 
 
-state 191
+state 184
 
    30 Keys: Key .
 
     $default  reduce using rule 30 (Keys)
 
 
-state 192
+state 185
 
    32 Abstract: BABS '{' . ParaList '}'
 
-    BParag  shift, and go to state 21
+    BPARAG  shift, and go to state 28
 
-    ParaList   go to state 221
-    Paragraph  go to state 222
+    ParaList   go to state 209
+    Paragraph  go to state 210
+    BParag     go to state 41
+
+
+state 186
+
+   33 Aknowledgements: BAKNOW . '{' ParaList '}'
+
+    '{'  shift, and go to state 211
+
+
+state 187
+
+    2 FrontMatter: BFMatter Title STitle Authores Date Institution Keywords Abstract Aknowledgements . Indice
+
+    BINDICE  shift, and go to state 212
+
+    $default  reduce using rule 43 (Lot)
+
+    Indice  go to state 213
+    Toc     go to state 214
+    Lof     go to state 215
+    Lot     go to state 216
+
+
+state 188
+
+   63 ParaContend: ParaContend . texto
+   64            | ParaContend . FreeElem
+  121 Item: BItem '(' ParaContend . ')'
+
+    texto       shift, and go to state 110
+    BBOLD       shift, and go to state 111
+    BREF        shift, and go to state 112
+    BIterm      shift, and go to state 113
+    BFoteN      shift, and go to state 114
+    BLineCode   shift, and go to state 115
+    BUNDERLINE  shift, and go to state 116
+    BAcronym    shift, and go to state 117
+    BITALIC     shift, and go to state 118
+    BXREF       shift, and go to state 119
+    BHREF       shift, and go to state 120
+    BCiteR      shift, and go to state 121
+    ')'         shift, and go to state 217
+
+    FreeElem    go to state 123
+    Ref         go to state 124
+    Href        go to state 125
+    Xref        go to state 126
+    CitRef      go to state 127
+    Iterm       go to state 128
+    FootNote    go to state 129
+    InlineCode  go to state 130
+    Acronym     go to state 131
+    Bold        go to state 132
+    Bbold       go to state 133
+    Italic      go to state 134
+    BItalic     go to state 135
+    Underline   go to state 136
+    BUnderLine  go to state 137
+
+
+state 189
+
+   78 Ref: BREF '(' texto . sep texto ')'
+
+    sep  shift, and go to state 218
+
+
+state 190
+
+   82 Iterm: BIterm '(' texto . ')'
+
+    ')'  shift, and go to state 219
+
+
+state 191
+
+   83 FootNote: BFoteN '(' texto . ')'
+
+    ')'  shift, and go to state 220
+
+
+state 192
+
+   84 InlineCode: BLineCode '(' linha . ')'
+
+    ')'  shift, and go to state 221
 
 
 state 193
 
-   33 Aknowledgements: BAKNOW . '{' ParaList '}'
+   85 Acronym: BAcronym '(' texto . ')'
 
-    '{'  shift, and go to state 223
+    ')'  shift, and go to state 222
 
 
 state 194
 
-    2 FrontMatter: BFMatter Title STitle Authores Date Institution Keywords Abstract Aknowledgements . Indice
+   80 Xref: BXREF '(' texto . ')'
 
-    BINDICE  shift, and go to state 224
-
-    $default  reduce using rule 43 (Lot)
-
-    Indice  go to state 225
-    Toc     go to state 226
-    Lof     go to state 227
-    Lot     go to state 228
+    ')'  shift, and go to state 223
 
 
 state 195
 
-   85 BCont: BCont texto .
+   79 Href: BHREF '(' texto . sep url ')'
 
-    $default  reduce using rule 85 (BCont)
+    sep  shift, and go to state 224
 
 
 state 196
 
-   84 Bold: BBOLD '(' BCont ')' .
+   81 CitRef: BCiteR '(' texto . ')'
 
-    $default  reduce using rule 84 (Bold)
+    ')'  shift, and go to state 225
 
 
 state 197
 
-   86 BCont: BCont Italic .
+   86 Bold: Bbold '(' BCont . ')'
+   88 BCont: BCont . texto
+   89      | BCont . Italic
+   90      | BCont . Underline
 
-    $default  reduce using rule 86 (BCont)
+    texto       shift, and go to state 226
+    BUNDERLINE  shift, and go to state 116
+    BITALIC     shift, and go to state 118
+    ')'         shift, and go to state 227
+
+    Italic      go to state 228
+    BItalic     go to state 135
+    Underline   go to state 229
+    BUnderLine  go to state 137
 
 
 state 198
 
-   87 BCont: BCont Underline .
+   92 Italic: BItalic '(' ICont . ')'
+   94 ICont: ICont . texto
+   95      | ICont . Bold
+   96      | ICont . Underline
 
-    $default  reduce using rule 87 (BCont)
+    texto       shift, and go to state 230
+    BBOLD       shift, and go to state 111
+    BUNDERLINE  shift, and go to state 116
+    ')'         shift, and go to state 231
+
+    Bold        go to state 232
+    Bbold       go to state 133
+    Underline   go to state 233
+    BUnderLine  go to state 137
 
 
 state 199
 
-   76 Ref: BREF '(' texto sep . texto ')'
+   98 Underline: BUnderLine '(' UCont . ')'
+  100 UCont: UCont . texto
+  101      | UCont . Bold
+  102      | UCont . Italic
 
-    texto  shift, and go to state 229
+    texto    shift, and go to state 234
+    BBOLD    shift, and go to state 111
+    BITALIC  shift, and go to state 118
+    ')'      shift, and go to state 235
+
+    Bold     go to state 236
+    Bbold    go to state 133
+    Italic   go to state 237
+    BItalic  go to state 135
 
 
 state 200
 
-   80 Iterm: BIterm '(' texto ')' .
+  108 Image: BImg '(' Path ')' .
 
-    $default  reduce using rule 80 (Iterm)
+    $default  reduce using rule 108 (Image)
 
 
 state 201
 
-   81 FootNote: BFoteN '(' texto ')' .
+  110 Caption: BCAP '(' texto . ')'
 
-    $default  reduce using rule 81 (FootNote)
+    ')'  shift, and go to state 238
 
 
 state 202
 
-   82 InlineCode: BLineCode '(' texto ')' .
+  123 T_Caption: BCAP '(' texto ')' .
 
-    $default  reduce using rule 82 (InlineCode)
+    $default  reduce using rule 123 (T_Caption)
 
 
 state 203
 
-   95 UCont: UCont texto .
+  132 BCel: BCEL .
 
-    $default  reduce using rule 95 (UCont)
+    $default  reduce using rule 132 (BCel)
 
 
 state 204
 
-   94 Underline: BUnderLine '(' UCont ')' .
+  127 Linha: BLinha '{' Celulas . '}'
+  129 Celulas: Celulas . Cel
 
-    $default  reduce using rule 94 (Underline)
+    BCEL  shift, and go to state 203
+    '}'   shift, and go to state 239
+
+    Cel   go to state 240
+    BCel  go to state 206
 
 
 state 205
 
-   96 UCont: UCont Bold .
+  130 Celulas: Cel .
 
-    $default  reduce using rule 96 (UCont)
+    $default  reduce using rule 130 (Celulas)
 
 
 state 206
 
-   97 UCont: UCont Italic .
+  131 Cel: BCel . '(' OPT_Cel ')' '{' texto '}'
 
-    $default  reduce using rule 97 (UCont)
+    '('  shift, and go to state 241
 
 
 state 207
 
-   83 Acronym: BAcronym '(' texto ')' .
+   29 Keys: Keys sep . Key
 
-    $default  reduce using rule 83 (Acronym)
+    arg  shift, and go to state 182
+
+    Key  go to state 242
 
 
 state 208
-
-   90 ICont: ICont texto .
-
-    $default  reduce using rule 90 (ICont)
-
-
-state 209
-
-   89 Italic: BItalic '(' ICont ')' .
-
-    $default  reduce using rule 89 (Italic)
-
-
-state 210
-
-   91 ICont: ICont Bold .
-
-    $default  reduce using rule 91 (ICont)
-
-
-state 211
-
-   92 ICont: ICont Underline .
-
-    $default  reduce using rule 92 (ICont)
-
-
-state 212
-
-   78 Xref: BXREF '(' texto ')' .
-
-    $default  reduce using rule 78 (Xref)
-
-
-state 213
-
-   77 Href: BHREF '(' texto sep . url ')'
-
-    url  shift, and go to state 230
-
-
-state 214
-
-   79 CitRef: BCiteR '(' texto ')' .
-
-    $default  reduce using rule 79 (CitRef)
-
-
-state 215
-
-  115 Item: BItem '(' ParaContend ')' .
-
-    $default  reduce using rule 115 (Item)
-
-
-state 216
-
-  122 Cel: BCel '(' . OPT_Cel ')' '{' ParaContend '}'
-
-    carater  shift, and go to state 231
-    inteiro  shift, and go to state 232
-
-    $default  reduce using rule 127 (OPT_Cel_um)
-
-    OPT_Cel     go to state 233
-    POS         go to state 234
-    OPT_Cel_um  go to state 235
-    DIM         go to state 236
-
-
-state 217
-
-  119 Linha: BLinha '{' Celulas '}' .
-
-    $default  reduce using rule 119 (Linha)
-
-
-state 218
-
-  120 Celulas: Celulas Cel .
-
-    $default  reduce using rule 120 (Celulas)
-
-
-state 219
-
-   29 Keys: Keys sep . Key
-
-    arg  shift, and go to state 189
-
-    Key  go to state 237
-
-
-state 220
 
    27 Keywords: BKEY '(' Keys ')' .
 
     $default  reduce using rule 27 (Keywords)
 
 
-state 221
+state 209
 
    32 Abstract: BABS '{' ParaList . '}'
    35 ParaList: ParaList . Paragraph
 
-    BParag  shift, and go to state 21
-    '}'     shift, and go to state 238
+    BPARAG  shift, and go to state 28
+    '}'     shift, and go to state 243
 
-    Paragraph  go to state 239
+    Paragraph  go to state 244
+    BParag     go to state 41
 
 
-state 222
+state 210
 
    36 ParaList: Paragraph .
 
     $default  reduce using rule 36 (ParaList)
 
 
-state 223
+state 211
 
    33 Aknowledgements: BAKNOW '{' . ParaList '}'
 
-    BParag  shift, and go to state 21
+    BPARAG  shift, and go to state 28
 
-    ParaList   go to state 240
-    Paragraph  go to state 222
+    ParaList   go to state 245
+    Paragraph  go to state 210
+    BParag     go to state 41
 
 
-state 224
+state 212
 
    38 Toc: BINDICE . '(' ')' Lof
    40 Lof: BINDICE . '(' IFIGURE ')' Lot
    42 Lot: BINDICE . '(' ITABLE ')'
 
-    '('  shift, and go to state 241
+    '('  shift, and go to state 246
 
 
-state 225
+state 213
 
     2 FrontMatter: BFMatter Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice .
 
     $default  reduce using rule 2 (FrontMatter)
 
 
-state 226
+state 214
 
    37 Indice: Toc .
 
     $default  reduce using rule 37 (Indice)
 
 
-state 227
+state 215
 
    39 Toc: Lof .
 
     $default  reduce using rule 39 (Toc)
 
 
-state 228
+state 216
 
    41 Lof: Lot .
 
     $default  reduce using rule 41 (Lof)
 
 
+state 217
+
+  121 Item: BItem '(' ParaContend ')' .
+
+    $default  reduce using rule 121 (Item)
+
+
+state 218
+
+   78 Ref: BREF '(' texto sep . texto ')'
+
+    texto  shift, and go to state 247
+
+
+state 219
+
+   82 Iterm: BIterm '(' texto ')' .
+
+    $default  reduce using rule 82 (Iterm)
+
+
+state 220
+
+   83 FootNote: BFoteN '(' texto ')' .
+
+    $default  reduce using rule 83 (FootNote)
+
+
+state 221
+
+   84 InlineCode: BLineCode '(' linha ')' .
+
+    $default  reduce using rule 84 (InlineCode)
+
+
+state 222
+
+   85 Acronym: BAcronym '(' texto ')' .
+
+    $default  reduce using rule 85 (Acronym)
+
+
+state 223
+
+   80 Xref: BXREF '(' texto ')' .
+
+    $default  reduce using rule 80 (Xref)
+
+
+state 224
+
+   79 Href: BHREF '(' texto sep . url ')'
+
+    url  shift, and go to state 248
+
+
+state 225
+
+   81 CitRef: BCiteR '(' texto ')' .
+
+    $default  reduce using rule 81 (CitRef)
+
+
+state 226
+
+   88 BCont: BCont texto .
+
+    $default  reduce using rule 88 (BCont)
+
+
+state 227
+
+   86 Bold: Bbold '(' BCont ')' .
+
+    $default  reduce using rule 86 (Bold)
+
+
+state 228
+
+   89 BCont: BCont Italic .
+
+    $default  reduce using rule 89 (BCont)
+
+
 state 229
 
-   76 Ref: BREF '(' texto sep texto . ')'
+   90 BCont: BCont Underline .
 
-    ')'  shift, and go to state 242
+    $default  reduce using rule 90 (BCont)
 
 
 state 230
 
-   77 Href: BHREF '(' texto sep url . ')'
+   94 ICont: ICont texto .
 
-    ')'  shift, and go to state 243
+    $default  reduce using rule 94 (ICont)
 
 
 state 231
 
-  125 POS: carater .
+   92 Italic: BItalic '(' ICont ')' .
 
-    $default  reduce using rule 125 (POS)
+    $default  reduce using rule 92 (Italic)
 
 
 state 232
 
-  128 DIM: inteiro .
+   95 ICont: ICont Bold .
 
-    $default  reduce using rule 128 (DIM)
+    $default  reduce using rule 95 (ICont)
 
 
 state 233
 
-  122 Cel: BCel '(' OPT_Cel . ')' '{' ParaContend '}'
+   96 ICont: ICont Underline .
 
-    ')'  shift, and go to state 244
+    $default  reduce using rule 96 (ICont)
 
 
 state 234
 
-  123 OPT_Cel: POS . sep OPT_Cel_um
+  100 UCont: UCont texto .
 
-    sep  shift, and go to state 245
+    $default  reduce using rule 100 (UCont)
 
 
 state 235
 
-  124 OPT_Cel: OPT_Cel_um .
+   98 Underline: BUnderLine '(' UCont ')' .
 
-    $default  reduce using rule 124 (OPT_Cel)
+    $default  reduce using rule 98 (Underline)
 
 
 state 236
 
-  126 OPT_Cel_um: DIM .
+  101 UCont: UCont Bold .
 
-    $default  reduce using rule 126 (OPT_Cel_um)
+    $default  reduce using rule 101 (UCont)
 
 
 state 237
+
+  102 UCont: UCont Italic .
+
+    $default  reduce using rule 102 (UCont)
+
+
+state 238
+
+  110 Caption: BCAP '(' texto ')' .
+
+    $default  reduce using rule 110 (Caption)
+
+
+state 239
+
+  127 Linha: BLinha '{' Celulas '}' .
+
+    $default  reduce using rule 127 (Linha)
+
+
+state 240
+
+  129 Celulas: Celulas Cel .
+
+    $default  reduce using rule 129 (Celulas)
+
+
+state 241
+
+  131 Cel: BCel '(' . OPT_Cel ')' '{' texto '}'
+
+    carater  shift, and go to state 249
+    inteiro  shift, and go to state 250
+
+    $default  reduce using rule 137 (OPT_Cel_um)
+
+    OPT_Cel     go to state 251
+    POS         go to state 252
+    OPT_Cel_um  go to state 253
+    Dim         go to state 254
+
+
+state 242
 
    29 Keys: Keys sep Key .
 
     $default  reduce using rule 29 (Keys)
 
 
-state 238
+state 243
 
    32 Abstract: BABS '{' ParaList '}' .
 
     $default  reduce using rule 32 (Abstract)
 
 
-state 239
+state 244
 
    35 ParaList: ParaList Paragraph .
 
     $default  reduce using rule 35 (ParaList)
 
 
-state 240
+state 245
 
    33 Aknowledgements: BAKNOW '{' ParaList . '}'
    35 ParaList: ParaList . Paragraph
 
-    BParag  shift, and go to state 21
-    '}'     shift, and go to state 246
+    BPARAG  shift, and go to state 28
+    '}'     shift, and go to state 255
 
-    Paragraph  go to state 239
+    Paragraph  go to state 244
+    BParag     go to state 41
 
 
-state 241
+state 246
 
    38 Toc: BINDICE '(' . ')' Lof
    40 Lof: BINDICE '(' . IFIGURE ')' Lot
    42 Lot: BINDICE '(' . ITABLE ')'
 
-    IFIGURE  shift, and go to state 247
-    ITABLE   shift, and go to state 248
-    ')'      shift, and go to state 249
+    IFIGURE  shift, and go to state 256
+    ITABLE   shift, and go to state 257
+    ')'      shift, and go to state 258
 
 
-state 242
+state 247
 
-   76 Ref: BREF '(' texto sep texto ')' .
+   78 Ref: BREF '(' texto sep texto . ')'
 
-    $default  reduce using rule 76 (Ref)
-
-
-state 243
-
-   77 Href: BHREF '(' texto sep url ')' .
-
-    $default  reduce using rule 77 (Href)
+    ')'  shift, and go to state 259
 
 
-state 244
+state 248
 
-  122 Cel: BCel '(' OPT_Cel ')' . '{' ParaContend '}'
+   79 Href: BHREF '(' texto sep url . ')'
 
-    '{'  shift, and go to state 250
-
-
-state 245
-
-  123 OPT_Cel: POS sep . OPT_Cel_um
-
-    inteiro  shift, and go to state 232
-
-    $default  reduce using rule 127 (OPT_Cel_um)
-
-    OPT_Cel_um  go to state 251
-    DIM         go to state 236
+    ')'  shift, and go to state 260
 
 
-state 246
+state 249
+
+  135 POS: carater .
+
+    $default  reduce using rule 135 (POS)
+
+
+state 250
+
+  138 Dim: inteiro .
+
+    $default  reduce using rule 138 (Dim)
+
+
+state 251
+
+  131 Cel: BCel '(' OPT_Cel . ')' '{' texto '}'
+
+    ')'  shift, and go to state 261
+
+
+state 252
+
+  133 OPT_Cel: POS . sep OPT_Cel_um
+
+    sep  shift, and go to state 262
+
+
+state 253
+
+  134 OPT_Cel: OPT_Cel_um .
+
+    $default  reduce using rule 134 (OPT_Cel)
+
+
+state 254
+
+  136 OPT_Cel_um: Dim .
+
+    $default  reduce using rule 136 (OPT_Cel_um)
+
+
+state 255
 
    33 Aknowledgements: BAKNOW '{' ParaList '}' .
 
     $default  reduce using rule 33 (Aknowledgements)
 
 
-state 247
+state 256
 
    40 Lof: BINDICE '(' IFIGURE . ')' Lot
 
-    ')'  shift, and go to state 252
+    ')'  shift, and go to state 263
 
 
-state 248
+state 257
 
    42 Lot: BINDICE '(' ITABLE . ')'
 
-    ')'  shift, and go to state 253
+    ')'  shift, and go to state 264
 
 
-state 249
+state 258
 
    38 Toc: BINDICE '(' ')' . Lof
 
-    BINDICE  shift, and go to state 254
+    BINDICE  shift, and go to state 265
 
     $default  reduce using rule 43 (Lot)
 
-    Lof  go to state 255
-    Lot  go to state 228
+    Lof  go to state 266
+    Lot  go to state 216
 
 
-state 250
+state 259
 
-  122 Cel: BCel '(' OPT_Cel ')' '{' . ParaContend '}'
+   78 Ref: BREF '(' texto sep texto ')' .
 
-    $default  reduce using rule 63 (ParaContend)
-
-    ParaContend  go to state 256
+    $default  reduce using rule 78 (Ref)
 
 
-state 251
+state 260
 
-  123 OPT_Cel: POS sep OPT_Cel_um .
+   79 Href: BHREF '(' texto sep url ')' .
 
-    $default  reduce using rule 123 (OPT_Cel)
+    $default  reduce using rule 79 (Href)
 
 
-state 252
+state 261
+
+  131 Cel: BCel '(' OPT_Cel ')' . '{' texto '}'
+
+    '{'  shift, and go to state 267
+
+
+state 262
+
+  133 OPT_Cel: POS sep . OPT_Cel_um
+
+    inteiro  shift, and go to state 250
+
+    $default  reduce using rule 137 (OPT_Cel_um)
+
+    OPT_Cel_um  go to state 268
+    Dim         go to state 254
+
+
+state 263
 
    40 Lof: BINDICE '(' IFIGURE ')' . Lot
 
-    BINDICE  shift, and go to state 257
+    BINDICE  shift, and go to state 269
 
     $default  reduce using rule 43 (Lot)
 
-    Lot  go to state 258
+    Lot  go to state 270
 
 
-state 253
+state 264
 
    42 Lot: BINDICE '(' ITABLE ')' .
 
     $default  reduce using rule 42 (Lot)
 
 
-state 254
+state 265
 
    40 Lof: BINDICE . '(' IFIGURE ')' Lot
    42 Lot: BINDICE . '(' ITABLE ')'
 
-    '('  shift, and go to state 259
+    '('  shift, and go to state 271
 
 
-state 255
+state 266
 
    38 Toc: BINDICE '(' ')' Lof .
 
     $default  reduce using rule 38 (Toc)
 
 
-state 256
+state 267
 
-   61 ParaContend: ParaContend . texto
-   62            | ParaContend . FreeElem
-  122 Cel: BCel '(' OPT_Cel ')' '{' ParaContend . '}'
+  131 Cel: BCel '(' OPT_Cel ')' '{' . texto '}'
 
-    texto       shift, and go to state 83
-    BBOLD       shift, and go to state 84
-    BREF        shift, and go to state 85
-    BIterm      shift, and go to state 86
-    BFoteN      shift, and go to state 87
-    BLineCode   shift, and go to state 88
-    BUnderLine  shift, and go to state 89
-    BAcronym    shift, and go to state 90
-    BItalic     shift, and go to state 91
-    BXREF       shift, and go to state 92
-    BHREF       shift, and go to state 93
-    BCiteR      shift, and go to state 94
-    '}'         shift, and go to state 260
-
-    FreeElem    go to state 96
-    Ref         go to state 97
-    Href        go to state 98
-    Xref        go to state 99
-    CitRef      go to state 100
-    Iterm       go to state 101
-    FootNote    go to state 102
-    InlineCode  go to state 103
-    Acronym     go to state 104
-    Bold        go to state 105
-    Italic      go to state 106
-    Underline   go to state 107
+    texto  shift, and go to state 272
 
 
-state 257
+state 268
+
+  133 OPT_Cel: POS sep OPT_Cel_um .
+
+    $default  reduce using rule 133 (OPT_Cel)
+
+
+state 269
 
    42 Lot: BINDICE . '(' ITABLE ')'
 
-    '('  shift, and go to state 261
+    '('  shift, and go to state 273
 
 
-state 258
+state 270
 
    40 Lof: BINDICE '(' IFIGURE ')' Lot .
 
     $default  reduce using rule 40 (Lof)
 
 
-state 259
+state 271
 
    40 Lof: BINDICE '(' . IFIGURE ')' Lot
    42 Lot: BINDICE '(' . ITABLE ')'
 
-    IFIGURE  shift, and go to state 247
-    ITABLE   shift, and go to state 248
+    IFIGURE  shift, and go to state 256
+    ITABLE   shift, and go to state 257
 
 
-state 260
+state 272
 
-  122 Cel: BCel '(' OPT_Cel ')' '{' ParaContend '}' .
+  131 Cel: BCel '(' OPT_Cel ')' '{' texto . '}'
 
-    $default  reduce using rule 122 (Cel)
+    '}'  shift, and go to state 274
 
 
-state 261
+state 273
 
    42 Lot: BINDICE '(' . ITABLE ')'
 
-    ITABLE  shift, and go to state 248
+    ITABLE  shift, and go to state 257
+
+
+state 274
+
+  131 Cel: BCel '(' OPT_Cel ')' '{' texto '}' .
+
+    $default  reduce using rule 131 (Cel)

@@ -54,11 +54,14 @@ typedef struct sImage
 typedef struct stabel
 {
 	List* rows;
+	int maxcolunas;
+	char* caption;
 }Table;
 
 typedef struct sRow
 {
-	List* cells;	
+	List* cells;
+	int size ;	
 }Row;
 
 typedef struct sCell
@@ -98,6 +101,33 @@ void addKey(Report*,char*);
 //Paragrafos
 void addRef(Report*,char*, char*,int);
 void addHRef(Report*,char*,char*,int);
+void addNegTag(Report*,int);
+void addItTag(Report*,int);
+void addUnderTag(Report*,int);
+void fechoTag(Report*,char*,int);
+void addTexto(Report*,char*,int);
+void fechoParagrafo(Report*,int);
+void addCapitulo(Report*,char*);
+void addParagrafo(Report*,int);
+void addEndTAG(Report*,char*,char*);
+void addTextoNF(Report*,char*);
+void addCodLinha(Report*,char*,int);
+void addImagem(Report*,Image*);
+void addItem(Report*,char*);
+void addOrdList(Report*);
+void addItemList(Report*);
+void fechaOrdList(Report*);
+void fechaItemList(Report*);
+void addCelula(Row*,Cell*);
+void addLinha(Table*,Row*);
+void addTabela(Report*,Table*);
+
+
+
+
+
+
+
 
 
 
@@ -105,22 +135,12 @@ void addHRef(Report*,char*,char*,int);
 
 void addData(Report*); //TEM QUE ESTAR NO REPORT.C/H
 void addSeccao(Report*,char*,int,int);
-void addItem(Report*,char*);
-void addOrdList(Report*);
-void addItemList(Report*);
-void addEndTAG(Report*,char*,char*);
-void addTextoNF(Report*);
 void addComentario(Report*);
 void addQuebra(Report*);
 void addFormat(Report*,char*);
-void addImagem(Report*,Image*);
 void addModImg(Report*);
-void addTexto(Report*,char*);
-void addTabela(Report*,Table,int);
 void addBackSlash(Report*);
 void addAnd(Report*);
-void addLinha(Table,Row);
-void addCelula(Row,char*,char);
 void addIndice(Report*,int,char*);
 void addIndList(Report*);
 void addIndFecho(Report*);

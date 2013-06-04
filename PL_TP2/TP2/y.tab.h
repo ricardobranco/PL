@@ -48,45 +48,46 @@
      codigo = 264,
      carater = 265,
      inteiro = 266,
-     BTITLE = 267,
-     BSTITLE = 268,
-     BAUTHOR = 269,
-     BURL = 270,
-     BAFFIL = 271,
-     BEMAIL = 272,
-     BDATE = 273,
-     BINST = 274,
-     BKEY = 275,
-     BABS = 276,
-     BAKNOW = 277,
-     BINDICE = 278,
-     BSUMMARY = 279,
-     BBOLD = 280,
-     BParag = 281,
-     BREF = 282,
-     BCODE = 283,
-     BIterm = 284,
-     BFoteN = 285,
-     BLineCode = 286,
-     BUnderLine = 287,
-     BAcronym = 288,
-     BItalic = 289,
-     BXREF = 290,
-     BHREF = 291,
-     BCiteR = 292,
-     BCHAP = 293,
-     BSEC = 294,
-     BFig = 295,
-     BImg = 296,
-     BENUM = 297,
-     BCAP = 298,
-     BLinha = 299,
-     BItem = 300,
-     BTAB = 301,
-     BCel = 302,
-     BItemize = 303,
-     IFIGURE = 304,
-     ITABLE = 305
+     linha = 267,
+     BTITLE = 268,
+     BSTITLE = 269,
+     BAUTHOR = 270,
+     BURL = 271,
+     BAFFIL = 272,
+     BEMAIL = 273,
+     BDATE = 274,
+     BINST = 275,
+     BKEY = 276,
+     BABS = 277,
+     BAKNOW = 278,
+     BINDICE = 279,
+     BSUMMARY = 280,
+     BBOLD = 281,
+     BPARAG = 282,
+     BREF = 283,
+     BCODE = 284,
+     BIterm = 285,
+     BFoteN = 286,
+     BLineCode = 287,
+     BUNDERLINE = 288,
+     BAcronym = 289,
+     BITALIC = 290,
+     BXREF = 291,
+     BHREF = 292,
+     BCiteR = 293,
+     BCHAP = 294,
+     BSEC = 295,
+     BFIG = 296,
+     BImg = 297,
+     BENUM = 298,
+     BCAP = 299,
+     BLINHA = 300,
+     BItem = 301,
+     BTAB = 302,
+     BCEL = 303,
+     BItemize = 304,
+     IFIGURE = 305,
+     ITABLE = 306
    };
 #endif
 /* Tokens.  */
@@ -99,58 +100,60 @@
 #define codigo 264
 #define carater 265
 #define inteiro 266
-#define BTITLE 267
-#define BSTITLE 268
-#define BAUTHOR 269
-#define BURL 270
-#define BAFFIL 271
-#define BEMAIL 272
-#define BDATE 273
-#define BINST 274
-#define BKEY 275
-#define BABS 276
-#define BAKNOW 277
-#define BINDICE 278
-#define BSUMMARY 279
-#define BBOLD 280
-#define BParag 281
-#define BREF 282
-#define BCODE 283
-#define BIterm 284
-#define BFoteN 285
-#define BLineCode 286
-#define BUnderLine 287
-#define BAcronym 288
-#define BItalic 289
-#define BXREF 290
-#define BHREF 291
-#define BCiteR 292
-#define BCHAP 293
-#define BSEC 294
-#define BFig 295
-#define BImg 296
-#define BENUM 297
-#define BCAP 298
-#define BLinha 299
-#define BItem 300
-#define BTAB 301
-#define BCel 302
-#define BItemize 303
-#define IFIGURE 304
-#define ITABLE 305
+#define linha 267
+#define BTITLE 268
+#define BSTITLE 269
+#define BAUTHOR 270
+#define BURL 271
+#define BAFFIL 272
+#define BEMAIL 273
+#define BDATE 274
+#define BINST 275
+#define BKEY 276
+#define BABS 277
+#define BAKNOW 278
+#define BINDICE 279
+#define BSUMMARY 280
+#define BBOLD 281
+#define BPARAG 282
+#define BREF 283
+#define BCODE 284
+#define BIterm 285
+#define BFoteN 286
+#define BLineCode 287
+#define BUNDERLINE 288
+#define BAcronym 289
+#define BITALIC 290
+#define BXREF 291
+#define BHREF 292
+#define BCiteR 293
+#define BCHAP 294
+#define BSEC 295
+#define BFIG 296
+#define BImg 297
+#define BENUM 298
+#define BCAP 299
+#define BLINHA 300
+#define BItem 301
+#define BTAB 302
+#define BCEL 303
+#define BItemize 304
+#define IFIGURE 305
+#define ITABLE 306
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 25 "yacc.y"
+#line 29 "yacc.y"
 {
 	char* valS;
+	char valC; 
 	int valI;
 }
 /* Line 1529 of yacc.c.  */
-#line 154 "y.tab.h"
+#line 157 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

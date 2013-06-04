@@ -7,23 +7,28 @@
 //VARIAVEIS GLOBAIS
 Report report;
 Autor autor;
+Image image;
+Table table;
+Row row;
+Cell cell;
+
 int zona;
 %}
 
 
-%token arg id email url sep texto codigo carater inteiro
+%token arg id email url sep texto codigo carater inteiro linha
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
-%token BSUMMARY BBOLD BParag BREF BCODE BIterm BFoteN BLineCode BUnderLine BAcronym 
-
-
-%token BItalic BXREF  BHREF BCiteR BCHAP BSEC BFig BImg BENUM BCAP BLinha BItem BTAB BCel BItemize
+%token BSUMMARY BBOLD BPARAG BREF BCODE BIterm BFoteN BLineCode BUNDERLINE BAcronym 
+%token BITALIC BXREF  BHREF BCiteR BCHAP BSEC BFIG BImg BENUM BCAP BLINHA BItem BTAB BCEL BItemize
 %token IFIGURE ITABLE
 
-%type<valS> arg id email url sep texto
+%type<valS> arg id email url sep texto codigo linha
 %type<valI> inteiro
+%type<valC> carater
 
 %union{
 	char* valS;
+	char valC; 
 	int valI;
 } 
 %start Report
@@ -99,8 +104,8 @@ Aknowledgements : BAKNOW '{' ParaList '}'
 				|
 				; 
 
-ParaList : ParaList Paragraph ;
-		 | Paragraph 
+ParaList : ParaList Paragraph {fechoParagrafo(&report,zona);} 
+		 | Paragraph {fechoParagrafo(&report,zona);}
 		 ;
 
 Indice : Toc ;
@@ -118,7 +123,9 @@ Lot : BINDICE '(' ITABLE ')' {report.indice_tab = 1;}
 //---------------------------------
 
 
-Body: ChapterList;
+Body: BBody ChapterList;
+
+BBody : {zona = BODY;};
 
 ChapterList	: ChapterList Chapter
 			| Chapter
@@ -126,21 +133,21 @@ ChapterList	: ChapterList Chapter
 
 Chapter : C_Title '{' ElemList '}';
 
-C_Title : BCHAP  '('  texto ')';
+C_Title : BCHAP  '('  texto ')' {addCapitulo(&report,$3);};
 
 ElemList:  ElemList Elem
 		|  Elem
 		;
 
 Elem 	: CodeBlock 
-		| Paragraph
+		| Paragraph 
 		| Section	
 		| Summary 
 		| Float 		
 		| List
 		;	
 
-CodeBlock: BCODE '{' codigo '}';
+CodeBlock: BCODE '{' codigo '}' {addTextoNF(&report,$3);};
 
 Section	: S_Title  '{' ElemList '}';
 
@@ -148,25 +155,27 @@ S_Title: BSEC '(' texto ')' ;
 
 Paragraph:	BParag	'{' ParaContend '}' ;
 
-ParaContend	: ParaContend texto
+BParag : BPARAG {addParagrafo(&report,zona);}
+
+ParaContend	: ParaContend texto {}
 			| ParaContend FreeElem	
 			|
 			;
 
 FreeElem	: FootNote
 			| Ref
-			| Xref
-			| CitRef
+			| Xref //FALTA
+			| CitRef //FALTA
 			| Href
-			| Iterm
+			| Iterm //FALTA
 			| Bold
 			| Italic
 			| Underline
 			| InlineCode
-			| Acronym
+			| Acronym 
 			;
 
-Summary: BSUMMARY '(' texto ')' ;
+Summary: BSUMMARY '(' texto ')' ; //FALTA
 
 Ref : BREF '(' texto sep texto')' {addRef(&report,$3,$5,zona);};
 
@@ -178,50 +187,58 @@ CitRef	: BCiteR '(' texto ')' {};
 
 Iterm	: BIterm '(' texto ')' {};
 
-FootNote: BFoteN '(' texto ')';
+FootNote: BFoteN '(' texto ')'; //Acabar
 
-InlineCode: BLineCode '(' texto ')';
+InlineCode: BLineCode '(' linha ')' {addCodLinha(&report,$3,zona);};
 
 Acronym	: BAcronym '(' texto ')';
 
-Bold: BBOLD '(' BCont ')'
+Bold: Bbold '(' BCont ')' {fechoTag(&report,"</b>",zona);};
 
-BCont	: BCont texto
-		| BCont Italic
-		| BCont Underline
-		|
+Bbold : BBOLD {addNegTag(&report,zona);};
+
+BCont	: BCont texto {addTexto(&report,$2,zona);} 
+		| BCont Italic 
+		| BCont Underline 
+		| 
 		;
 
-Italic: BItalic '(' ICont ')'
+Italic: BItalic '(' ICont ')' {fechoTag(&report,"</i>",zona);};
 
-ICont	: ICont texto
-		| ICont Bold
-		| ICont Underline
-		|
+BItalic : BITALIC {addItTag(&report,zona);};
+
+ICont	: ICont texto {addTexto(&report,$2,zona);}
+		| ICont Bold {}
+		| ICont Underline {}
+		| {}
 		;
 
-Underline: BUnderLine '(' UCont ')'
+Underline : BUnderLine '(' UCont ')' {fechoTag(&report,"</b>",zona);};
 
-UCont	: UCont texto
-		| UCont Bold
-		| UCont Italic
-		|
+BUnderLine : BUNDERLINE {addUnderTag(&report,zona);};
+
+UCont	: UCont texto {addTexto(&report,$2,zona);}
+		| UCont Bold 
+		| UCont Italic 
+		| 
 		;
 
 
-Float	: Figure
-		| TABELA
+Float	: Figure {addImagem(&report,&image);}
+		| Table
 		;
 
 
 Figure	: BFig '(' Image Caption ')';
 
+BFig : BFIG {image = init_Image();} ;
+
 
 Image 	: BImg	'(' Path  ')'; 
 
-Path: texto;
+Path: texto {image.path = $1;};
 
-Caption	: BCAP '(' texto ')';
+Caption	: BCAP '(' texto ')' {image.caption = $3;};
 
 //---------------- Listas --------------------------
 
@@ -251,33 +268,40 @@ Item: BItem '(' ParaContend ')';
 
 
 
-TABELA 	: BTAB '(' Caption  C_Tabela ')';
+Table : BTab '(' T_Caption  C_Tabela ')' {addTabela(&report,&table);};
+
+T_Caption : BCAP '(' texto ')' {table.caption = $3;};
+
+BTab : BTAB {table = init_Table();};
 
 
-C_Tabela: C_Tabela Linha
-		| Linha
+C_Tabela: C_Tabela Linha {addLinha(&table,&row);}
+		| Linha {addLinha(&table,&row);}
 		;
 
 Linha	: BLinha '{'  Celulas  '}';
 
 
-Celulas	:  Celulas  Cel
-		| Cel
+BLinha : BLINHA {row = init_Row();};
+
+Celulas	: Celulas  Cel {addCelula(&row,&cell);}
+		| Cel {addCelula(&row,&cell);}
 		;
 
-Cel : BCel '(' OPT_Cel  ')'  '{'   ParaContend   '}' ;
+Cel : BCel '(' OPT_Cel  ')'  '{'   texto   '}' {cell.cell = $6;};
 
+BCel : BCEL {init_Cell();};
 
-OPT_Cel :  POS sep OPT_Cel_um
+OPT_Cel : POS sep OPT_Cel_um
 		| OPT_Cel_um;
 
-POS : carater;
+POS : carater {cell.pos = $1;};
 
-OPT_Cel_um	: DIM
+OPT_Cel_um	: Dim
 			|
 			;
 
-DIM: inteiro;
+Dim: inteiro {cell.dim = $1;};
 
 
 
