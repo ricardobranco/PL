@@ -3,10 +3,13 @@
 #include <string.h>
 #include "preprocessador.h"
 
+#define FRONTMATTER 1
+#define BODY 2
+
 //VARIAVEIS GLOBAIS
 Report report;
 Autor autor;
-List* chars;
+int zona;
 %}
 
 
@@ -29,7 +32,9 @@ List* chars;
 
 Report : FrontMatter Body'$' {return 0;};
 
-FrontMatter : Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice;
+FrontMatter : BFMatter Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice;
+
+BFMatter : {zona=FRONTMATTER;}
 
 Title: BTITLE '(' arg ')' 	{addTitulo(&report, $3);};
 

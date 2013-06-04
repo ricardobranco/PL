@@ -19,9 +19,11 @@ typedef struct sreport
 	List* lindice_fig;
 	List* lindice;
 
-	List* html;
-	List* latex;
-	 
+	List* htmlCorpo;
+	List* htmlInicio;
+
+	List* latexCorpo;
+	List* latexInicio;
 }Report;
 
 typedef struct sAutor
@@ -102,8 +104,6 @@ void addTextoNF(Report*);
 void addComentario(Report*);
 void addQuebra(Report*);
 void addFormat(Report*,char*);
-void addHTML(Report*,char*);
-void addLATEX(Report*,char*);
 void addImagem(Report*,Image*);
 void addModImg(Report*);
 void addTexto(Report*,char*);

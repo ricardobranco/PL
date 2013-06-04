@@ -42,11 +42,16 @@ Report init_Report(){
 	report.data = 0;
 	report.autores = init(sizeof(Autor),NULL);
 	report.keywords = init(sizeof(char*),NULL);
+	report.keywords = init(sizeof(char*),NULL);
 	report.lindice_tab = init(sizeof(IndiceCell),NULL);
 	report.lindice_fig = init(sizeof(IndiceCell),NULL);
 	report.lindice = init(sizeof(IndiceCell),NULL);
-	report.html = init(sizeof(char*),NULL);
-	report.latex = init(sizeof(char*),NULL);
+	
+
+	report.htmlCorpo = init(sizeof(char*),NULL);
+	report.latexCorpo = init(sizeof(char*),NULL);
+	report.htmlInicio = init(sizeof(char*),NULL);
+	report.latexInicio = init(sizeof(char*),NULL);
 	
 
 	
