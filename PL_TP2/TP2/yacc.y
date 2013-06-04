@@ -13,13 +13,14 @@ int zona;
 %}
 
 
-%token arg id email url sep texto codigo
+%token arg id email url sep texto codigo carater inteiro
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
 %token BSUMMARY BBOLD BParag BREF BCODE BIterm BFoteN BLineCode BUnderLine BAcronym 
-%token BItalic BXREF BCiteR BCHAP
+%token BItalic BXREF BCiteR BCHAP BSEC BFig BImg BENUM BCAP BLinha BItem BTAB BCel BItemize
 %token IFIGURE ITABLE
 
-%type<valS> arg id email url sep
+%type<valS> arg id email url sep 
+%type<valI> inteiro
 
 %union{
 	char* valS;
@@ -133,13 +134,17 @@ ElemList:  ElemList Elem
 
 Elem 	: CodeBlock 
 		| Paragraph
-	//	| Section	
+		| Section	
 		| Summary 
-	//	| Float 		
-	//	| List
+		| Float 		
+		| List
 		;	
 
 CodeBlock: BCODE '{' codigo '}';
+
+Section	: S_Title  '{' ElemList '}';
+
+S_Title: BSEC '(' texto ')' ;
 
 Paragraph:	BParag	'{' ParaContend '}' ;
 
@@ -201,7 +206,75 @@ UCont	: UCont texto
 		;
 
 
+Float	: Figure
+		| TABELA
+		;
 
+
+Figure	: BFig '(' Image Caption ')';
+
+
+Image 	: BImg	'(' Path  ')'; 
+
+Path: texto;
+
+Caption	: BCAP '(' texto ')';
+
+//---------------- Listas --------------------------
+
+List: Enumerate
+	| Itemize
+	;
+
+Enumerate	: BENUM '(' C_ENUM   ')'
+
+C_ENUM	: C_ENUM Item
+		| C_ENUM Itemize
+		|
+		;
+
+
+Itemize	: BItemize '(' C_Item ')';
+
+C_Item	: C_Item Item
+		| C_Item Enumerate
+		|
+		;
+
+Item: BItem '(' ParaContend ')';
+
+
+//----------------------- TABELAS --------------------------------
+
+
+
+TABELA 	: BTAB '(' Caption  C_Tabela ')';
+
+
+C_Tabela: C_Tabela Linha
+		| Linha
+		;
+
+Linha	: BLinha '{'  Celulas  '}';
+
+
+Celulas	:  Celulas  Cel
+		| Cel
+		;
+
+Cel : BCel '(' OPT_Cel  ')'  '{'   ParaContend   '}' ;
+
+
+OPT_Cel :  POS sep OPT_Cel_um
+		| OPT_Cel_um;
+
+POS : carater;
+
+OPT_Cel_um	: DIM
+			|
+			;
+
+DIM: inteiro;
 
 
 
