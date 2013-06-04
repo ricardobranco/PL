@@ -65,8 +65,8 @@ typedef struct sCell
 
 typedef struct sIndiceCell
 {
-	char* label;
-	char* texto;
+	char* ilabel;
+	char* itexto;
 
 }IndiceCell;
 

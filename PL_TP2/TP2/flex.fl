@@ -49,8 +49,8 @@ codigo ([^\}]|((\\})))+  ///Verificar
 
 
 
-<INDICE>figuras         {BEGIN 0; RETURN IFIGURE;}
-<INDICE>tabelas			{BEGIN 0; RETURN ITABLE;}
+<INDICE>figuras         {BEGIN 0; return IFIGURE;}
+<INDICE>tabelas			{BEGIN 0; return ITABLE;}
 
 
 %%

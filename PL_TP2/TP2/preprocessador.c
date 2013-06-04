@@ -63,8 +63,8 @@ Image init_Image(){
 
 IndiceCell init_IndiceCell(){
 	IndiceCell indicecell;
-	indicecell.label = NULL;
-	indicecell.texto = NULL;
+	indicecell.ilabel = NULL;
+	indicecell.itexto = NULL;
 	return indicecell;
 
 }
