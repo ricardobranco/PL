@@ -44,20 +44,36 @@
      email = 260,
      url = 261,
      sep = 262,
-     BTITLE = 263,
-     BSTITLE = 264,
-     BAUTHOR = 265,
-     BURL = 266,
-     BAFFIL = 267,
-     BEMAIL = 268,
-     BDATE = 269,
-     BINST = 270,
-     BKEY = 271,
-     BABS = 272,
-     BAKNOW = 273,
-     BINDICE = 274,
-     IFIGURE = 275,
-     ITABLE = 276
+     texto = 263,
+     codigo = 264,
+     BTITLE = 265,
+     BSTITLE = 266,
+     BAUTHOR = 267,
+     BURL = 268,
+     BAFFIL = 269,
+     BEMAIL = 270,
+     BDATE = 271,
+     BINST = 272,
+     BKEY = 273,
+     BABS = 274,
+     BAKNOW = 275,
+     BINDICE = 276,
+     BSUMMARY = 277,
+     BBOLD = 278,
+     BParag = 279,
+     BREF = 280,
+     BCODE = 281,
+     BIterm = 282,
+     BFoteN = 283,
+     BLineCode = 284,
+     BUnderLine = 285,
+     BAcronym = 286,
+     BItalic = 287,
+     BXREF = 288,
+     BCiteR = 289,
+     BCHAP = 290,
+     IFIGURE = 291,
+     ITABLE = 292
    };
 #endif
 /* Tokens.  */
@@ -66,33 +82,49 @@
 #define email 260
 #define url 261
 #define sep 262
-#define BTITLE 263
-#define BSTITLE 264
-#define BAUTHOR 265
-#define BURL 266
-#define BAFFIL 267
-#define BEMAIL 268
-#define BDATE 269
-#define BINST 270
-#define BKEY 271
-#define BABS 272
-#define BAKNOW 273
-#define BINDICE 274
-#define IFIGURE 275
-#define ITABLE 276
+#define texto 263
+#define codigo 264
+#define BTITLE 265
+#define BSTITLE 266
+#define BAUTHOR 267
+#define BURL 268
+#define BAFFIL 269
+#define BEMAIL 270
+#define BDATE 271
+#define BINST 272
+#define BKEY 273
+#define BABS 274
+#define BAKNOW 275
+#define BINDICE 276
+#define BSUMMARY 277
+#define BBOLD 278
+#define BParag 279
+#define BREF 280
+#define BCODE 281
+#define BIterm 282
+#define BFoteN 283
+#define BLineCode 284
+#define BUnderLine 285
+#define BAcronym 286
+#define BItalic 287
+#define BXREF 288
+#define BCiteR 289
+#define BCHAP 290
+#define IFIGURE 291
+#define ITABLE 292
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 18 "yacc.y"
+#line 20 "yacc.y"
 {
 	char* valS;
 	int valI;
 }
 /* Line 1529 of yacc.c.  */
-#line 96 "y.tab.h"
+#line 128 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
