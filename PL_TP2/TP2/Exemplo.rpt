@@ -35,6 +35,17 @@
 		tenta meter aqui um cenas igual ao de fechar, para ver oque ele faz
 	}
 	
+	\tabela(
+
+		\linha{
+			\cel(c,1){ começo a escrever}
+			\cel(c,1){ e aqui continua}
+
+		}
+		\linha{
+			cel(c,2){tentar por uma celula só a ocupar as duas}
+		}
+	)
 
 }
 

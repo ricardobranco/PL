@@ -37,7 +37,7 @@ int zona;
 
 %%
 
-Report : FrontMatter Body'$' {return 0;};
+Report : FrontMatter Body '$' {return 0;};
 
 FrontMatter : BFMatter Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice;
 
@@ -46,7 +46,8 @@ BFMatter : {zona=FRONTMATTER;}
 Title: BTITLE '(' arg ')' 	{addTitulo(&report, $3);};
 
 STitle: BSTITLE '(' arg ')' {addSTitulo(&report, $3);}
-	  | ;
+	  | 
+	  ;
 
 Authores : Authores Author 	{addAutor(&report,&autor);} 
 		 | Author 			{addAutor(&report,&autor);}
@@ -217,7 +218,7 @@ BItalic : BITALIC {addItTag(&report,zona);};
 ICont	: ICont texto {addTexto(&report,$2,zona);}
 		| ICont Bold {}
 		| ICont Underline {}
-		| {}
+		| 
 		;
 
 Underline : BUnderLine '(' UCont ')' {fechoTag(&report,"</b>",zona);};
