@@ -5,7 +5,7 @@
 
 //VARIAVEIS GLOBAIS
 Report report;
-
+Autor autor;
 %}
 
 
@@ -36,8 +36,10 @@ STitle: BSTITLE '(' arg ')' {addSTitulo(&report, $3);}
 Authores : Authores Author 
 		 | Author
 		 ;
-		 
-Author : BAUTHOR '(' Nome OPT_Author ')';
+
+Author : Bauthor '(' Nome OPT_Author ')';
+
+Bauthor : BAUTHOR {autor = init_Autor();}
 
 Nome : arg ;
 
