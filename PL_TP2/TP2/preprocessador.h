@@ -25,6 +25,8 @@ typedef struct sreport
 
 	List* htmlCorpo;
 	List* htmlInicio;
+    
+    List* htmlFootNote;
 
 	List* latexCorpo;
 	List* latexInicio;
@@ -78,6 +80,8 @@ typedef struct sIndiceCell
 	char* itexto;
 
 }IndiceCell;
+
+
 
 
 //INICIALIZAÇÕES

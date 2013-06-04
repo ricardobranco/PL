@@ -49,6 +49,7 @@ Report init_Report(){
 	report.lindice_tab = init(sizeof(IndiceCell),NULL);
 	report.lindice_fig = init(sizeof(IndiceCell),NULL);
 	report.lindice = init(sizeof(IndiceCell),NULL);
+    report.htmlFootNote = init(sizeof(char*), NULL);
 	
 
 	report.htmlCorpo = init(sizeof(char*),NULL);
@@ -109,6 +110,54 @@ void addKey(Report* report, char* arg){
 }
 
 
+void addFoteNote(Report* report, char* arg, int count_foot,int mode){
+    
+    
+    char *texto= strdup(arg);
+    int tam= (int)strlen(texto);
+    char* html_fim = malloc(sizeof(char)*(103+tam));
+    char* html_text = malloc(sizeof(char)*(49+tam));
+    
+    
+    //HTML
+    
+    sprintf(html_text, "<sup><a href=\"#fn%d\" id=\"ref%d\">%d</a></sup>", count_foot,count_foot,count_foot);
+    if(mode == BODY)
+		insertTail(report->htmlCorpo,html_text);
+			
+	else{
+		insertTail(report->htmlInicio,html_text);
+		
+	}
+    
+    
+    sprintf(html_fim,"<sup id=\"fn%d\">%d. [%s]<a href=\"#ref%d\" title=\"Jump back to footnote %d in the text.\">%d</a></sup>", count_foot,count_foot, texto, count_foot, count_foot, count_foot);
+    
+        insertTail(report->htmlFootNote, html_fim);
+    
+    
+    
+    
+    //LATEX
+    
+    char* ref_l = "\\footnote{";
+    char* fec_l = "}";
+    
+    if(mode == BODY){
+		insertTail(report->latexCorpo,&ref_l);
+		insertTail(report->latexCorpo,&texto);
+		insertTail(report->latexCorpo,&fec_l);
+		
+	}
+	else{
+		insertTail(report->latexInicio,&ref_l);
+		insertTail(report->latexInicio,&texto);
+		insertTail(report->latexInicio,&fec_l);
+		
+	}
+    
+    
+}
 
 void addRef(Report* report, char* arg1 , char* arg2 ,int mode){
 	
@@ -445,7 +494,6 @@ void addImagem(Report* report,Image* img){
 	insertTail(report->latexCorpo,&alatexfigure);
 	insertTail(report->latexCorpo,&includegraphics);
 	insertTail(report->latexCorpo,&path);
-	insertTail(report->latexCorpo,&flatexchavetas);
 	insertTail(report->latexCorpo,&alatexcap);
 	insertTail(report->latexCorpo,&caption);
 	insertTail(report->latexCorpo,&flatexchavetas);

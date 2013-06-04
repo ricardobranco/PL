@@ -12,7 +12,7 @@ Table table;
 Row row;
 Cell cell;
 int seccao;
-
+int count_foot;
 int zona;
 %}
 
@@ -150,7 +150,7 @@ Elem 	: CodeBlock
 		| Summary 
 		| Float 		
 		| List
-		;	
+		;
 
 CodeBlock: BCODE '{' codigo '}' {addTextoNF(&report,$3);};
 
@@ -194,7 +194,7 @@ CitRef	: BCiteR '(' texto ')' {};
 
 Iterm	: BIterm '(' texto ')' {};
 
-FootNote: BFoteN '(' texto ')'; //Acabar
+FootNote: BFoteN '(' texto ')' {count_foot++; addFoteNote(&report,$3,count_foot,zona);};
 
 InlineCode: BLineCode '(' linha ')' {addCodLinha(&report,$3,zona);};
 
@@ -325,6 +325,7 @@ int main()
 
 	//INICIALIZAÇÕES
 	report = init_Report();
+	count_foot=0;
 
 	int yyres = yyparse();
   	printf("YYRES: %d\n",yyres);
