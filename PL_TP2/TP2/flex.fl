@@ -4,7 +4,11 @@
 
 
 %}
+<<<<<<< HEAD
 %x INDICE
+=======
+%x INDICE CODIGO ARGS CODIGOLINHA
+>>>>>>> 9d6d52cd88f0dab445182bbbe0984e96ad2fcf4f
 
 arg ([^\(\)\,\\\{\}]|(\\[\\\(\)\{\}\,]))+
 email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
@@ -19,14 +23,14 @@ inteiro [0-9]+
 
 
 <<EOF>>			{return '$';}
+<ARGS>\)		{BEGIN 0; return ')';}
 <*>[ \n\t]+		{;}
-[\(\)\{\}] 		{return yytext[0];} 
-,				{return sep;}
+<*>[\(\)\{\}] 	{return yytext[0];} 
+<ARGS>,			{printf("SEP:%s\n",yytext );return sep;}
 
-
-\\titulo 		{return BTITLE;}
-\\stitulo 		{return BSTITLE;}
-\\autor 		{return BAUTHOR;}
+\\titulo 		{BEGIN ARGS; return BTITLE;}
+\\stitulo 		{BEGIN ARGS; return BSTITLE;}
+\\autor 		{BEGIN ARGS;return BAUTHOR;}
 \\data			{return BDATE;}
 \\inst			{return BINST;}
 \\keys			{return BKEY;}
@@ -37,6 +41,7 @@ inteiro [0-9]+
 \\codigo		{return BCODE;}
 \\s[1-5]		{yylval.valI = yytext[2]-'0';
 				return BSEC;}
+
 \\p				{return BPARAG;}
 \\sumario		{return BSUMMARY;}
 \\ref			{return BREF;}
@@ -73,21 +78,22 @@ inteiro [0-9]+
 {inteiro}	{yylval.valI = atoi(strdup(yytext));
 			return inteiro;}
 
-{id}		{yylval.valS = strdup(yytext);
-			return id;}
-{url}		{yylval.valS = strdup(yytext);
-			return url;}			
-{email}		{yylval.valS = strdup(yytext);
-			return email;}
-{arg} 		{yylval.valS = strdup(yytext);
-			return arg;}
-{linha}		{yylval.valS = strdup(yytext);
-			 return linha;}			
-{texto}		{yylval.valS = strdup(yytext);
-			return texto;}
-{codigo}	{yylval.valS = strdup(yytext);
-			return codigo;}
-
+<ARGS>{id}			{printf("ID:%s\n",yytext);yylval.valS = strdup(yytext);
+					return id;}
+<ARGS>{url}			{printf("URL%s\n",yytext );
+					yylval.valS = strdup(yytext);
+					return url;}			
+<ARGS>{email}		{printf("EMAIL:%s\n",yytext);
+					yylval.valS = strdup(yytext);
+					return email;}
+<ARGS>{arg} 		{printf("ARGS:%s\n",yytext); yylval.valS = strdup(yytext);
+					return arg;}
+<CODIGOLINHA>{linha}				{printf("LINHA:%s\n",yytext);yylval.valS = strdup(yytext);
+					 return linha;}			
+{texto}				{printf("TEXTO:%s\n",yytext);yylval.valS = strdup(yytext);
+					return texto;}
+<CODIGO>{codigo}	{BEGIN 0; yylval.valS = strdup(yytext);
+					return codigo;}
 
 
 <INDICE>figuras         {BEGIN 0; return IFIGURE;}
