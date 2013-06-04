@@ -11,6 +11,7 @@ typedef struct sreport
 	int indice;
 	int indice_fig;
 	int indice_tab;
+	int data;
 	
 	List* autores;
 	List* keywords;

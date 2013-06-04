@@ -28,20 +28,20 @@ Report : FrontMatter '$' {return 0;};
 
 FrontMatter : Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice;
 
-Title: BTITLE '(' arg ')' {addTitulo(&report, $3);};
+Title: BTITLE '(' arg ')' 	{addTitulo(&report, $3);};
 
 STitle: BSTITLE '(' arg ')' {addSTitulo(&report, $3);}
 	  | ;
 
-Authores : Authores Author 
-		 | Author
+Authores : Authores Author 	{addAutor(&report,&autor);} 
+		 | Author 			{addAutor(&report,&autor);}
 		 ;
 
 Author : Bauthor '(' Nome OPT_Author ')';
 
 Bauthor : BAUTHOR {autor = init_Autor();}
 
-Nome : arg ;
+Nome : arg {autor.anome = $1;};
 
 
 OPT_Author	: Nident OPT_A_UM
@@ -60,17 +60,17 @@ OPT_A_Tres	: Affiliation
 			|
 			;
 
-Nident : sep id	;	
+Nident : sep id	{autor.aid = $2;};	
 	   
-Email : sep  email ;
+Email : sep  email {autor.aemail = $2;};
 
-Url : sep  url ;
+Url : sep  url {autor.aurl = $2;};
 
-Affiliation : sep  arg ;
+Affiliation : sep  arg {autor.aaffil = $2;};
 
-Date : BDATE '('')';
+Date : BDATE '('')' {report.data = 1;};
 
-Institution : BINST '(' arg ')'
+Institution : BINST '(' arg ')' {report.inst = $3;}
 			|
 			;
 

@@ -1437,14 +1437,59 @@ yyreduce:
     {addSTitulo(&report, (yyvsp[(3) - (4)].valS));}
     break;
 
+  case 7:
+#line 36 "yacc.y"
+    {addAutor(&report,&autor);}
+    break;
+
+  case 8:
+#line 37 "yacc.y"
+    {addAutor(&report,&autor);}
+    break;
+
   case 10:
 #line 42 "yacc.y"
     {autor = init_Autor();}
     break;
 
+  case 11:
+#line 44 "yacc.y"
+    {autor.anome = (yyvsp[(1) - (1)].valS);}
+    break;
+
+  case 20:
+#line 63 "yacc.y"
+    {autor.aid = (yyvsp[(2) - (2)].valS);}
+    break;
+
+  case 21:
+#line 65 "yacc.y"
+    {autor.aemail = (yyvsp[(2) - (2)].valS);}
+    break;
+
+  case 22:
+#line 67 "yacc.y"
+    {autor.aurl = (yyvsp[(2) - (2)].valS);}
+    break;
+
+  case 23:
+#line 69 "yacc.y"
+    {autor.aaffil = (yyvsp[(2) - (2)].valS);}
+    break;
+
+  case 24:
+#line 71 "yacc.y"
+    {report.data = 1;}
+    break;
+
+  case 25:
+#line 73 "yacc.y"
+    {report.inst = (yyvsp[(3) - (4)].valS);}
+    break;
+
 
 /* Line 1267 of yacc.c.  */
-#line 1448 "y.tab.c"
+#line 1493 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);

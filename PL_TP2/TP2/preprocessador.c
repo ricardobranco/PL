@@ -45,6 +45,7 @@ Report init_Report(){
 	report.indice = 0;
 	report.indice_tab = 0;
 	report.indice_fig = 0;
+	report.data = 0;
 }
 
 Image init_Image(){
