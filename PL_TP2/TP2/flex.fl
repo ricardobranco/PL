@@ -30,8 +30,20 @@ codigo ([^\}]|((\\})))+  ///Verificar
 \\resumo		{return BABS;}
 \\indice		{BEGIN INDICE;	return BINDICE;}
 
+\\capitulo		{return BCHAP;}
+\\codigo		{return BCODE;}
+\\s[1-6]		{yylval.valI = yytext[2]-'0';
+				return BSEC;}
+\\p				{return BParag;}
+\\sumario		{return BSUMMARY;}
+\\ref			{return BREF;}
+\\xref			{return BXREF;}
+\\href			{return BHREF;}
+\\citref		{return BCiteR;}
 
-\\	
+
+
+
 
 
 
@@ -46,6 +58,8 @@ codigo ([^\}]|((\\})))+  ///Verificar
 			return arg;}
 {texto}		{yylval.valS = strdup(yytext);
 			return texto;}
+{codigo}	{yylval.valS = strdup(yytext);
+			return codigo;}
 
 
 
