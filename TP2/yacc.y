@@ -1,217 +1,250 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "report.h"
+#include "preprocessador.h"
 
+
+//VARIAVEIS GLOBAIS
 Report report;
 Autor autor;
-Image imagem;
- 
+Image image;
+Table table;
+Row row;
+Cell cell;
+int seccao;
+int count_foot;
+int zona;
 %}
 
-%token TEXT ERROR ENDARG NID SEP EMAIL URL ENDBLOCK BTEXT BREAK BCODE CodeB BCiteR BIterm BBEIU BXREF BFoteN BAcronym BLineCode BEGI
-%token BTITLE BSTITLE BAUTHOR BEMAIL BURL BAFFIL BABS BDATE BINST BKEY BAKNOW BLOF BLOT BTOC BBODY BCHAP BLIST BSEC BParag BREF TEXT_V
-%token BSUMMARY BBOLD BUnderLine BItalic Path BFig BImg BCAP BENUM BItemize BItem BLinha DIM BCel POS C_Cel BTAB
-%start Report
+
+%token arg id email url sep texto codigo carater inteiro linha
+%token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
+%token BSUMMARY BBOLD BPARAG BREF BCODE BIterm BFoteN BLineCode BUNDERLINE BAcronym 
+%token BITALIC BXREF  BHREF BCiteR BCHAP BSEC BFIG BImg BENUM BCAP BLINHA BItem BTAB BCEL BItemize
+%token IFIGURE ITABLE
+
+%type<valS> arg id email url sep texto codigo linha
+%type<valI> inteiro
+%type<valC> carater
 
 %union{
 	char* valS;
-	int vali;
+	char valC; 
+	int valI;
 } 
+%start Report
 
-%type<valS> TEXT BTEXT EMAIL URL NID Name Nident Email Url Affilliation
 
 %%
 
-Report: FrontMatter Body'$' {return 0;};
+Report : FrontMatter Body '$' {return 0;};
 
-FrontMatter : Title SubTitle Authors Date Instituition Keywords Abstract Aknowledgements Toc Lof Lot ;
+FrontMatter : BFMatter Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice;
 
-Title : BTITLE TEXT ENDARG  {addTitulo(&report, yylval.valS);};
+BFMatter : {zona=FRONTMATTER;}
 
-SubTitle : BSTITLE TEXT ENDARG {addSTitulo(&report, yylval.valS);} ;
-		 | 
-		 ;
-Authors : Author Authors 
-		| 
-		;
+Title: BTITLE '(' arg ')' 	{addTitulo(&report, $3);};
 
-Author : Bauthor Name AuthorOPT ENDARG 	{autor.nome = strdup($2);
-										 insertHead(report.autores,&autor);} ;
+STitle: BSTITLE '(' arg ')' {addSTitulo(&report, $3);}
+	  | 
+	  ;
 
-Bauthor : BAUTHOR  {autor = init_Autor();};
-
-
-Name : TEXT {$$=$1;};
-
-
-AuthorOPT : SEP Nident AuthorOPT {insertHead(autor.nident,&($2));}
-		  | SEP Url AuthorOPT {insertHead(autor.url,&($2));}
-		  | SEP Email AuthorOPT {insertHead(autor.email,&($2));}
-		  | SEP Affilliation AuthorOPT {insertHead(autor.affil,&($2));}
-		  |
-		  ;
-
-Nident : NID  {$$=$1;};
-
-Email : EMAIL {$$=$1;};
-
-Url :  URL  {$$=$1;};
-
-Affilliation :  TEXT {$$=$1;};
-
-Abstract : BABS ParaList ENDBLOCK ;
-
-Aknowledgements : BAKNOW ParaList ENDBLOCK
-
-ParaList : Paragraph BREAK ParaList;
-		 | Paragraph ;
+Authores : Authores Author 	{addAutor(&report,&autor);} 
+		 | Author 			{addAutor(&report,&autor);}
 		 ;
 
-Date : BDATE ;
+Author : Bauthor '(' Nome OPT_Author ')';
 
-Instituition : BINST TEXT ENDARG ;//{report.inst = strdup($2); } 
-			 | //{report.inst = NULL;}
-			 ;
+Bauthor : BAUTHOR {autor = init_Autor();}
 
-Keywords : BKEY Keys ENDARG
-		 |
-		 ;
+Nome : arg {autor.anome = $1;};
 
-Keys : Keys SEP TEXT  
-	 | TEXT 
+
+OPT_Author	: Nident OPT_A_UM
+			| OPT_A_UM
+			;
+
+OPT_A_UM	: Email OPT_A_Dois
+			| OPT_A_Dois
+			;
+
+OPT_A_Dois	: Url OPT_A_Tres
+			| OPT_A_Tres
+			;
+
+OPT_A_Tres	: Affiliation
+			|
+			;
+
+Nident : sep id	{autor.aid = $2;};	
+	   
+Email : sep  email {autor.aemail = $2;};
+
+Url : sep  url {autor.aurl = $2;};
+
+Affiliation : sep  arg {autor.aaffil = $2;};
+
+Date : BDATE '('')' {report.data = 1;};
+
+Institution : BINST '(' arg ')' {report.inst = $3;}
+			|
+			;
+
+Keywords : BKEY '(' Keys ')' 
+		 |	
+		 ;	
+
+Keys : Keys sep Key
+	 | Key
 	 ;
 
- Toc : BTOC 
- 	 |
- 	 ;
+Key : arg {addKey(&report,$1);};
 
- Lof : BLOF
- 	 |
- 	 ;
+Abstract : BAbs '{' ParaList '}' ;
 
- Lot : BLOT
-     |
-     ;	 	 	
-	
-//----------------------------
+BAbs : BABS {addResumo(&report);};
 
- 
-Body :  Chapterlist  ;
+Aknowledgements : BAknow '{' ParaList '}' {fechoAgradecimentos(&report);};
+				|
+				; 
 
-Chapterlist : 	Chapterlist Chapter 
-			| 	Chapterlist Section
-			|	
+BAknow : BAKNOW {addAgradecimentos(&report);};
+
+ParaList : ParaList Paragraph {fechoParagrafo(&report,zona);} 
+		 | Paragraph {fechoParagrafo(&report,zona);}
+		 ;
+
+Indice : Toc ;
+
+Toc : BINDICE '(' ')' Lof {report.indice = 1;}
+	| Lof
+	;
+Lof : BINDICE '(' IFIGURE ')' Lot {report.indice_fig = 1;}
+	| Lot
+	;
+Lot : BINDICE '(' ITABLE ')' {report.indice_tab = 1;}
+	|
+	;
+
+//---------------------------------
+
+
+Body: BBody ChapterList;
+
+BBody : {zona = BODY;};
+
+ChapterList	: ChapterList Chapter
+			| Chapter
 			;
 
-Chapter :	 C_Title BEGI ElemList  ENDARG;
+Chapter : C_Title '{' ElemList '}';
 
+C_Title : BCHAP  '('  texto ')' {addCapitulo(&report,$3);};
 
-C_Title: BCHAP 	TEXT   ENDARG;
-
-
-Section	: S_Title  BEGI ElemList ENDBLOCK;
-
-S_Title: BSEC  TEXT  ENDARG;
-
-
-ElemList	:  ElemList Elem
-			|  Elem
-			;
-
+ElemList:  ElemList Elem
+		|  Elem
+		;
 
 Elem 	: CodeBlock 
-		| Paragraph
+		| Paragraph 
 		| Section	
-		| Summary 
 		| Float 		
 		| List
-		;	
+		;
 
-CodeBlock: BCODE CodeB ENDBLOCK;
+CodeBlock: BCODE '{' codigo '}' {addTextoNF(&report,$3);};
 
+Section	: S_Title  '{' ElemList '}';
 
-Paragraph:	BParag	ParaContend ENDARG;
+S_Title: BSec '(' texto ')' {addSeccao(&report,$3,seccao);};
 
+BSec : BSEC {seccao = yylval.valI;}
 
-ParaContend	: ParaContend TEXT_V
+Paragraph:	BParag	'{' ParaContend '}' ;
+
+BParag : BPARAG {addParagrafo(&report,zona);}
+
+ParaContend	: ParaContend texto {}
 			| ParaContend FreeElem	
 			|
 			;
 
-
-
 FreeElem	: FootNote
 			| Ref
-			| Xref
-			| CitRef
-			| Iterm
+			| Xref //FALTA
+			| CitRef //FALTA
+			| Href
+			| Iterm //FALTA
 			| Bold
 			| Italic
 			| Underline
 			| InlineCode
-			| Acronym
+			| Acronym 
 			;
 
-Bold: BBOLD BCont ENDARG
 
-BCont	: BCont TEXT
-		| BCont Italic
-		| BCont Underline
-		|
+Ref : BREF '(' texto sep texto')' {addRef(&report,$3,$5,zona);};
+
+Href : BHREF '(' texto sep url ')' {}  ;
+
+Xref: BXREF '(' texto ')' {};
+
+CitRef	: BCiteR '(' texto ')' {};
+
+Iterm	: BIterm '(' texto ')' {};
+
+FootNote: BFoteN '(' texto ')' {count_foot++; addFoteNote(&report,$3,count_foot,zona);};
+
+InlineCode: BLineCode '(' linha ')' {addCodLinha(&report,$3,zona);};
+
+Acronym	: BAcronym '(' texto ')';
+
+Bold: Bbold '(' BCont ')' {fechoTag(&report,"</b>",zona);};
+
+Bbold : BBOLD {addNegTag(&report,zona);};
+
+BCont	: BCont texto {addTexto(&report,$2,zona);} 
+		| BCont Italic 
+		| BCont Underline 
+		| 
 		;
 
-Italic: BItalic ICont ENDARG
+Italic: BItalic '(' ICont ')' {fechoTag(&report,"</i>",zona);};
 
-ICont	: ICont TEXT
-		| ICont Bold
-		| ICont Underline
-		|
+BItalic : BITALIC {addItTag(&report,zona);};
+
+ICont	: ICont texto {addTexto(&report,$2,zona);}
+		| ICont Bold {}
+		| ICont Underline {}
+		| 
 		;
 
-Underline: BUnderLine UCont ENDARG
+Underline : BUnderLine '(' UCont ')' {fechoTag(&report,"</b>",zona);};
 
-UCont	: UCont TEXT
-		| UCont Bold
-		| UCont Italic
-		|
-		;
+BUnderLine : BUNDERLINE {addUnderTag(&report,zona);};
 
-
-//Confirmar se só leva TEXT_V ou é uma String especial
-
-Summary: BSUMMARY BTEXT ENDARG;
-
-Ref 	: BREF BTEXT ENDARG;
-
-Xref	: BXREF BTEXT ENDARG;
-
-CitRef	: BCiteR BTEXT ENDARG;
-
-Iterm	: BIterm BTEXT ENDARG;
-
-FootNote: BFoteN BTEXT ENDARG;
-
-InlineCode: BLineCode BTEXT ENDARG;
-
-Acronym	: BAcronym BTEXT ENDARG;
-
-
-
-
-
-
-
-Float	: Figure
-		| TABELA
+UCont	: UCont texto {addTexto(&report,$2,zona);}
+		| UCont Bold 
+		| UCont Italic 
+		| 
 		;
 
 
-Figure	: BFig  Image Caption ENDARG;
+Float	: Figure {addImagem(&report,&image);}
+		| Table
+		;
 
-Image 	: BImg	Path  ENDARG;
 
-Caption	: BCAP TEXT ENDARG;
+Figure	: BFig '(' Image Caption ')';
+
+BFig : BFIG {image = init_Image();} ;
+
+
+Image 	: BImg	'(' Path  ')'; 
+
+Path: texto {image.path = $1;};
+
+Caption	: BCAP '(' texto ')' {image.caption = $3;};
 
 //---------------- Listas --------------------------
 
@@ -219,7 +252,7 @@ List: Enumerate
 	| Itemize
 	;
 
-Enumerate	: BENUM  C_ENUM   ENDARG
+Enumerate	: BENUM '(' C_ENUM   ')'
 
 C_ENUM	: C_ENUM Item
 		| C_ENUM Itemize
@@ -227,51 +260,57 @@ C_ENUM	: C_ENUM Item
 		;
 
 
-Itemize	: BItemize C_Item ENDARG;
+Itemize	: BItemize '(' C_Item ')';
 
 C_Item	: C_Item Item
 		| C_Item Enumerate
 		|
 		;
 
-Item: BItem ParaContend ENDARG;
+Item: BItem '(' ParaContend ')';
 
 
 //----------------------- TABELAS --------------------------------
 
 
 
-TABELA 	: BTAB  Caption  C_Tabela ENDARG;
+Table : BTab '(' T_Caption  C_Tabela ')' {addTabela(&report,&table);};
+
+T_Caption : BCAP '(' texto ')' {table.caption = $3;};
+
+BTab : BTAB {table = init_Table();};
 
 
-C_Tabela: C_Tabela Linha
-		| Linha
+C_Tabela: C_Tabela Linha {addLinha(&table,&row);}
+		| Linha {addLinha(&table,&row);}
 		;
 
-Linha	: BLinha   Celulas  ENDBLOCK;
+Linha	: BLinha '{'  Celulas  '}';
 
 
-Celulas	:  Celulas  Cel
-		| Cel
+BLinha : BLINHA {row = init_Row();};
+
+Celulas	: Celulas  Cel {addCelula(&row,&cell);}
+		| Cel {addCelula(&row,&cell);}
 		;
 
-Cel : BCel  OPT_Cel  ENDARG  '{'   ParaContend   '}' ;
+Cel : BCel '(' OPT_Cel  ')'  '{'   texto   '}' {cell.cell = $6;};
 
+BCel : BCEL {init_Cell();};
 
-OPT_Cel :  POS SEP OPT_Cel_um
+OPT_Cel : POS sep OPT_Cel_um
 		| OPT_Cel_um;
 
+POS : carater {cell.pos = $1;};
 
-OPT_Cel_um	: DIM
+OPT_Cel_um	: Dim
 			|
 			;
 
+Dim: inteiro {cell.dim = $1;};
 
 
 
-
-
-//-----------------------------------------------------------------
 %%
 
 
@@ -281,23 +320,17 @@ int yyerror( char *s )
 }
 
 int main()
-{
+{	
 
-	//Inicializações
-/*
-	report.indice = 0;
-	report.indice_fig = 0;
-	report.indice_tab = 0;
-	report.html=init(sizeof(char*),NULL);
-	report.latex=init(sizeof(char*),NULL);
-	report.seccoes=init(sizeof(char*),NULL);
-	report.autores=init(sizeof(Autor),NULL);
+	//INICIALIZAÇÕES
+	report = init_Report();
+	count_foot=0;
 
-
-  	int yyres = yyparse();
+	int yyres = yyparse();
   	printf("YYRES: %d\n",yyres);
-  	geraHTML(&report,NULL);
-  	geraLATEX(&report,NULL);*/
+  	
+
+
   	return 0;
 }
 

@@ -39,138 +39,121 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     TEXT = 258,
-     ERROR = 259,
-     ENDARG = 260,
-     NID = 261,
-     SEP = 262,
-     EMAIL = 263,
-     URL = 264,
-     ENDBLOCK = 265,
-     BTEXT = 266,
-     BREAK = 267,
-     BCODE = 268,
-     CodeB = 269,
-     BCiteR = 270,
-     BIterm = 271,
-     BBEIU = 272,
-     BXREF = 273,
-     BFoteN = 274,
-     BAcronym = 275,
-     BLineCode = 276,
-     BEGI = 277,
-     BTITLE = 278,
-     BSTITLE = 279,
-     BAUTHOR = 280,
-     BEMAIL = 281,
-     BURL = 282,
-     BAFFIL = 283,
-     BABS = 284,
-     BDATE = 285,
-     BINST = 286,
-     BKEY = 287,
-     BAKNOW = 288,
-     BLOF = 289,
-     BLOT = 290,
-     BTOC = 291,
-     BBODY = 292,
-     BCHAP = 293,
-     BLIST = 294,
+     arg = 258,
+     id = 259,
+     email = 260,
+     url = 261,
+     sep = 262,
+     texto = 263,
+     codigo = 264,
+     carater = 265,
+     inteiro = 266,
+     linha = 267,
+     BTITLE = 268,
+     BSTITLE = 269,
+     BAUTHOR = 270,
+     BURL = 271,
+     BAFFIL = 272,
+     BEMAIL = 273,
+     BDATE = 274,
+     BINST = 275,
+     BKEY = 276,
+     BABS = 277,
+     BAKNOW = 278,
+     BINDICE = 279,
+     BSUMMARY = 280,
+     BBOLD = 281,
+     BPARAG = 282,
+     BREF = 283,
+     BCODE = 284,
+     BIterm = 285,
+     BFoteN = 286,
+     BLineCode = 287,
+     BUNDERLINE = 288,
+     BAcronym = 289,
+     BITALIC = 290,
+     BXREF = 291,
+     BHREF = 292,
+     BCiteR = 293,
+     BCHAP = 294,
      BSEC = 295,
-     BParag = 296,
-     BREF = 297,
-     TEXT_V = 298,
-     BSUMMARY = 299,
-     BBOLD = 300,
-     BUnderLine = 301,
-     BItalic = 302,
-     Path = 303,
-     BFig = 304,
-     BImg = 305,
-     BCAP = 306,
-     BENUM = 307,
-     BItemize = 308,
-     BItem = 309,
-     BLinha = 310,
-     DIM = 311,
-     BCel = 312,
-     POS = 313,
-     C_Cel = 314,
-     BTAB = 315
+     BFIG = 296,
+     BImg = 297,
+     BENUM = 298,
+     BCAP = 299,
+     BLINHA = 300,
+     BItem = 301,
+     BTAB = 302,
+     BCEL = 303,
+     BItemize = 304,
+     IFIGURE = 305,
+     ITABLE = 306
    };
 #endif
 /* Tokens.  */
-#define TEXT 258
-#define ERROR 259
-#define ENDARG 260
-#define NID 261
-#define SEP 262
-#define EMAIL 263
-#define URL 264
-#define ENDBLOCK 265
-#define BTEXT 266
-#define BREAK 267
-#define BCODE 268
-#define CodeB 269
-#define BCiteR 270
-#define BIterm 271
-#define BBEIU 272
-#define BXREF 273
-#define BFoteN 274
-#define BAcronym 275
-#define BLineCode 276
-#define BEGI 277
-#define BTITLE 278
-#define BSTITLE 279
-#define BAUTHOR 280
-#define BEMAIL 281
-#define BURL 282
-#define BAFFIL 283
-#define BABS 284
-#define BDATE 285
-#define BINST 286
-#define BKEY 287
-#define BAKNOW 288
-#define BLOF 289
-#define BLOT 290
-#define BTOC 291
-#define BBODY 292
-#define BCHAP 293
-#define BLIST 294
+#define arg 258
+#define id 259
+#define email 260
+#define url 261
+#define sep 262
+#define texto 263
+#define codigo 264
+#define carater 265
+#define inteiro 266
+#define linha 267
+#define BTITLE 268
+#define BSTITLE 269
+#define BAUTHOR 270
+#define BURL 271
+#define BAFFIL 272
+#define BEMAIL 273
+#define BDATE 274
+#define BINST 275
+#define BKEY 276
+#define BABS 277
+#define BAKNOW 278
+#define BINDICE 279
+#define BSUMMARY 280
+#define BBOLD 281
+#define BPARAG 282
+#define BREF 283
+#define BCODE 284
+#define BIterm 285
+#define BFoteN 286
+#define BLineCode 287
+#define BUNDERLINE 288
+#define BAcronym 289
+#define BITALIC 290
+#define BXREF 291
+#define BHREF 292
+#define BCiteR 293
+#define BCHAP 294
 #define BSEC 295
-#define BParag 296
-#define BREF 297
-#define TEXT_V 298
-#define BSUMMARY 299
-#define BBOLD 300
-#define BUnderLine 301
-#define BItalic 302
-#define Path 303
-#define BFig 304
-#define BImg 305
-#define BCAP 306
-#define BENUM 307
-#define BItemize 308
-#define BItem 309
-#define BLinha 310
-#define DIM 311
-#define BCel 312
-#define POS 313
-#define C_Cel 314
-#define BTAB 315
+#define BFIG 296
+#define BImg 297
+#define BENUM 298
+#define BCAP 299
+#define BLINHA 300
+#define BItem 301
+#define BTAB 302
+#define BCEL 303
+#define BItemize 304
+#define IFIGURE 305
+#define ITABLE 306
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 17 "yacc.y"
+#line 30 "yacc.y"
 {
 	char* valS;
-	int vali;
+	char valC; 
+	int valI;
 }
 /* Line 1529 of yacc.c.  */
-#line 174 "y.tab.h"
+#line 157 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

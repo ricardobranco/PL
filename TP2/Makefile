@@ -10,8 +10,7 @@ OUTPUT = report
 
 report:$(OBJS)
 	$(CC) $(CFLAGS) -o $(OUTPUT) $(OBJS) $(LIBS) -g
-	./$(OUTPUT) < Exemplo.rpt
-
+	
 lex.yy.c: $(PARSER)
 	flex $(PARSER)
 
