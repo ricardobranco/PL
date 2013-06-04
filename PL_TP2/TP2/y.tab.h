@@ -85,7 +85,8 @@
      BCel = 301,
      BItemize = 302,
      IFIGURE = 303,
-     ITABLE = 304
+     ITABLE = 304,
+     BHREF = 305
    };
 #endif
 /* Tokens.  */
@@ -136,6 +137,7 @@
 #define BItemize 302
 #define IFIGURE 303
 #define ITABLE 304
+#define BHREF 305
 
 
 
@@ -148,7 +150,7 @@ typedef union YYSTYPE
 	int valI;
 }
 /* Line 1529 of yacc.c.  */
-#line 152 "y.tab.h"
+#line 154 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
