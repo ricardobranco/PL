@@ -74,7 +74,7 @@ Institution : BINST '(' arg ')' {report.inst = $3;}
 			|
 			;
 
-Keywords : BKEY '(' Keys ')'
+Keywords : BKEY '(' Keys ')' 
 		 |	
 		 ;	
 
@@ -82,7 +82,7 @@ Keys : Keys sep Key
 	 | Key
 	 ;
 
-Key : arg ;
+Key : arg {addKey(&report,$1);};
 
 Abstract : BABS '{' ParaList '}';
 
@@ -92,13 +92,13 @@ Aknowledgements : BAKNOW '{' ParaList '}'
 
 Indice : Toc ;
 
-Toc : BINDICE '(' ')' Lof
+Toc : BINDICE '(' ')' Lof {report.indice = 1;}
 	| Lof
 	;
-Lof : BINDICE '(' IFIGURE ')' Lot
+Lof : BINDICE '(' IFIGURE ')' Lot {report.indice_fig = 1;}
 	| Lot
 	;
-Lot : BINDICE '(' ITABLE ')'
+Lot : BINDICE '(' ITABLE ')' {report.indice_tab = 1;}
 	|
 	;
 

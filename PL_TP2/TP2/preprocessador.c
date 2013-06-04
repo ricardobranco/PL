@@ -33,12 +33,6 @@ Table init_Table(){
 
 Report init_Report(){
 	Report report;
-	report.autores = init(sizeof(Autor),NULL);
-	report.html = init(sizeof(char*),NULL);
-	report.latex = init(sizeof(char*),NULL);
-	report.lindice = init(sizeof(IndiceCell),NULL);
-	report.lindice_fig = init(sizeof(IndiceCell),NULL);
-	report.lindice_tab = init(sizeof(IndiceCell),NULL);
 	report.titulo = NULL;
 	report.stitulo = NULL;
 	report.inst = NULL;
@@ -46,6 +40,16 @@ Report init_Report(){
 	report.indice_tab = 0;
 	report.indice_fig = 0;
 	report.data = 0;
+	report.autores = init(sizeof(Autor),NULL);
+	report.keywords = init(sizeof(char*),NULL);
+	report.lindice_tab = init(sizeof(IndiceCell),NULL);
+	report.lindice_fig = init(sizeof(IndiceCell),NULL);
+	report.lindice = init(sizeof(IndiceCell),NULL);
+	report.html = init(sizeof(char*),NULL);
+	report.latex = init(sizeof(char*),NULL);
+	
+
+	
 }
 
 Image init_Image(){
@@ -86,3 +90,11 @@ void addSTitulo(Report *report, char*arg){
 void addAutor(Report* report, Autor* autor){
 	insertHead(report->autores,autor);
 }
+
+void addKey(Report* report, char* arg){
+	char* key = strdup(arg);
+	insertHead(report->keywords,&key);
+
+}
+
+

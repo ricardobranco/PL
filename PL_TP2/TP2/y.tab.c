@@ -1487,9 +1487,29 @@ yyreduce:
     {report.inst = (yyvsp[(3) - (4)].valS);}
     break;
 
+  case 31:
+#line 85 "yacc.y"
+    {addKey(&report,(yyvsp[(1) - (1)].valS));}
+    break;
+
+  case 36:
+#line 95 "yacc.y"
+    {report.indice = 1;}
+    break;
+
+  case 38:
+#line 98 "yacc.y"
+    {report.indice_fig = 1;}
+    break;
+
+  case 40:
+#line 101 "yacc.y"
+    {report.indice_tab = 1;}
+    break;
+
 
 /* Line 1267 of yacc.c.  */
-#line 1493 "y.tab.c"
+#line 1513 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
