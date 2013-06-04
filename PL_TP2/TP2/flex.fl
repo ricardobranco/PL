@@ -4,7 +4,7 @@
 
 
 %}
-%x INDICE CODIGO
+%x INDICE CODIGO ARGS CODIGOLINHA
 
 arg ([^\(\)\,\\\{\}]|(\\[\\\(\)\{\}\,]))+
 email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
@@ -19,14 +19,14 @@ inteiro [0-9]+
 
 
 <<EOF>>			{return '$';}
+<ARGS>\)		{BEGIN 0; return ')';}
 <*>[ \n\t]+		{;}
-<*>[\(\)\{\}] 		{return yytext[0];} 
-,				{return sep;}
+<*>[\(\)\{\}] 	{return yytext[0];} 
+<ARGS>,			{printf("SEP:%s\n",yytext );return sep;}
 
-
-\\titulo 		{return BTITLE;}
-\\stitulo 		{return BSTITLE;}
-\\autor 		{return BAUTHOR;}
+\\titulo 		{BEGIN ARGS; return BTITLE;}
+\\stitulo 		{BEGIN ARGS; return BSTITLE;}
+\\autor 		{BEGIN ARGS;return BAUTHOR;}
 \\data			{return BDATE;}
 \\inst			{return BINST;}
 \\keys			{return BKEY;}
@@ -37,6 +37,7 @@ inteiro [0-9]+
 \\codigo		{BEGIN CODIGO; return BCODE;}
 \\s[1-5]		{yylval.valI = yytext[2]-'0';
 				return BSEC;}
+
 \\p				{return BPARAG;}
 \\sumario		{return BSUMMARY;}
 \\ref			{return BREF;}
@@ -73,17 +74,19 @@ inteiro [0-9]+
 {inteiro}			{yylval.valI = atoi(strdup(yytext));
 					return inteiro;}
 
-{id}				{yylval.valS = strdup(yytext);
+<ARGS>{id}			{printf("ID:%s\n",yytext);yylval.valS = strdup(yytext);
 					return id;}
-{url}				{yylval.valS = strdup(yytext);
+<ARGS>{url}			{printf("URL%s\n",yytext );
+					yylval.valS = strdup(yytext);
 					return url;}			
-{email}				{yylval.valS = strdup(yytext);
+<ARGS>{email}		{printf("EMAIL:%s\n",yytext);
+					yylval.valS = strdup(yytext);
 					return email;}
-{arg} 				{yylval.valS = strdup(yytext);
+<ARGS>{arg} 		{printf("ARGS:%s\n",yytext); yylval.valS = strdup(yytext);
 					return arg;}
-{linha}				{yylval.valS = strdup(yytext);
+<CODIGOLINHA>{linha}				{printf("LINHA:%s\n",yytext);yylval.valS = strdup(yytext);
 					 return linha;}			
-{texto}				{yylval.valS = strdup(yytext);
+{texto}				{printf("TEXTO:%s\n",yytext);yylval.valS = strdup(yytext);
 					return texto;}
 <CODIGO>{codigo}	{BEGIN 0; yylval.valS = strdup(yytext);
 					return codigo;}
