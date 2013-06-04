@@ -2,6 +2,10 @@
 #include "string.h"
 #include "stdio.h"
 
+
+#define FRONTMATTER 1
+#define BODY 2
+
 typedef struct sreport
 {
 	
@@ -91,11 +95,16 @@ void addKey(Report*,char*);
 
 
 //Body
+//Paragrafos
+void addRef(Report*,char*, char*,int);
+void addHRef(Report*,char*,char*,int);
+
+
+
 
 
 void addData(Report*); //TEM QUE ESTAR NO REPORT.C/H
 void addSeccao(Report*,char*,int,int);
-void addHRef(Report*,char*);
 void addItem(Report*,char*);
 void addOrdList(Report*);
 void addItemList(Report*);

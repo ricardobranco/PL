@@ -3,8 +3,6 @@
 #include <string.h>
 #include "preprocessador.h"
 
-#define FRONTMATTER 1
-#define BODY 2
 
 //VARIAVEIS GLOBAIS
 Report report;
@@ -16,10 +14,10 @@ int zona;
 %token arg id email url sep texto codigo carater inteiro
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
 %token BSUMMARY BBOLD BParag BREF BCODE BIterm BFoteN BLineCode BUnderLine BAcronym 
-%token BItalic BXREF BCiteR BCHAP BSEC BFig BImg BENUM BCAP BLinha BItem BTAB BCel BItemize
+%token BItalic BXREF  BHREF BCiteR BCHAP BSEC BFig BImg BENUM BCAP BLinha BItem BTAB BCel BItemize
 %token IFIGURE ITABLE
 
-%type<valS> arg id email url sep 
+%type<valS> arg id email url sep texto
 %type<valI> inteiro
 
 %union{
@@ -157,6 +155,7 @@ FreeElem	: FootNote
 			| Ref
 			| Xref
 			| CitRef
+			| HRef
 			| Iterm
 			| Bold
 			| Italic
@@ -167,13 +166,15 @@ FreeElem	: FootNote
 
 Summary: BSUMMARY '(' texto ')' ;
 
-Ref : BREF '(' texto ')';
+Ref : BREF '(' texto sep texto')' {addRef(&report,$3,$5,zona);};
 
-Xref: BXREF '(' texto ')';
+HRef : BHREF '(' texto sep url ')' {}  ;
 
-CitRef	: BCiteR '(' texto ')';
+Xref: BXREF '(' texto ')' {};
 
-Iterm	: BIterm '(' texto ')';
+CitRef	: BCiteR '(' texto ')' {};
+
+Iterm	: BIterm '(' texto ')' {};
 
 FootNote: BFoteN '(' texto ')';
 

@@ -103,3 +103,103 @@ void addKey(Report* report, char* arg){
 }
 
 
+
+void addRef(Report* report, char* arg1 , char* arg2 ,int mode){
+	
+	char* label =  strdup(arg1);
+	char* texto = strdup(arg2);  
+
+
+	//HTML
+	char* ahref = "<a href=\"#";
+	char* mhref = "\">";
+	char* fhref = "</a>\n";
+	if(mode == BODY){
+		insertTail(report->htmlCorpo,&ahref);
+		insertTail(report->htmlCorpo,&label);
+		insertTail(report->htmlCorpo,&mhref);
+		insertTail(report->htmlCorpo,&texto);
+		insertTail(report->htmlCorpo,&fhref);
+	}
+	else{
+		insertTail(report->htmlInicio,&ahref);
+		insertTail(report->htmlInicio,&label);
+		insertTail(report->htmlInicio,&mhref);
+		insertTail(report->htmlInicio,&texto);
+		insertTail(report->htmlInicio,&fhref);
+	}
+
+
+
+	//LATEX
+		char* alref = "\\ref{";
+		char* flref = "}\n";
+
+	if(mode == BODY){
+		insertTail(report->latexCorpo,&alref);
+		insertTail(report->latexCorpo,&label);
+		insertTail(report->latexCorpo,&flref);
+		
+	}
+	else{
+		insertTail(report->latexInicio,&ahref);
+		insertTail(report->latexInicio,&label);
+		insertTail(report->latexInicio,&flref);
+		
+	}
+
+}
+
+
+void addHRef(Report* report, char* arg1 , char* arg2 ,int mode){
+	
+	char* label =  strdup(arg1);
+	char* texto = strdup(arg2);  
+
+
+	//HTML
+	char* ahref = "<a href=\"";
+	char* mhref = "\">";
+	char* fhref = "</a>\n";
+	if(mode == BODY){
+		insertTail(report->htmlCorpo,&ahref);
+		insertTail(report->htmlCorpo,&label);
+		insertTail(report->htmlCorpo,&mhref);
+		insertTail(report->htmlCorpo,&texto);
+		insertTail(report->htmlCorpo,&fhref);
+	}
+	else{
+		insertTail(report->htmlInicio,&ahref);
+		insertTail(report->htmlInicio,&label);
+		insertTail(report->htmlInicio,&mhref);
+		insertTail(report->htmlInicio,&texto);
+		insertTail(report->htmlInicio,&fhref);
+	}
+
+
+
+	//LATEX
+		char* alref = "\\ref{";
+		char* mlref = "}{";
+		char* flref = "}\n";
+
+	if(mode == BODY){
+		insertTail(report->latexCorpo,&alref);
+		insertTail(report->latexCorpo,&label);
+		insertTail(report->latexCorpo,&mlref);
+		insertTail(report->latexInicio,&texto);
+		insertTail(report->latexCorpo,&flref);
+		
+	}
+	else{
+		insertTail(report->latexInicio,&ahref);
+		insertTail(report->latexInicio,&label);
+		insertTail(report->latexInicio,&mlref);
+		insertTail(report->latexInicio,&texto);
+		insertTail(report->latexInicio,&flref);
+		
+	}
+
+}
+
+
