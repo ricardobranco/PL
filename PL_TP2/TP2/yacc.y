@@ -12,7 +12,7 @@ Autor autor;
 %token arg id email url sep texto codigo
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
 %token BSUMMARY BBOLD BParag BREF BCODE BIterm BFoteN BLineCode BUnderLine BAcronym 
-%token BItalic BXREF BCiteR BCHAP
+%token BItalic BXREF BCiteR BCHAP BSEC
 %token IFIGURE ITABLE
 
 %type<valS> arg id email url sep
@@ -127,13 +127,17 @@ ElemList:  ElemList Elem
 
 Elem 	: CodeBlock 
 		| Paragraph
-	//	| Section	
+		| Section	
 		| Summary 
 	//	| Float 		
 	//	| List
 		;	
 
 CodeBlock: BCODE '{' codigo '}';
+
+Section	: S_Title  '{' ElemList '}';
+
+S_Title: BSEC '(' texto ')' ;
 
 Paragraph:	BParag	'(' ParaContend ')' ;
 

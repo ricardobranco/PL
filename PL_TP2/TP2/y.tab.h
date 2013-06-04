@@ -72,8 +72,9 @@
      BXREF = 288,
      BCiteR = 289,
      BCHAP = 290,
-     IFIGURE = 291,
-     ITABLE = 292
+     BSEC = 291,
+     IFIGURE = 292,
+     ITABLE = 293
    };
 #endif
 /* Tokens.  */
@@ -110,8 +111,9 @@
 #define BXREF 288
 #define BCiteR 289
 #define BCHAP 290
-#define IFIGURE 291
-#define ITABLE 292
+#define BSEC 291
+#define IFIGURE 292
+#define ITABLE 293
 
 
 
@@ -124,7 +126,7 @@ typedef union YYSTYPE
 	int valI;
 }
 /* Line 1529 of yacc.c.  */
-#line 128 "y.tab.h"
+#line 130 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
