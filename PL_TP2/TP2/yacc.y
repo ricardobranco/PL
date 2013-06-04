@@ -15,8 +15,10 @@ int zona;
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
 %token BSUMMARY BBOLD BParag BREF BCODE BIterm BFoteN BLineCode BUnderLine BAcronym 
 
-%token BItalic BXREF BCiteR BCHAP BSEC BFig BImg BENUM BCAP BLinha BItem BTAB BCel BItemize
-%token IFIGURE ITABLE BHREF
+
+%token BItalic BXREF  BHREF BCiteR BCHAP BSEC BFig BImg BENUM BCAP BLinha BItem BTAB BCel BItemize
+%token IFIGURE ITABLE
+
 %type<valS> arg id email url sep texto
 %type<valI> inteiro
 
@@ -155,8 +157,8 @@ FreeElem	: FootNote
 			| Ref
 			| Xref
 			| CitRef
-		//	| Iterm
 			| Href
+			| Iterm
 			| Bold
 			| Italic
 			| Underline
@@ -174,7 +176,7 @@ Xref: BXREF '(' texto ')' {};
 
 CitRef	: BCiteR '(' texto ')' {};
 
-//Iterm	: BIterm '(' texto ')';
+Iterm	: BIterm '(' texto ')' {};
 
 FootNote: BFoteN '(' texto ')';
 
