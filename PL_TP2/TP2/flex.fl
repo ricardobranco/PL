@@ -11,7 +11,7 @@ email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
 url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
 id [a-zA-Z]{0,2}[0-9]+
 texto ({arg}|,)+ 
-codigo ([^\}]|((\\})))+  ///Verificar
+codigo ([^\}]|(\\\}))+  
 %%
 
 
@@ -30,8 +30,40 @@ codigo ([^\}]|((\\})))+  ///Verificar
 \\resumo		{return BABS;}
 \\indice		{BEGIN INDICE;	return BINDICE;}
 
+\\capitulo		{return BCHAP;}
+\\codigo		{return BCODE;}
+\\s[1-6]		{yylval.valI = yytext[2]-'0';
+				return BSEC;}
+\\p				{return BParag;}
+\\sumario		{return BSUMMARY;}
+\\ref			{return BREF;}
+\\xref			{return BXREF;}
+\\href			{return BHREF;}
+\\citref		{return BCiteR;}
+\\rodape		{return BFoteN;}
+\\lcodigo		{return BLineCode;}
+\\acronimo		{return BAcronym;}
 
-\\	
+\\negrito		{return BBOLD;}
+\\italico		{return BItalic;}
+\\sublinhado	{return BUnderLine;}
+
+\\figura 		{return BFig;}
+\\imagem		{return BImg;}
+\\leg			{return BCAP;}
+
+\\lo 			{return BENUM;}
+\\li 			{return BItemize;}
+\\item			{return BItem;}
+
+\\tabela 		{return BTAB;}
+\\linha 		{return BLinha;}
+\\cel 			{return BCel;}
+
+
+
+
+
 
 
 
@@ -46,6 +78,8 @@ codigo ([^\}]|((\\})))+  ///Verificar
 			return arg;}
 {texto}		{yylval.valS = strdup(yytext);
 			return texto;}
+{codigo}	{yylval.valS = strdup(yytext);
+			return codigo;}
 
 
 
