@@ -148,7 +148,6 @@ ElemList:  ElemList Elem
 Elem 	: CodeBlock 
 		| Paragraph 
 		| Section	
-		| Summary 
 		| Float 		
 		| List
 		;
@@ -183,7 +182,6 @@ FreeElem	: FootNote
 			| Acronym 
 			;
 
-Summary: BSUMMARY '(' texto ')' ; //FALTA
 
 Ref : BREF '(' texto sep texto')' {addRef(&report,$3,$5,zona);};
 

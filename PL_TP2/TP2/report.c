@@ -30,8 +30,8 @@ void geraHTML(Report* report,char* output){
 		fprintf(fileout,"<hr>\n" );
 
 	
-	geraAutoresHTML(report->autores,fileout);
-	geraData(fileout);
+//	geraAutoresHTML(report->autores,fileout);
+//	geraData(fileout);
 
 
 	
@@ -42,7 +42,7 @@ void geraHTML(Report* report,char* output){
 	
 	}
 
-	geraKeywords(report->keywords,fileout);
+	//geraKeywords(report->keywords,fileout);
 	
 
 	List* htmlresumoagradecimentos = report->htmlInicio;
@@ -51,9 +51,9 @@ void geraHTML(Report* report,char* output){
 		fprintf(fileout,"%s",*entrada);
 	}
 
-	geraIndice(report->indice,fileout);
-	geraIndice_fig(report->indice_fig,fileout);
-	geraIndice_tab(report->indice_tab,fileout);
+//	geraIndice(report->indice,fileout);
+//	geraIndice_fig(report->indice_fig,fileout);
+//	geraIndice_tab(report->indice_tab,fileout);
 
 
 	
@@ -122,7 +122,7 @@ void geraLATEX(Report* report,char* output){
 		fprintf(fileout, "\\subtitle{%s}\n",report->stitulo);
 	}
 
-	geraAutoresLatex(report->autores,fileout);
+	//geraAutoresLatex(report->autores,fileout);
 	fprintf(fileout, "\\frontmatter" );	
 	fprintf(fileout, "\\date{\\today}\n");
 
