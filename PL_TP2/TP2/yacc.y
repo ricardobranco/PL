@@ -99,11 +99,15 @@ Keys : Keys sep Key
 
 Key : arg {addKey(&report,$1);};
 
-Abstract : BABS '{' ParaList '}';
+Abstract : BAbs '{' ParaList '}' ;
 
-Aknowledgements : BAKNOW '{' ParaList '}'
+BAbs : BABS {addResumo(&report);};
+
+Aknowledgements : BAknow '{' ParaList '}' {fechoAgradecimentos(&report);};
 				|
 				; 
+
+BAknow : BAKNOW {addAgradecimentos(&report);};
 
 ParaList : ParaList Paragraph {fechoParagrafo(&report,zona);} 
 		 | Paragraph {fechoParagrafo(&report,zona);}

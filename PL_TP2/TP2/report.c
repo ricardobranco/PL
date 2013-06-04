@@ -22,26 +22,43 @@ void geraHTML(Report* report,char* output){
 			fprintf(fileout,"%s\n%s\n%s\n",ahtml,meta,abody);
 
 
-	if(report->titulo){
-		fprintf(fileout,"<h1>%s</h1>\n<hr>\n",report->titulo);
+	
+		fprintf(fileout,"<h1>%s</h1>\n",report->titulo);
+		if(report->stitulo)
+			fprintf(fileout,"<h2>%s</h2>\n",report->stitulo);
+		
+		fprintf(fileout,"<hr>\n" );
+
+	
+	geraAutoresHTML(report->autores,fileout);
+	geraData(fileout);
+
+
+	
+	if(report->inst){
+	////////INSTITUIÇÃO////////////////////
+	fprintf(fileout, "<center>\n<h3>%s</h3></center>\n",report->inst );	
+
+	
 	}
-	/*
-     -----------------Ter ATENÇÂO------------------    
-     
-     if(report->autor){
-		fprintf(fileout,"<address>%s</address>\n",report->autor);
-	}*/
+
+	geraKeywords(report->keywords,fileout);
 	
 
-	if(report->indice){
-		List* indice = report->seccoes;
-		while(indice->list){
-			char** indentrada = pop(indice);
-			fprintf(fileout, "%s",*indentrada);   
-		}
+	List* htmlresumoagradecimentos = report->htmlInicio;
+	while(htmlresumoagradecimentos->list){
+		char** entrada = pop(htmlresumoagradecimentos);
+		fprintf(fileout,"%s",*entrada);
 	}
 
-	List* html = report->html;
+	geraIndice(report->indice,fileout);
+	geraIndice_fig(report->indice_fig,fileout);
+	geraIndice_tab(report->indice_tab,fileout);
+
+
+	
+
+	List* html = report->htmlCorpo;
 	while(html->list){
 		char** entrada = pop(html);
 		fprintf(fileout,"%s",*entrada);
@@ -66,7 +83,7 @@ void geraLATEX(Report* report,char* output){
 
 	}
 
-	char* docclass = "\\documentclass[10pt]{article}";
+	char* docclass = "\\documentclass[11pt, a4paper, oneside]";
 	char* usepackage = "\\usepackage{graphicx, url,hyperref,verbatim}";
 	char* inputenc = "\\usepackage[utf8]{inputenc}";
 	char* babel = "\\usepackage[portuges]{babel}";
@@ -99,15 +116,15 @@ void geraLATEX(Report* report,char* output){
 	fprintf(fileout,"%s\n%s\n%s\n%s\n%s\n",counter,lever,indent,beforeskip,afterskip);
 	fprintf(fileout,"%s\n%s\n%s\n%s\n",font,subsubparagraph3,subsubparagraphmark,makeatother);
 
-	if(report->titulo){
-		fprintf(fileout, "\\title{%s}\n",report->titulo) ;
+	fprintf(fileout, "\\title{%s}\n",report->titulo) ;
+	
+	if(report->stitulo){
+		fprintf(fileout, "\\subtitle{%s}\n",report->stitulo);
 	}
-    /*
-     -----------------Ter ATENÇÂO------------------
-     
-	if(report->autor){
-		fprintf(fileout, "\\author{%s}\n",report->autor);
-	}*/
+
+	geraAutoresLatex(report->autores,fileout);
+	fprintf(fileout, "\\frontmatter" );	
+	fprintf(fileout, "\\date{\\today}\n");
 
 	char* begindoc = "\\begin{document}";
 	char* maketitle = "\\maketitle";
@@ -116,11 +133,19 @@ void geraLATEX(Report* report,char* output){
 	fprintf(fileout,"%s\n%s\n",begindoc,maketitle);
 
 	char* indicelatex = "\\tableofcontents";
+	char* indicefig = "\\listoffigures";
+	char* indicetab = "\\listoftables";
 	if(report->indice)
 		fprintf(fileout, "%s\n",indicelatex);
+	if(report->indice_fig)
+		fprintf(fileout, "%s\n", indicefig );
+	if(report->indice_tab)
+		fprintf(stderr, "%s\n", indicetab );
 
 
-	List* latex = report->latex;
+
+	fprintf(fileout, "\\mainmatter\n");
+	List* latex = report->latexCorpo;
 	while(latex->list){
 		char** entrada = pop(latex);
 		fprintf(fileout,"%s",*entrada);

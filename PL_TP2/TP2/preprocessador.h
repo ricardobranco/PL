@@ -121,8 +121,10 @@ void addCelula(Row*,Cell*);
 void addLinha(Table*,Row*);
 void addTabela(Report*,Table*);
 void addSeccao(Report*,char*,int);
-
-
+void addResumo(Report*);
+void addAgradecimentos(Report*);
+void fechoResumo(Report*);
+void fechoAgradecimentos(Report*);
 
 
 

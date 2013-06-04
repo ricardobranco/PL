@@ -825,5 +825,35 @@ void addSeccao(Report* report,char*arg,int tamanho){
 	insertTail(report->latexCorpo,&slatex);
  }
 
+void addAgradecimentos(Report* report){
+	//HTML
+	char* html = "<h2>Agradecimentos</h2";
+	insertTail(report->htmlInicio,&html);
+	//LATEX
+	char* latex = "\\begin{flushright}";
+	insertTail(report->latexInicio,&latex);
 
+}
+
+void addResumo(Report* report){
+	//HTML
+	char* html = "<h2>Resumo</h2";
+	insertTail(report->htmlInicio,&html);
+	//LATEX
+	char* latex = "\\begin{abstract}";
+	insertTail(report->latexInicio,&latex);
+}
+
+
+void fechoAgradecimentos(Report* report){
+	//LATEX
+	char* latex = "\\end{flushright}";
+	insertTail(report->latexInicio,&latex);
+}
+
+void fechoResumo(Report* report){
+	//LATEX
+	char* latex = "\\end{abstract}";
+	insertTail(report->latexInicio,&latex);
+}
 
