@@ -429,6 +429,7 @@ void addImagem(Report* report,Image* img){
 
 	IndiceCell novo;
 	novo.ilabel = novo.itexto = caption;
+	insertTail(report->lindice_fig, &novo);
 
 
 
@@ -689,6 +690,13 @@ void addTabela(Report* report,Table* tabela){
 	insertTail(report->latexCorpo,&flatexcap);
 	char* flatextabela = "\\end{tabular}";
 	insertTail(report->latexCorpo,&flatextabela);
+
+	IndiceCell indicecell;
+	indicecell.ilabel = caption;
+	indicecell.itexto = caption;
+
+	insertTail(report->lindice_tab,&indicecell);
+
 }
 
 
@@ -699,5 +707,123 @@ int nrDigits(int value){
 		return 1;
 	else return 1 + nrDigits(value/10);
 }
+
+
+void addSeccao(Report* report,char*arg,int tamanho){
+	
+	char* seccao = strdup(arg);
+
+
+	//HTML
+
+	
+
+	IndiceCell indicecell;
+	indicecell.ilabel = indicecell.itexto = seccao;
+	char* athtml = "<a name=\"";
+	char* fthtml = "\"></a>\n";
+
+
+
+	insertTail(report->htmlCorpo,&athtml);
+	insertTail(report->htmlCorpo,&seccao);
+	insertTail(report->htmlCorpo,&fthtml);
+	
+
+
+
+	char ahtml[4] = "<h >";
+	char fhtml[6] = "</h >\n";
+	char ctamanho = '1'+tamanho;
+	ahtml[2]= ctamanho;
+	fhtml[3]=ctamanho;
+	
+	insertTail(report->htmlCorpo,&ahtml);
+	insertTail(report->htmlCorpo,&seccao);
+	insertTail(report->htmlCorpo,&fhtml);
+	//LATEX
+	/*
+	SECÇÃO LVL1 -> /section{}
+	SECÇÃO LVL2 -> /subsection{}
+	SECÇÃO LVL3 -> /subsubsection{}
+	SECÇÃO LVL4 -> /paragraph{}\mbox{}\\
+	SECÇÃO LVL5 -> /subparagraph{}\mbox{}\\
+	
+	evitar erro "there's no line here to end" -> \mbox{}\\  
+	*/
+
+	char* as1 = "\\section{";
+	char* as2 = "\\subsection{";
+	char* as3 = "\\subsubsection{";
+	char* as4 = "\\paragraph{";
+	char* as5 = "\\subparagraph{";
+	char* as6 = "\\subsubparagraph{";
+	char* mbox = "\\mbox{}\\\\\n";
+	char* fs = "}\n";
+	char* slatex = NULL;
+	int alocar;
+	switch(tamanho){
+		case 1:{
+			alocar=strlen(as1)+1;
+			break;
+		}
+		case 2:{
+			alocar=strlen(as2)+1;
+			break;
+		}
+		case 3:{
+			alocar=strlen(as3)+1;
+			break;
+		}
+		case 4:{
+			alocar=strlen(as4)+1+strlen(mbox);
+			break;
+		}
+		case 5:{
+			alocar=strlen(as5)+1+strlen(mbox);
+			break;
+		}
+		case 6:{
+			alocar=strlen(as6)+1+strlen(mbox);
+			break;
+		}
+	}
+
+	slatex = (char*)malloc(sizeof(char)*strlen(seccao)+alocar+2);
+	switch(tamanho){
+		case 1:{
+			strncat(slatex,as1,strlen(as1));
+			break;
+		}
+		case 2:{
+			strncat(slatex,as2,strlen(as2));
+			break;
+		}
+		case 3:{
+			strncat(slatex,as3,strlen(as3));
+			break;
+		}
+		case 4:{
+			strncat(slatex,as4,strlen(as4));
+			break;
+		}
+		case 5:{
+			strncat(slatex,as5,strlen(as5));
+			break;
+		}
+		case 6:{
+			strncat(slatex,as6,strlen(as6));
+			break;
+		}
+	}
+
+	strncat(slatex,seccao,strlen(seccao));
+	strncat(slatex,fs,strlen(fs));
+	if(tamanho>3)
+		strncat(slatex,mbox,strlen(mbox));
+
+	insertTail(report->latexCorpo,&slatex);
+ }
+
 
 

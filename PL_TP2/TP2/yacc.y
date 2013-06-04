@@ -11,6 +11,7 @@ Image image;
 Table table;
 Row row;
 Cell cell;
+int seccao;
 
 int zona;
 %}
@@ -151,7 +152,9 @@ CodeBlock: BCODE '{' codigo '}' {addTextoNF(&report,$3);};
 
 Section	: S_Title  '{' ElemList '}';
 
-S_Title: BSEC '(' texto ')' ;
+S_Title: BSec '(' texto ')' {addSeccao(&report,$3,seccao);};
+
+BSec : BSEC {seccao = yylval.valI;}
 
 Paragraph:	BParag	'{' ParaContend '}' ;
 

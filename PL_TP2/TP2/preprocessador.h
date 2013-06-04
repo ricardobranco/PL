@@ -98,7 +98,6 @@ void addKey(Report*,char*);
 
 
 //Body
-//Paragrafos
 void addRef(Report*,char*, char*,int);
 void addHRef(Report*,char*,char*,int);
 void addNegTag(Report*,int);
@@ -121,6 +120,7 @@ void fechaItemList(Report*);
 void addCelula(Row*,Cell*);
 void addLinha(Table*,Row*);
 void addTabela(Report*,Table*);
+void addSeccao(Report*,char*,int);
 
 
 
@@ -134,14 +134,3 @@ void addTabela(Report*,Table*);
 
 
 void addData(Report*); //TEM QUE ESTAR NO REPORT.C/H
-void addSeccao(Report*,char*,int,int);
-void addComentario(Report*);
-void addQuebra(Report*);
-void addFormat(Report*,char*);
-void addModImg(Report*);
-void addBackSlash(Report*);
-void addAnd(Report*);
-void addIndice(Report*,int,char*);
-void addIndList(Report*);
-void addIndFecho(Report*);
-void addData(Report*);
