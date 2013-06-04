@@ -72,7 +72,6 @@
      BAcronym = 288,
      BItalic = 289,
      BXREF = 290,
-<<<<<<< HEAD
      BHREF = 291,
      BCiteR = 292,
      BCHAP = 293,
@@ -88,23 +87,6 @@
      BItemize = 303,
      IFIGURE = 304,
      ITABLE = 305
-=======
-     BCiteR = 291,
-     BCHAP = 292,
-     BSEC = 293,
-     BFig = 294,
-     BImg = 295,
-     BENUM = 296,
-     BCAP = 297,
-     BLinha = 298,
-     BItem = 299,
-     BTAB = 300,
-     BCel = 301,
-     BItemize = 302,
-     IFIGURE = 303,
-     ITABLE = 304,
-     BHREF = 305
->>>>>>> acf8404937d42ef57e516d446f872417f53fc917
    };
 #endif
 /* Tokens.  */
@@ -141,7 +123,6 @@
 #define BAcronym 288
 #define BItalic 289
 #define BXREF 290
-<<<<<<< HEAD
 #define BHREF 291
 #define BCiteR 292
 #define BCHAP 293
@@ -157,30 +138,13 @@
 #define BItemize 303
 #define IFIGURE 304
 #define ITABLE 305
-=======
-#define BCiteR 291
-#define BCHAP 292
-#define BSEC 293
-#define BFig 294
-#define BImg 295
-#define BENUM 296
-#define BCAP 297
-#define BLinha 298
-#define BItem 299
-#define BTAB 300
-#define BCel 301
-#define BItemize 302
-#define IFIGURE 303
-#define ITABLE 304
-#define BHREF 305
->>>>>>> acf8404937d42ef57e516d446f872417f53fc917
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 23 "yacc.y"
+#line 24 "yacc.y"
 {
 	char* valS;
 	int valI;

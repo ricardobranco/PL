@@ -14,13 +14,9 @@ int zona;
 %token arg id email url sep texto codigo carater inteiro
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
 %token BSUMMARY BBOLD BParag BREF BCODE BIterm BFoteN BLineCode BUnderLine BAcronym 
-<<<<<<< HEAD
+
 %token BItalic BXREF  BHREF BCiteR BCHAP BSEC BFig BImg BENUM BCAP BLinha BItem BTAB BCel BItemize
 %token IFIGURE ITABLE
-=======
-%token BItalic BXREF BCiteR BCHAP BSEC BFig BImg BENUM BCAP BLinha BItem BTAB BCel BItemize
-%token IFIGURE ITABLE BHREF
->>>>>>> acf8404937d42ef57e516d446f872417f53fc917
 
 %type<valS> arg id email url sep texto
 %type<valI> inteiro
@@ -160,13 +156,8 @@ FreeElem	: FootNote
 			| Ref
 			| Xref
 			| CitRef
-<<<<<<< HEAD
 			| HRef
 			| Iterm
-=======
-		//	| Iterm
-			| Href
->>>>>>> acf8404937d42ef57e516d446f872417f53fc917
 			| Bold
 			| Italic
 			| Underline
@@ -180,19 +171,11 @@ Ref : BREF '(' texto sep texto')' {addRef(&report,$3,$5,zona);};
 
 HRef : BHREF '(' texto sep url ')' {}  ;
 
-<<<<<<< HEAD
 Xref: BXREF '(' texto ')' {};
 
 CitRef	: BCiteR '(' texto ')' {};
 
 Iterm	: BIterm '(' texto ')' {};
-=======
-Href: BHREF '(' url ')';
-
-CitRef	: BCiteR '(' texto ')';
-
-//Iterm	: BIterm '(' texto ')';
->>>>>>> acf8404937d42ef57e516d446f872417f53fc917
 
 FootNote: BFoteN '(' texto ')';
 
