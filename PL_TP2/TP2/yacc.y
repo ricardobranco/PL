@@ -141,7 +141,7 @@ Elem 	: CodeBlock
 
 CodeBlock: BCODE '{' codigo '}';
 
-Paragraph:	BParag	'(' ParaContend ')' ;
+Paragraph:	BParag	'{' ParaContend '}' ;
 
 ParaContend	: ParaContend texto
 			| ParaContend FreeElem	
