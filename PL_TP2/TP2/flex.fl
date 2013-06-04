@@ -4,11 +4,8 @@
 
 
 %}
-<<<<<<< HEAD
-%x INDICE
-=======
+
 %x INDICE CODIGO ARGS CODIGOLINHA
->>>>>>> 9d6d52cd88f0dab445182bbbe0984e96ad2fcf4f
 
 arg ([^\(\)\,\\\{\}]|(\\[\\\(\)\{\}\,]))+
 email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
