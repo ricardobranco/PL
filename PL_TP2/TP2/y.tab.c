@@ -83,8 +83,8 @@
      BABS = 272,
      BAKNOW = 273,
      BINDICE = 274,
-     FIGURE = 275,
-     TABLE = 276
+     IFIGURE = 275,
+     ITABLE = 276
    };
 #endif
 /* Tokens.  */
@@ -105,8 +105,8 @@
 #define BABS 272
 #define BAKNOW 273
 #define BINDICE 274
-#define FIGURE 275
-#define TABLE 276
+#define IFIGURE 275
+#define ITABLE 276
 
 
 
@@ -476,7 +476,7 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "arg", "id", "email", "url", "sep",
   "BTITLE", "BSTITLE", "BAUTHOR", "BURL", "BAFFIL", "BEMAIL", "BDATE",
-  "BINST", "BKEY", "BABS", "BAKNOW", "BINDICE", "FIGURE", "TABLE", "'$'",
+  "BINST", "BKEY", "BABS", "BAKNOW", "BINDICE", "IFIGURE", "ITABLE", "'$'",
   "'('", "')'", "'{'", "'}'", "$accept", "Report", "FrontMatter", "Title",
   "STitle", "Authores", "Author", "Nome", "OPT_Author", "OPT_A_UM",
   "OPT_A_Dois", "OPT_A_Tres", "Nident", "Email", "Url", "Affiliation",
@@ -1428,12 +1428,17 @@ yyreduce:
 
   case 4:
 #line 31 "yacc.y"
-    {}
+    {addTitulo(&report, (yyvsp[(3) - (4)].valS));}
+    break;
+
+  case 5:
+#line 33 "yacc.y"
+    {addSTitulo(&report, (yyvsp[(3) - (4)].valS));}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1437 "y.tab.c"
+#line 1442 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1658,6 +1663,10 @@ int yyerror( char *s )
 
 int main()
 {	
+
+	//INICIALIZAÇÕES
+	report = init_Report();
+
 	int yyres = yyparse();
   	printf("YYRES: %d\n",yyres);
   	

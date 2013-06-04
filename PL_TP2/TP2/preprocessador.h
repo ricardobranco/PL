@@ -83,7 +83,7 @@ Report init_Report();
 //FrontMatter
 void addTitulo(Report*,char*);
 void addSTitulo(Report*, char*);
-void addAutor(Report*,char*);
+void addAutor(Report*,Autor*);
 
 void addData(Report*);
 void addSeccao(Report*,char*,int,int);

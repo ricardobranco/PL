@@ -28,14 +28,15 @@ Report : FrontMatter '$' {return 0;};
 
 FrontMatter : Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice;
 
-Title: BTITLE '(' arg ')' {};
+Title: BTITLE '(' arg ')' {addTitulo(&report, $3);};
 
-STitle: BSTITLE '(' arg ')'
+STitle: BSTITLE '(' arg ')' {addSTitulo(&report, $3);}
 	  | ;
 
 Authores : Authores Author 
 		 | Author
 		 ;
+		 
 Author : BAUTHOR '(' Nome OPT_Author ')';
 
 Nome : arg ;
@@ -117,6 +118,10 @@ int yyerror( char *s )
 
 int main()
 {	
+
+	//INICIALIZAÇÕES
+	report = init_Report();
+
 	int yyres = yyparse();
   	printf("YYRES: %d\n",yyres);
   	

@@ -56,8 +56,8 @@
      BABS = 272,
      BAKNOW = 273,
      BINDICE = 274,
-     FIGURE = 275,
-     TABLE = 276
+     IFIGURE = 275,
+     ITABLE = 276
    };
 #endif
 /* Tokens.  */
@@ -78,8 +78,8 @@
 #define BABS 272
 #define BAKNOW 273
 #define BINDICE 274
-#define FIGURE 275
-#define TABLE 276
+#define IFIGURE 275
+#define ITABLE 276
 
 
 
