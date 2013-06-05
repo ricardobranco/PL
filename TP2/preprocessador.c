@@ -101,12 +101,12 @@ void addSTitulo(Report *report, char*arg){
 
 void addAutor(Report* report, Autor* autor){
 	
-	insertHead(report->autores,autor);
+	insertTail(report->autores,autor);
 }
 
 void addKey(Report* report, char* arg){
 	char* key = strdup(arg);
-	insertHead(report->keywords,&key);
+	insertTail(report->keywords,&key);
 
 }
 
@@ -116,7 +116,7 @@ void addFoteNote(Report* report, char* arg, int count_foot,int mode){
     
     char *texto= strdup(arg);
     int tam= (int)strlen(texto);
-    char* html_fim = malloc(sizeof(char)*(103+tam));
+    char* html_fim = malloc(sizeof(char)*(104+tam));
     char* html_text = malloc(sizeof(char)*(49+tam));
     
     
@@ -132,9 +132,8 @@ void addFoteNote(Report* report, char* arg, int count_foot,int mode){
 	}
     
     
-    sprintf(html_fim,"<sup id=\"fn%d\">%d. [%s]<a href=\"#ref%d\" title=\"Jump back to footnote %d in the text.\">%d</a></sup>", count_foot,count_foot, texto, count_foot, count_foot, count_foot);
-    
-        insertTail(report->htmlFootNote, html_fim);
+    sprintf(html_fim,"<sup id=\"fn%d\">%d. [%s]<a href=\"#ref%d\" title=\"Jump back to footnote %d in the text.\">%d</a></sup>\n", count_foot,count_foot, texto, count_foot, count_foot, count_foot);
+   	insertTail(report->htmlFootNote, html_fim);
     
     
     
@@ -390,6 +389,7 @@ void addCapitulo(Report* report,char* arg){
 
 	IndiceCell novo;
 	novo.ilabel = novo.itexto = capitulo;
+	insertTail(report->lindice,&novo);
 
 	//LATEX
 	char* alatex = "\\chapter{";
@@ -792,6 +792,7 @@ void addSeccao(Report* report,char*arg,int tamanho){
 
 	IndiceCell indicecell;
 	indicecell.ilabel = indicecell.itexto = seccao;
+	insertTail(report->lindice,&indicecell);
 	char* athtml = "<a name=\"";
 	char* fthtml = "\"></a>\n";
 
@@ -809,7 +810,6 @@ void addSeccao(Report* report,char*arg,int tamanho){
 	
 	sprintf(ahtml,"<h%d>",tamanho+1);
 	sprintf(fhtml,"</h%d>\n",tamanho+1);
-	printf("SECÇÃO:%s %s %s\n", ahtml,seccao,fhtml);
 	
 	insertTail(report->htmlCorpo,&ahtml);
 	insertTail(report->htmlCorpo,&seccao);

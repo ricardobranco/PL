@@ -1,5 +1,5 @@
 #include "report.h"
-
+#include "time.h"
 void geraHTML(Report* report,char* output){
 
 
@@ -50,8 +50,9 @@ void geraHTML(Report* report,char* output){
 }
 
 	
-//	geraData(fileout);
-
+	time_t timenow = time(NULL);
+	struct tm tm = *localtime(&timenow);
+	fprintf(fileout,"<center>%d/%d/%d</center>\n",tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
 
 	
 	if(report->inst){
@@ -61,8 +62,6 @@ void geraHTML(Report* report,char* output){
 	
 	}
 
-	//geraKeywords(report->keywords,fileout);
-	
 
 	List* htmlresumoagradecimentos = report->htmlInicio;
 	while(htmlresumoagradecimentos->size){
@@ -71,9 +70,50 @@ void geraHTML(Report* report,char* output){
 	}
 
 	
-//	geraIndice(report->indice,fileout);
-//	geraIndice_fig(report->indice_fig,fileout);
-//	geraIndice_tab(report->indice_tab,fileout);
+	if(report->indice){
+		List* indice = report->lindice;
+		fprintf(fileout, "<h2>Indice</h2>\n" );
+			fprintf(fileout, "<ol>\n" );
+			
+		while(indice->size){
+			IndiceCell* ic = pop(indice);
+			fprintf(fileout, "<li><a hef=\"#%s\">%s</a></li>",ic->ilabel,ic->itexto);
+			
+		}
+		fprintf(fileout, "</ol><br/>\n" );
+			
+	}
+
+if(report->indice_fig){
+		List* indice = report->lindice_fig;
+		fprintf(fileout, "<h2>Lista de figuras</h2>\n" );
+			fprintf(fileout, "<ol>\n" );
+			
+		while(indice->size){
+			IndiceCell* ic = pop(indice);
+			fprintf(fileout, "<li><a hef=\"#%s\">%s</a></li>",ic->ilabel,ic->itexto);
+			
+
+		}
+		fprintf(fileout, "</ol><br/>\n" );
+			
+	}
+
+if(report->indice_tab){
+		List* indice = report->lindice_tab;
+		fprintf(fileout, "<h2>Listas de tabelas</h2>\n" );
+			fprintf(fileout, "<ol>\n" );
+			
+		while(indice->size){
+			IndiceCell* ic = pop(indice);
+			fprintf(fileout, "<li><a hef=\"#%s\">%s</a></li>",ic->ilabel,ic->itexto);
+			
+
+		}
+		fprintf(fileout, "</ol><br/>\n" );
+			
+	}
+
 
 
 	
@@ -84,6 +124,16 @@ void geraHTML(Report* report,char* output){
 		
 		fprintf(fileout,"%s",*entrada);
 	}
+
+
+	List* rodape = report->htmlFootNote;
+	while(html->size){
+		char** foot = pop(html);
+		
+		fprintf(fileout,"%s",*foot);
+	}
+
+
 
 	fprintf(fileout,"%s\n",fbody);
 
