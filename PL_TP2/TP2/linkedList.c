@@ -21,7 +21,8 @@ List* insertHead (List *l, void *data) {
         return l;
     
     if(l->list == NULL) {
-        l->list = (Node*) malloc (sizeof(Node));
+        Node* node = (Node*) malloc (sizeof(Node)); 
+        l->list = node;
         l->list->data = malloc(l->dataSize); 
         memcpy(l->list->data,data,l->dataSize);
         l->list->next = NULL;

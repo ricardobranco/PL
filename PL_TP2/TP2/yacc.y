@@ -49,8 +49,8 @@ STitle: BSTITLE '(' arg ')' {addSTitulo(&report, $3);}
 	  | 
 	  ;
 
-Authores : Authores Author 	{addAutor(&report,&autor);} 
-		 | Author 			{addAutor(&report,&autor);}
+Authores : Authores Author 	{printf("JA TEMOS AUTOR\n"); addAutor(&report,&autor);} 
+		 | Author 			{printf("JA TEMOS AUTOR\n"); addAutor(&report,&autor);}
 		 ;
 
 Author : Bauthor '(' Nome OPT_Author ')';
@@ -64,7 +64,7 @@ OPT_Author	: Nident OPT_A_UM
 			| OPT_A_UM
 			;
 
-OPT_A_UM	: Email OPT_A_Dois
+OPT_A_UM	: Email OPT_A_Dois   
 			| OPT_A_Dois
 			;
 
