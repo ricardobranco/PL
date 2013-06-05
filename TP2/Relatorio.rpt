@@ -28,15 +28,22 @@
 
 	\p{Nós, como referido anteriormente, estamos a "continuar" o trabalho realizado no Trabalho Prático 1 (TP1) e por isso a sintaxe da linguagem manteve-se a do trabalho anterior, fazendo algumas alterações e acrescentando outras funcionalidades que são as seguintes:}
 
-	\tabela{
-		\leg(Comandos a utilizar)
+	\figura{
+		\imagem{sintaxe.png}
+		\leg{1ª parte}
+	}
+	\figura{
+		\imagem{sintaxe1.png}
+		\leg{2ª parte}
+	}
+	\figura{
+		\imagem{sintaxe2.png}
+		\leg{3ª parte}
+	}
+	\figura{
+		\imagem{sintaxe3.png}
+		\leg{4ª parte}
 
-		\linha{
-
-			\cel(c,1){Comandos}
-
-			\cel(c,1){Descrição}
-		}
 	}
 }
 
