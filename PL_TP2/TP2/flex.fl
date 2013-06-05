@@ -2,6 +2,7 @@
 #include "y.tab.h"
 
 %}
+
 %x INDICE CODIGO ARGS CODIGOLINHA
 
 arg ([^\(\)\,\\\{\}]|(\\[\\\(\)\{\}\,]))+
@@ -32,7 +33,7 @@ inteiro [0-9]+
 \\indice		{BEGIN INDICE;	return BINDICE;}
 
 \\capitulo		{return BCHAP;}
-\\codigo		{BEGIN CODIGO; return BCODE;}
+\\codigo		{return BCODE;}
 \\s[1-5]		{yylval.valI = yytext[2]-'0';
 				return BSEC;}
 
@@ -66,11 +67,11 @@ inteiro [0-9]+
 
 
 
-[cCdDeE]			{yylval.valC = yytext[0];
-					return carater;}
+[cCdDeE]	{yylval.valC = yytext[0];
+			return carater;}
 
-{inteiro}			{yylval.valI = atoi(strdup(yytext));
-					return inteiro;}
+{inteiro}	{yylval.valI = atoi(strdup(yytext));
+			return inteiro;}
 
 <ARGS>{id}			{printf("ID:%s\n",yytext);yylval.valS = strdup(yytext);
 					return id;}
@@ -88,7 +89,6 @@ inteiro [0-9]+
 					return texto;}
 <CODIGO>{codigo}	{BEGIN 0; yylval.valS = strdup(yytext);
 					return codigo;}
-
 
 
 <INDICE>figuras         {BEGIN 0; return IFIGURE;}
