@@ -228,3 +228,15 @@ void geraLATEX(Report* report,char* output){
 
 	fclose(fileout);
 }
+
+char* get_time(){
+    
+    char *data=(char*)malloc(sizeof(char)*11);
+	time_t rawtime = time(NULL);
+    struct tm tm = *localtime(&rawtime);
+    sprintf(data,"%d/%d/%d",tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
+    
+    return data;
+}
+
+
