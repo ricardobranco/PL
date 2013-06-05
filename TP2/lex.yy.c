@@ -997,7 +997,7 @@ case YY_STATE_EOF(CODIGOLINHA):
 case 1:
 YY_RULE_SETUP
 #line 23 "flex.fl"
-{BEGIN 0; return ')';}
+{printf("Fecha|%s|\n",yytext);BEGIN 0; return ')';}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
@@ -1008,7 +1008,7 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 25 "flex.fl"
-{return yytext[0];} 
+{printf("Parametro|%s|\n",yytext);return yytext[0];} 
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
@@ -1033,7 +1033,7 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 31 "flex.fl"
-{printf("SEP:%s\n",yytext ); return BDATE;}
+{printf("Data:%s\n",yytext ); return BDATE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
