@@ -889,7 +889,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 16 "flex.fl"
+#line 17 "flex.fl"
 
 
 
@@ -981,219 +981,219 @@ case YY_STATE_EOF(INDICE):
 case YY_STATE_EOF(CODIGO):
 case YY_STATE_EOF(ARGS):
 case YY_STATE_EOF(CODIGOLINHA):
-#line 19 "flex.fl"
+#line 20 "flex.fl"
 {return '$';}
 	YY_BREAK
 case 1:
 YY_RULE_SETUP
-#line 20 "flex.fl"
+#line 21 "flex.fl"
 {BEGIN 0; return ')';}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 21 "flex.fl"
+#line 22 "flex.fl"
 {;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 22 "flex.fl"
+#line 23 "flex.fl"
 {return yytext[0];} 
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 23 "flex.fl"
+#line 24 "flex.fl"
 {printf("SEP:%s\n",yytext );return sep;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 25 "flex.fl"
+#line 26 "flex.fl"
 {BEGIN ARGS; return BTITLE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 26 "flex.fl"
+#line 27 "flex.fl"
 {BEGIN ARGS; return BSTITLE;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 27 "flex.fl"
+#line 28 "flex.fl"
 {BEGIN ARGS;return BAUTHOR;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 28 "flex.fl"
+#line 29 "flex.fl"
 {return BDATE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 29 "flex.fl"
+#line 30 "flex.fl"
 {return BINST;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 30 "flex.fl"
+#line 31 "flex.fl"
 {return BKEY;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 31 "flex.fl"
+#line 32 "flex.fl"
 {return BABS;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 32 "flex.fl"
+#line 33 "flex.fl"
 {BEGIN INDICE;	return BINDICE;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 34 "flex.fl"
+#line 35 "flex.fl"
 {return BCHAP;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 35 "flex.fl"
-{BEGIN CODIGO; return BCODE;}
+#line 36 "flex.fl"
+{return BCODE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 36 "flex.fl"
+#line 37 "flex.fl"
 {yylval.valI = yytext[2]-'0';
 				return BSEC;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 39 "flex.fl"
+#line 40 "flex.fl"
 {return BPARAG;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 40 "flex.fl"
+#line 41 "flex.fl"
 {return BSUMMARY;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 41 "flex.fl"
+#line 42 "flex.fl"
 {return BREF;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 42 "flex.fl"
+#line 43 "flex.fl"
 {return BXREF;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 43 "flex.fl"
+#line 44 "flex.fl"
 {return BHREF;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 44 "flex.fl"
+#line 45 "flex.fl"
 {return BCiteR;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 45 "flex.fl"
+#line 46 "flex.fl"
 {return BFoteN;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 46 "flex.fl"
+#line 47 "flex.fl"
 {return BLineCode;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 47 "flex.fl"
+#line 48 "flex.fl"
 {return BAcronym;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 49 "flex.fl"
+#line 50 "flex.fl"
 {return BBOLD;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 50 "flex.fl"
+#line 51 "flex.fl"
 {return BITALIC;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 51 "flex.fl"
+#line 52 "flex.fl"
 {return BUNDERLINE;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 53 "flex.fl"
+#line 54 "flex.fl"
 {return BFIG;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 54 "flex.fl"
+#line 55 "flex.fl"
 {return BImg;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 55 "flex.fl"
+#line 56 "flex.fl"
 {return BCAP;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 57 "flex.fl"
+#line 58 "flex.fl"
 {return BENUM;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 58 "flex.fl"
+#line 59 "flex.fl"
 {return BItemize;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 59 "flex.fl"
+#line 60 "flex.fl"
 {return BItem;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 61 "flex.fl"
+#line 62 "flex.fl"
 {return BTAB;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 62 "flex.fl"
+#line 63 "flex.fl"
 {return BLINHA;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 63 "flex.fl"
+#line 64 "flex.fl"
 {return BCEL;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 69 "flex.fl"
+#line 70 "flex.fl"
 {yylval.valC = yytext[0];
-					return carater;}
+			return carater;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 72 "flex.fl"
+#line 73 "flex.fl"
 {yylval.valI = atoi(strdup(yytext));
-					return inteiro;}
+			return inteiro;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 75 "flex.fl"
+#line 76 "flex.fl"
 {printf("ID:%s\n",yytext);yylval.valS = strdup(yytext);
 					return id;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 77 "flex.fl"
+#line 78 "flex.fl"
 {printf("URL%s\n",yytext );
 					yylval.valS = strdup(yytext);
 					return url;}			
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 80 "flex.fl"
+#line 81 "flex.fl"
 {printf("EMAIL:%s\n",yytext);
 					yylval.valS = strdup(yytext);
 					return email;}
@@ -1201,27 +1201,27 @@ YY_RULE_SETUP
 case 42:
 /* rule 42 can match eol */
 YY_RULE_SETUP
-#line 83 "flex.fl"
+#line 84 "flex.fl"
 {printf("ARGS:%s\n",yytext); yylval.valS = strdup(yytext);
 					return arg;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 85 "flex.fl"
+#line 86 "flex.fl"
 {printf("LINHA:%s\n",yytext);yylval.valS = strdup(yytext);
 					 return linha;}			
 	YY_BREAK
 case 44:
 /* rule 44 can match eol */
 YY_RULE_SETUP
-#line 87 "flex.fl"
+#line 88 "flex.fl"
 {printf("TEXTO:%s\n",yytext);yylval.valS = strdup(yytext);
 					return texto;}
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
 YY_RULE_SETUP
-#line 89 "flex.fl"
+#line 90 "flex.fl"
 {BEGIN 0; yylval.valS = strdup(yytext);
 					return codigo;}
 	YY_BREAK
