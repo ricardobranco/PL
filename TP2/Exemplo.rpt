@@ -6,69 +6,8 @@
 
 \inst(Universidade do minho)
 
-\keys(cha1,cabrito,test2)
-
 \resumo
-	\p{ agora dentro do paragrafo, ve se funciona \negrito{ este negrico e \italico{agora o italico}}
-	}
-
-
-
-\indice()
-\indice(figuras)
-\indice(tabelas)
-
-\capitulo(cap1){
-	\s1(sec1){
-		\s2(sec1_2){
-		\s3(seC1_2_3){
-			\p{com texto}
-			\codigo{
-				int main 
-				asdasdas
-				asdas
-				das
-				dasdas d
-				asd
-				asd
-				asdas
-				das
-				dasd
-				as
-				dasd
-				asda
-				sdasdsdasd
-				asdasd
-
-			}
-
-			\tabela{
-			\leg(tabela 1)
-			\linha{
-			\cel(c,1){
-				texto
-			}
-
-			}
-			}
-			\li{
-			\item{
-			cenas
-			}
-			\li{
-			
-			}
-			\item{
-			caasasd
-			}
-			}
-
-
-		}
-		}
-	}
-}
-
+	\p{Resumo Com texto variado}
 
 
 

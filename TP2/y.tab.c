@@ -1701,22 +1701,22 @@ yyreduce:
 
   case 5:
 #line 46 "yacc.y"
-    {printf("Titulo\n");addTitulo(&report, (yyvsp[(3) - (4)].valS));}
+    {addTitulo(&report, (yyvsp[(3) - (4)].valS));}
     break;
 
   case 6:
 #line 48 "yacc.y"
-    {printf("STitulo\n");addSTitulo(&report, (yyvsp[(3) - (4)].valS));}
+    {addSTitulo(&report, (yyvsp[(3) - (4)].valS));}
     break;
 
   case 8:
 #line 52 "yacc.y"
-    {printf("Autor\n");addAutor(&report,&autor);}
+    {addAutor(&report,&autor);}
     break;
 
   case 9:
 #line 53 "yacc.y"
-    {printf("Autor\n");addAutor(&report,&autor);}
+    {addAutor(&report,&autor);}
     break;
 
   case 11:
@@ -1751,12 +1751,12 @@ yyreduce:
 
   case 25:
 #line 87 "yacc.y"
-    {printf("Data\n");report.data = 1;}
+    {report.data = 1;}
     break;
 
   case 26:
 #line 89 "yacc.y"
-    {printf("Instituição\n");report.inst = strdup((yyvsp[(3) - (4)].valS));}
+    {report.inst = strdup((yyvsp[(3) - (4)].valS));}
     break;
 
   case 32:
@@ -1766,7 +1766,7 @@ yyreduce:
 
   case 33:
 #line 103 "yacc.y"
-    {printf("RESUMO\n");}
+    {fechoResumo(&report);}
     break;
 
   case 34:
@@ -1837,6 +1837,11 @@ yyreduce:
   case 68:
 #line 175 "yacc.y"
     {addParagrafo(&report,zona);}
+    break;
+
+  case 69:
+#line 177 "yacc.y"
+    {addTexto(&report,(yyvsp[(2) - (2)].valS),zona);}
     break;
 
   case 83:
@@ -2041,7 +2046,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 2045 "y.tab.c"
+#line 2050 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2274,6 +2279,7 @@ int main()
 	int yyres = yyparse();
   	printf("YYRES: %d\n",yyres);
   	
+  	geraHTML(&report,NULL);
 
 
   	return 0;

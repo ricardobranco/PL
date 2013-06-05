@@ -348,6 +348,10 @@ void fechoTag(Report* report,char* htmltag,int mode){
 
 void addTexto(Report* report,char* arg,int mode){
 	char* linha = strdup(arg);
+	if(mode!=BODY){
+		printf("INITIAL\n");
+	}
+
 	//HTML
 	mode==BODY?insertTail(report->htmlCorpo,&linha):insertTail(report->htmlInicio,&linha);
 	//LATEX
@@ -895,7 +899,7 @@ void addSeccao(Report* report,char*arg,int tamanho){
 
 void addAgradecimentos(Report* report){
 	//HTML
-	char* html = "<h2>Agradecimentos</h2";
+	char* html = "<h2>Agradecimentos</h2>";
 	insertTail(report->htmlInicio,&html);
 	//LATEX
 	char* latex = "\\begin{flushright}";
@@ -905,7 +909,7 @@ void addAgradecimentos(Report* report){
 
 void addResumo(Report* report){
 	//HTML
-	char* html = "<h2>Resumo</h2";
+	char* html = "<h2>Resumo</h2>";
 	insertTail(report->htmlInicio,&html);
 	//LATEX
 	char* latex = "\\begin{abstract}";

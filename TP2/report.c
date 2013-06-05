@@ -30,7 +30,26 @@ void geraHTML(Report* report,char* output){
 		fprintf(fileout,"<hr>\n" );
 
 	
-	geraAutoresHTML(report->autores,fileout);
+	List* autores = report->autores;
+	while(autores->size){
+		Autor* autor = pop(autores);
+		fprintf(fileout,"<address> %s",autor->anome);
+		if(autor->aid){
+			fprintf(fileout," - %s",autor->aid);
+		}
+		if(autor->aemail){
+			fprintf(fileout," - %s",autor->aemail);
+		}
+		if(autor->aurl){
+			fprintf(fileout," - %s",autor->aurl);
+		}
+		if(autor->aaffil){
+			fprintf(fileout," - %s",autor->aaffil);
+		}
+		fprintf(fileout,"</address>\n");
+}
+
+	
 //	geraData(fileout);
 
 
@@ -46,11 +65,12 @@ void geraHTML(Report* report,char* output){
 	
 
 	List* htmlresumoagradecimentos = report->htmlInicio;
-	while(htmlresumoagradecimentos->list){
+	while(htmlresumoagradecimentos->size){
 		char** entrada = pop(htmlresumoagradecimentos);
 		fprintf(fileout,"%s",*entrada);
 	}
 
+	
 //	geraIndice(report->indice,fileout);
 //	geraIndice_fig(report->indice_fig,fileout);
 //	geraIndice_tab(report->indice_tab,fileout);
@@ -59,37 +79,17 @@ void geraHTML(Report* report,char* output){
 	
 
 	List* html = report->htmlCorpo;
-	while(html->list){
+	while(html->size){
+		printf("PASSOU\n");
 		char** entrada = pop(html);
 		fprintf(fileout,"%s",*entrada);
 	}
-
+	printf("PASSOU\n");
 	fprintf(fileout,"%s\n",fbody);
 
 	fclose(fileout);
 
 
-}
-
-
-void geraAutoresHTML(List* autores, FILE* file){
-	while(autores->list){
-		Autor* autor = pop(autores);
-		fprintf(file,"<address> %s - ",autor->anome);
-		if(autor->aid){
-			fprintf(file,"%s - ",autor->aid);
-		}
-		if(autor->aemail){
-			fprintf(file,"%s - ",autor->aemail);
-		}
-		if(autor->aurl){
-			fprintf(file,"%s - ",autor->aurl);
-		}
-		if(autor->aaffil){
-			fprintf(file,"%s",autor->aaffil);
-		}
-		fprintf(file,"</address>\n");
-	}
 }
 
 

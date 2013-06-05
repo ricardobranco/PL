@@ -43,14 +43,14 @@ FrontMatter : BFMatter  Title STitle Authores Date Institution Keywords Abstract
 
 BFMatter : {zona=FRONTMATTER;}
 
-Title: BTITLE '(' arg ')' 	{printf("Titulo\n");addTitulo(&report, $3);};
+Title: BTITLE '(' arg ')' 	{addTitulo(&report, $3);};
 
-STitle: BSTITLE '(' arg ')' {printf("STitulo\n");addSTitulo(&report, $3);}
+STitle: BSTITLE '(' arg ')' {addSTitulo(&report, $3);}
 	  | 
 	  ;
 
-Authores : Authores Author 	{printf("Autor\n");addAutor(&report,&autor);} 
-		 | Author 			{printf("Autor\n");addAutor(&report,&autor);}
+Authores : Authores Author 	{addAutor(&report,&autor);} 
+		 | Author 			{addAutor(&report,&autor);}
 		 ;
 
 Author : Bauthor '(' Nome OPT_Author ')';
@@ -84,9 +84,9 @@ Url : sep  url {autor.aurl = $2;};
 
 Affiliation : sep  arg {autor.aaffil = $2;};
 
-Date : BDATE '('')' {printf("Data\n");report.data = 1;};
+Date : BDATE '('')' {report.data = 1;};
 
-Institution : BINST '(' arg ')' {printf("Instituição\n");report.inst = strdup($3);}
+Institution : BINST '(' arg ')' {report.inst = strdup($3);}
 			|
 			;
 
@@ -100,7 +100,7 @@ Keys : Keys sep Key
 
 Key : arg {addKey(&report,$1);};
 
-Abstract : BAbs  ParaList  {printf("RESUMO\n");} ;
+Abstract : BAbs  ParaList  {fechoResumo(&report);} ;
 
 BAbs : BABS {addResumo(&report);};
 
@@ -174,7 +174,7 @@ Paragraph:	BParag	'{' ParaContend '}' ;
 
 BParag : BPARAG {addParagrafo(&report,zona);}
 
-ParaContend	: ParaContend texto 
+ParaContend	: ParaContend texto {addTexto(&report,$2,zona);}
 			| ParaContend FreeElem	
 			|
 			;
@@ -345,6 +345,7 @@ int main()
 	int yyres = yyparse();
   	printf("YYRES: %d\n",yyres);
   	
+  	geraHTML(&report,NULL);
 
 
   	return 0;
