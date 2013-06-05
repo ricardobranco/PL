@@ -57,7 +57,7 @@ Report init_Report(){
 	report.htmlInicio = init(sizeof(char*),NULL);
 	report.latexInicio = init(sizeof(char*),NULL);
 	
-
+	return report;
 	
 }
 
@@ -100,6 +100,7 @@ void addSTitulo(Report *report, char*arg){
 }
 
 void addAutor(Report* report, Autor* autor){
+	
 	insertHead(report->autores,autor);
 }
 

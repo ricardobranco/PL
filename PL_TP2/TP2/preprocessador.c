@@ -100,6 +100,7 @@ void addSTitulo(Report *report, char*arg){
 }
 
 void addAutor(Report* report, Autor* autor){
+    
 	insertHead(report->autores,autor);
 }
 

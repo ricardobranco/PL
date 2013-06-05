@@ -39,7 +39,7 @@ int zona;
 
 Report : FrontMatter Body '$' {return 0;};
 
-FrontMatter : BFMatter Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice;
+FrontMatter : BFMatter  Title STitle Authores Date Institution Keywords Abstract Aknowledgements Indice;
 
 BFMatter : {zona=FRONTMATTER;}
 
@@ -164,7 +164,7 @@ Paragraph:	BParag	'{' ParaContend '}' ;
 
 BParag : BPARAG {addParagrafo(&report,zona);}
 
-ParaContend	: ParaContend texto {}
+ParaContend	: ParaContend texto 
 			| ParaContend FreeElem	
 			|
 			;
