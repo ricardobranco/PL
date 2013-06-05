@@ -224,7 +224,7 @@
 
 			\p{Para as estruturas temos funções de inicialização, que são as seguintes:}
 
-			\codigo{
+			\codigo
 				Autor init_Autor();
 				Cell init_Cell();
 				Row init_Row();
@@ -234,20 +234,20 @@
 				Image init_Image();
 				Keywords init_Keywords();
 				Report init_Report();
-			}
+			\end
 
 			\p{Funções para a capa:}
 
-			\codigo{
+			\codigo
 				void addTitulo(Report*,char*);
 				void addSTitulo(Report*, char*);
 				void addAutor(Report*,Autor*);
 				void addKey(Report*,char*);
-			}
+			\end
 
 			\p{E funções para o corpo do relatório:}
 			
-			\codigo{
+			\codigo
 				void addRef(Report*,char*, char*,int);
 				void addHRef(Report*,char*,char*,int);
 				void addNegTag(Report*,int);
@@ -275,7 +275,7 @@
 				void addAgradecimentos(Report*);
 				void fechoResumo(Report*);
 				void fechoAgradecimentos(Report*);
-			}
+			\end
 		}
 	}
 
@@ -287,25 +287,25 @@
 
 			\p{A lista ligada implementada por nós é genérica e esta é a sua estrutura:}
 
-			\codigo{
-				typedef struct node \{
+			\codigo
+				typedef struct node {
 				    void* data;    	/* Apontador para um tipo de dados*/
 				    struct node *next;	/* Apontador para o próximo nodo*/
-				\}Node;
+				}Node;
 
 
-				typedef struct list \{
+				typedef struct list {
 				    int size;    	/* Número de elementos na lista ligada*/
 				    int (*compare) (void*,void*); /* Função de comparação*/
 				    size_t dataSize;	/* Memória que o tipo de dados necessita*/
 				    Node *list;		/* Apontador para o primeiro nodo da lista*/
-				\}List;
-			}
+				}List;
+			\end
 		}
 
 		\s2(Funções para controlo das Estruturas){
 
-			\codigo{
+			\codigo
 				List* init(size_t dataSize,int (*compare) (void*,void*));
 				List* insertHead (List *l, void *data);
 				int search (List *l, void *data);
@@ -314,7 +314,7 @@
 				List* insertTail (List *l, void *data);
 				List* removeNode (List*l, void *data);
 				void* pop(List* l);
-			}
+			\end
 		}
 	}
 

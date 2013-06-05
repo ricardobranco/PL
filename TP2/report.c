@@ -80,11 +80,11 @@ void geraHTML(Report* report,char* output){
 
 	List* html = report->htmlCorpo;
 	while(html->size){
-		printf("PASSOU\n");
 		char** entrada = pop(html);
+		
 		fprintf(fileout,"%s",*entrada);
 	}
-	printf("PASSOU\n");
+
 	fprintf(fileout,"%s\n",fbody);
 
 	fclose(fileout);

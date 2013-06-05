@@ -801,18 +801,21 @@ void addSeccao(Report* report,char*arg,int tamanho){
 	insertTail(report->htmlCorpo,&seccao);
 	insertTail(report->htmlCorpo,&fthtml);
 	
+	char* sample = "<h1>";
+	char* sample2 = "<h2>";
 
-
-
-	char ahtml[4] = "<h >";
-	char fhtml[6] = "</h >\n";
-	char ctamanho = '1'+tamanho;
-	ahtml[2]= ctamanho;
-	fhtml[3]=ctamanho;
+	char* ahtml = malloc(sizeof(char)*strlen(sample));
+	char* fhtml = malloc(sizeof(char)*strlen(sample2));
+	
+	sprintf(ahtml,"<h%d>",tamanho+1);
+	sprintf(fhtml,"</h%d>\n",tamanho+1);
+	printf("SECÇÃO:%s %s %s\n", ahtml,seccao,fhtml);
 	
 	insertTail(report->htmlCorpo,&ahtml);
 	insertTail(report->htmlCorpo,&seccao);
 	insertTail(report->htmlCorpo,&fhtml);
+	
+
 	//LATEX
 	/*
 	SECÇÃO LVL1 -> /section{}

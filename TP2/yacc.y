@@ -21,7 +21,7 @@ int zona;
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
 %token BSUMMARY BBOLD BPARAG BREF BCODE BIterm BFoteN BLineCode BUNDERLINE BAcronym 
 %token BITALIC BXREF  BHREF BCiteR BCHAP BSEC BFIG BImg BENUM BCAP BLINHA BITEM BTAB BCEL BITEMIZE
-%token IFIGURE ITABLE
+%token IFIGURE ITABLE ENDCOD
 
 %type<valS> arg id email url sep texto codigo linha
 %type<valI> inteiro
@@ -110,8 +110,8 @@ Aknowledgements : BAknow '{' ParaList '}' {printf("Agradecimentos\n");fechoAgrad
 
 BAknow : BAKNOW {addAgradecimentos(&report);};
 
-ParaList : ParaList Paragraph {fechoParagrafo(&report,zona);} 
-		 | Paragraph {fechoParagrafo(&report,zona);}
+ParaList : ParaList Paragraph 
+		 | Paragraph 
 		 ;
 
 Indice : Toc ;
@@ -162,15 +162,15 @@ Elem 	: CodeBlock
 		| List
 		;
 
-CodeBlock: BCODE '{' codigo '}' {addTextoNF(&report,$3);};
+CodeBlock: BCODE  codigo ENDCOD {addTextoNF(&report,strdup($2));};
 
 Section	: S_Title  '{' ElemList '}';
 
-S_Title: BSec '(' arg ')' {printf("Secção\n");addSeccao(&report,$3,seccao);};
+S_Title: BSec '(' arg ')' {printf("Secção\n");addSeccao(&report,strdup($3),seccao);};
 
 BSec : BSEC {seccao = yylval.valI;}
 
-Paragraph:	BParag	'{' ParaContend '}' ;
+Paragraph:	BParag	'{' ParaContend '}'  {fechoParagrafo(&report,zona);} ;
 
 BParag : BPARAG {addParagrafo(&report,zona);}
 
