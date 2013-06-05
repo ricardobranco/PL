@@ -28,7 +28,7 @@ inteiro [0-9]+
 \\titulo 		{BEGIN ARGS; return BTITLE;}
 \\stitulo 		{BEGIN ARGS; return BSTITLE;}
 \\autor 		{BEGIN ARGS;return BAUTHOR;}
-\\data			{printf("SEP:%s\n",yytext ); return BDATE;}
+\\data			{BEGIN ARGS;return BDATE;}
 \\inst			{BEGIN ARGS;return BINST;}
 \\keys			{BEGIN ARGS;return BKEY;}
 \\resumo		{return BABS;}
