@@ -104,7 +104,7 @@ Abstract : BAbs  ParaList  {printf("RESUMO\n");} ;
 
 BAbs : BABS {addResumo(&report);};
 
-Aknowledgements : BAknow '{' ParaList '}' {fechoAgradecimentos(&report);};
+Aknowledgements : BAknow '{' ParaList '}' {printf("Agradecimentos\n");fechoAgradecimentos(&report);};
 				|
 				; 
 
@@ -116,15 +116,23 @@ ParaList : ParaList Paragraph {fechoParagrafo(&report,zona);}
 
 Indice : Toc ;
 
-Toc : BINDICE '(' ')' Lof {report.indice = 1;}
+Toc : BToc Lof 
 	| Lof
 	;
-Lof : BINDICE '(' IFIGURE ')' Lot {report.indice_fig = 1;}
+
+
+Lof :  BLof Lot 
 	| Lot
 	;
-Lot : BINDICE '(' ITABLE ')' {report.indice_tab = 1;}
+Lot :  BLot 
 	|
 	;
+
+
+
+BToc :BINDICE '(' ')' {printf("Indice\n"); report.indice = 1;}
+BLof :BINDICE '(' IFIGURE ')'{printf("Figuras \n");report.indice_fig = 1;}
+BLot :BINDICE '(' ITABLE ')'{printf("Tabelas\n"); report.indice_tab = 1;}
 
 //---------------------------------
 
@@ -133,13 +141,15 @@ Body: BBody ChapterList;
 
 BBody : {zona = BODY;};
 
-ChapterList	: ChapterList Chapter
-			| Chapter
+ChapterList	: ChapterList Chapter 
+			| Chapter 
 			;
 
-Chapter : C_Title '{' ElemList '}';
+Chapter : C_Title '{' ElemList '}' ;
 
-C_Title : BCHAP  '('  texto ')' {addCapitulo(&report,$3);};
+
+
+C_Title : BCHAP  '('  arg ')' {printf("Capitulo\n"); addCapitulo(&report,$3);};
 
 ElemList:  ElemList Elem
 		|  Elem
@@ -156,7 +166,7 @@ CodeBlock: BCODE '{' codigo '}' {addTextoNF(&report,$3);};
 
 Section	: S_Title  '{' ElemList '}';
 
-S_Title: BSec '(' texto ')' {addSeccao(&report,$3,seccao);};
+S_Title: BSec '(' arg ')' {printf("Secção\n");addSeccao(&report,$3,seccao);};
 
 BSec : BSEC {seccao = yylval.valI;}
 

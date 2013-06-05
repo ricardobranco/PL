@@ -18,36 +18,34 @@
 \indice(figuras)
 \indice(tabelas)
 
+\capitulo(cap1){
+	\s1(sec1){
+		\s2(sec1_2){
+		\s3(seC1_2_3){
+			\p{com texto}
+			\codigo{
+				int main 
+				asdasdas
+				asdas
+				das
+				dasdas d
+				asd
+				asd
+				asdas
+				das
+				dasd
+				as
+				dasd
+				asda
+				sdasdsdasd
+				asdasd
 
-\capitulo(Era uma vez, um){
-	\p{
-		1 capitulo.. mas is nada
+			}
+		}
+		}
 	}
 }
-\capitulo(TESTE A SERIO){
 
-	\codigo{
-		bloco de codigo /uma vez \\ \ fui passear
-
-		por uma terra brilhante
-
-		90kcs)88 ][] e ver se isto funca \} 
-		tenta meter aqui um cenas igual ao de fechar, para ver oque ele faz
-	}
-	
-	\tabela(
-
-		\linha{
-			\cel(c,1){ começo a escrever}
-			\cel(c,1){ e aqui continua}
-
-		}
-		\linha{
-			cel(c,2){tentar por uma celula só a ocupar as duas}
-		}
-	)
-
-}
 
 
 

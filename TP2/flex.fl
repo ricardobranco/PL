@@ -12,17 +12,20 @@ email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
 url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
 id [a-zA-Z]{0,2}[0-9]+
 texto ({arg}|[,\)])+ 
-codigo ([^\}]|(\\\}))+
+codigo ([^\}\{]|(\\[\{\}]))+
 linha  ([^\n\)]|(\\\)))+  
 inteiro [0-9]+
 
 %%
 
 
-<<EOF>>			{return '$';}
-<ARGS>\)		{BEGIN 0; return ')';}
+<<EOF>>			 	{return '$';}
+<ARGS,INDICE>\)	 	{BEGIN 0; return ')';}
+<CODIGO>{codigo} 	{BEGIN 0; yylval.valS = strdup(yytext);
+					return codigo;}
+
 <*>[ \n\t]+		{;}
-<*>[\(\)\{\}] 	{return yytext[0];} 
+<*>[\(\)\{\}] 	{printf("PARAM|%s|\n",yytext);return yytext[0];} 
 <ARGS>,			{printf("SEP:%s\n",yytext );return sep;}
 
 \\titulo 		{BEGIN ARGS; return BTITLE;}
@@ -32,11 +35,14 @@ inteiro [0-9]+
 \\inst			{BEGIN ARGS;return BINST;}
 \\keys			{BEGIN ARGS;return BKEY;}
 \\resumo		{return BABS;}
-\\indice		{BEGIN INDICE;	return BINDICE;}
+\\indice		{BEGIN INDICE;	
+				return BINDICE;}
 
-\\capitulo		{return BCHAP;}
-\\codigo		{return BCODE;}
-\\s[1-5]		{yylval.valI = yytext[2]-'0';
+\\capitulo		{BEGIN ARGS;
+				return BCHAP;}
+\\codigo		{BEGIN CODIGO; return BCODE;}
+\\s[1-5]		{BEGIN ARGS;
+				yylval.valI = yytext[2]-'0';
 				return BSEC;}
 
 \\p				{return BPARAG;}
@@ -66,6 +72,9 @@ inteiro [0-9]+
 \\cel 			{return BCEL;}
 
 
+<INDICE>figuras         {return IFIGURE;}
+<INDICE>tabelas			{return ITABLE;}
+
 
 
 
@@ -89,12 +98,7 @@ inteiro [0-9]+
 					 return linha;}			
 {texto}				{printf("TEXTO:%s\n",yytext);yylval.valS = strdup(yytext);
 					return texto;}
-<CODIGO>{codigo}	{BEGIN 0; yylval.valS = strdup(yytext);
-					return codigo;}
 
-
-<INDICE>figuras         {BEGIN 0; return IFIGURE;}
-<INDICE>tabelas			{BEGIN 0; return ITABLE;}
 
 
 %%
