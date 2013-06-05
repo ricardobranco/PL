@@ -1233,12 +1233,12 @@ YY_RULE_SETUP
 case 34:
 YY_RULE_SETUP
 #line 73 "flex.fl"
-{return BItemize;}
+{return BITEMIZE;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 74 "flex.fl"
-{return BItem;}
+{return BITEM;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP

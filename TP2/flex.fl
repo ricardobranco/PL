@@ -70,8 +70,8 @@ inteiro [0-9]+
 				return BCAP;}
 
 \\lo 			{return BENUM;}
-\\li 			{return BItemize;}
-\\item			{return BItem;}
+\\li 			{return BITEMIZE;}
+\\item			{return BITEM;}
 
 \\tabela 		{return BTAB;}
 \\linha 		{return BLINHA;}

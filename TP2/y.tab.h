@@ -82,10 +82,10 @@
      BENUM = 298,
      BCAP = 299,
      BLINHA = 300,
-     BItem = 301,
+     BITEM = 301,
      BTAB = 302,
      BCEL = 303,
-     BItemize = 304,
+     BITEMIZE = 304,
      IFIGURE = 305,
      ITABLE = 306
    };
@@ -134,10 +134,10 @@
 #define BENUM 298
 #define BCAP 299
 #define BLINHA 300
-#define BItem 301
+#define BITEM 301
 #define BTAB 302
 #define BCEL 303
-#define BItemize 304
+#define BITEMIZE 304
 #define IFIGURE 305
 #define ITABLE 306
 

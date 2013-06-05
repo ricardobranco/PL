@@ -20,7 +20,7 @@ int zona;
 %token arg id email url sep texto codigo carater inteiro linha
 %token BTITLE BSTITLE BAUTHOR BURL BAFFIL BEMAIL BDATE BINST BKEY BABS BAKNOW BINDICE
 %token BSUMMARY BBOLD BPARAG BREF BCODE BIterm BFoteN BLineCode BUNDERLINE BAcronym 
-%token BITALIC BXREF  BHREF BCiteR BCHAP BSEC BFIG BImg BENUM BCAP BLINHA BItem BTAB BCEL BItemize
+%token BITALIC BXREF  BHREF BCiteR BCHAP BSEC BFIG BImg BENUM BCAP BLINHA BITEM BTAB BCEL BITEMIZE
 %token IFIGURE ITABLE
 
 %type<valS> arg id email url sep texto codigo linha
@@ -245,16 +245,16 @@ Float	: Figure {addImagem(&report,&image);}
 		;
 
 
-Figure	: BFig '(' Image Caption ')';
+Figure	: BFig '{' Image Caption '}';
 
 BFig : BFIG {image = init_Image();} ;
 
 
-Image 	: BImg	'(' Path  ')'; 
+Image 	: BImg	'{' Path  '}'; 
 
 Path: texto {image.path = $1;};
 
-Caption	: BCAP '(' arg ')' {image.caption = $3;};
+Caption	: BCAP '{' arg '}' {image.caption = $3;};
 
 //---------------- Listas --------------------------
 
@@ -262,23 +262,29 @@ List: Enumerate
 	| Itemize
 	;
 
-Enumerate	: BENUM '(' C_ENUM   ')'
+Enumerate	: BEnum '{' C_ENUM   '}' {fechaOrdList(&report);};
 
+BEnum : BENUM {addOrdList(&report);};
 C_ENUM	: C_ENUM Item
 		| C_ENUM Itemize
+		| C_ENUM Enumerate
 		|
 		;
 
 
-Itemize	: BItemize '(' C_Item ')';
+Itemize	: BItemize '{' C_Item '}' {fechaItemList(&report);};
 
-C_Item	: C_Item Item
+BItemize : BITEMIZE {addItemList(&report);};
+
+C_Item	: C_Item Item  
 		| C_Item Enumerate
+		| C_Item Itemize
 		|
 		;
 
-Item: BItem '(' ParaContend ')';
+Item: BItem '{' ParaContend '}' {fechaItem(&report);};
 
+BItem : BITEM {addItem(&report);};
 
 //----------------------- TABELAS --------------------------------
 

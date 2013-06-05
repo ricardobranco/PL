@@ -506,33 +506,13 @@ void addImagem(Report* report,Image* img){
 
 
 
-void addItem(Report* report, char* arg){
-	
-	char* item = strdup(arg);
-
-
+void addItem(Report* report){
 	//HTML
 	char* ahtmlitem = "<li>";
-	char* fhtmlitem = "</li>\n";
-	insertTail(report->latexCorpo,&ahtmlitem);
-	insertTail(report->latexCorpo,&item);
-	insertTail(report->latexCorpo,&fhtmlitem);
-	
-
-
-
+	insertTail(report->htmlCorpo,&ahtmlitem);
 	//LATEX
 	char* latexitem = "\\item";
-	char* newline = "\n";
-
 	insertTail(report->latexCorpo,&latexitem);
-	insertTail(report->latexCorpo,&item);
-	insertTail(report->latexCorpo,&newline);
-
-
-
-
-
 }
 
 void addOrdList(Report* report){
@@ -557,6 +537,39 @@ void addItemList(Report* report){
 }
 
 
+void fechaItem(Report* report){
+	//HTML
+	char* ahtmlitem = "</li>";
+	insertTail(report->htmlCorpo,&ahtmlitem);
+	//LATEX
+	char* latexitem = "\n";
+	insertTail(report->latexCorpo,&latexitem);
+
+}
+
+void fechaOrdList(Report* report){
+	//HTML
+	char* olhtml = "</ol>\n";
+	insertTail(report->htmlCorpo,&olhtml);
+
+	//LATEX
+	char* ollatex = "\\end{enumerate}\n";
+	insertTail(report->latexCorpo,&ollatex);
+}
+
+
+void fechaItemList(Report* report){
+	//HTML
+	char* ulhtml = "</ul>\n";
+	insertTail(report->htmlCorpo,&ulhtml);
+
+	//LATEX
+	char* ullatex = "\\end{itemize}\n";
+	insertTail(report->latexCorpo,&ullatex);
+}
+
+
+
 void addLinha(Table* tabela, Row* linha){
 	Row linhacopia;
 	linhacopia.size = linha->size;
@@ -572,6 +585,12 @@ void addLinha(Table* tabela, Row* linha){
 
 
 }
+
+
+
+
+
+
 
 void addCelula(Row* linha, Cell* cell){
 	Cell celula;

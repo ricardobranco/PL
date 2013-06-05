@@ -30,7 +30,7 @@ void geraHTML(Report* report,char* output){
 		fprintf(fileout,"<hr>\n" );
 
 	
-//	geraAutoresHTML(report->autores,fileout);
+	geraAutoresHTML(report->autores,fileout);
 //	geraData(fileout);
 
 
@@ -70,6 +70,28 @@ void geraHTML(Report* report,char* output){
 
 
 }
+
+
+void geraAutoresHTML(List* autores, FILE* file){
+	while(autores->list){
+		Autor* autor = pop(autores);
+		fprintf(file,"<address> %s - ",autor->anome);
+		if(autor->aid){
+			fprintf(file,"%s - ",autor->aid);
+		}
+		if(autor->aemail){
+			fprintf(file,"%s - ",autor->aemail);
+		}
+		if(autor->aurl){
+			fprintf(file,"%s - ",autor->aurl);
+		}
+		if(autor->aaffil){
+			fprintf(file,"%s",autor->aaffil);
+		}
+		fprintf(file,"</address>\n");
+	}
+}
+
 
 
 void geraLATEX(Report* report,char* output){
