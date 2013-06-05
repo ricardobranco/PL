@@ -54,6 +54,9 @@ void geraHTML(Report* report,char* output){
 	struct tm tm = *localtime(&timenow);
 	fprintf(fileout,"<center>%d/%d/%d</center>\n",tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
 
+
+
+
 	
 	if(report->inst){
 	////////INSTITUIÇÃO////////////////////

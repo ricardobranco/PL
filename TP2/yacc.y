@@ -310,10 +310,7 @@ Celulas	: Celulas  Cel {addCelula(&row,&cell);}
 		| Cel {addCelula(&row,&cell);}
 		;
 
-Cel : BCel '(' OPT_Cel  ')'  '{'   Cel_cont   '}' ;
-
-Cel_cont: texto {cell.cell = $1;}
-		;
+Cel : BCel '(' OPT_Cel  ')'  '{'   texto   '}' {cell.cell = $6;};
 
 BCel : BCEL {init_Cell();};
 
