@@ -32,31 +32,6 @@ Portanto, neste documento irão estar presentes as nossas decisões, a estrutura
 Nós, como referido anteriormente, estamos a "continuar" o trabalho realizado no Trabalho Prático 1 (TP1) e por isso a sintaxe da linguagem manteve-se a do trabalho anterior, fazendo algumas alterações e acrescentando outras funcionalidades que são as seguintes:
 
 
-\begin{figure}[h]
-\centering
-\includegraphics{sintaxe.PNG}
-\label{Linguagem}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics{sintaxe1.PNG}
-\label{Linguagem}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics{sintaxe2.PNG}
-\label{Linguagem}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics{sintaxe3.PNG}
-\caption{Sintaxe da Linguagem}
-\end{figure}
-
-}
 
 
 
@@ -89,135 +64,137 @@ Nós, como referido anteriormente, estamos a "continuar" o trabalho realizado no
 			\p{Como referido anteriormente, o nosso relatório e composto por duas partes, a capa e o corpo do relatório.}
 			\p{A capa tem obrigatóriamente a seguinte estrutura:}
 
-\begin{itemize}
-\item Titulo
-\item Autor
-\item Data
-\item Resumo
-\end{itemize}
-e opcionalmente:
-\begin{itemize}
-\item Mais do que um autor
-\item Sub Titulo
-\item Instituição
-\item Palavras Chave
-\item Agradecimentos
-\item Indice
-\item Indice de Figuras
-\item Indice de Tabelas
-\end{itemize}
+			\lo{
+				\item {Titulo}
+				\item {Autor}
+				\item {Data}
+				\item {Resumo}
+			}
+			\p{e opcionalmente:}
+
+			\li{
+				\item {Mais do que um autor}
+				\item {Sub Titulo}
+				\item {Instituição}
+				\item {Palavras Chave}
+				\item {Agradecimentos}
+				\item {Indice}
+				\item {Indice de Figuras}
+				\item {Indice de Tabelas}
+			}
 
 			\p{E o autor tem obrigatóriamente:}
 
-\begin{itemize}
-\item Nome
-\end{itemize}
+			\li{
+				\item {Nome}
+			}
 
-e opcionalmente:
-\begin{itemize}
-\item Numero de identificação
-\item Email
-\item Url
-\item Afiliação
-\end{itemize}
+			\p{e opcionalmente:}
+			\li{
+				\item {Numero de identificação}
+				\item {Email}
+				\item {Url}
+				\item {Afiliação}
+			}
 
 			\p{Neste caso, as opção fizemos em forma de escada, onde uma tinha-se a ela própria e à seguinte ou apenas a seguinte.}
 			\p{Depois no corpo do relatório temos obrigatoriamente:}
 
-\begin{itemize}
-\item Capitulo ou lista de capitulos
-\end{itemize}
+			\li{
+				\item {Capitulo ou lista de capitulos}
+			}
 
 			\p{Um capítulo tem obrigatoriamente:}
 
-\begin{itemize}
-\item Titulo
-\item Lista de Elementos
-\end{itemize}
+			\li{
+				\item {Titulo}
+				\item {Lista de Elementos}
+			}
 
 			\p{A lista de elementos pode ser qualquer um entre:}
 
-\begin{itemize}
-\item Paragrafo
-\item Corpo Flutuante
-\item Lista
-\item Secção
-\item Sumário
-\item Uma secção onde se pode por todo o tipo de código
-\end{itemize}
+			\li{
+				\item {Parágrafo}
+				\item {Corpo Flutuante}
+				\item {Lista}
+				\item {Secção}
+				\item {Sumário}
+				\item {Bloco de Código}
+			}
 
 			\p{Uma secção pode ter:}
 
-\begin{itemize}
-\item Titulo
-\item Lista de Elementos
-\end{itemize}
+			\li{
+				\item {Titulo}
+				\item {Lista de Elementos}
+			}
 
 			\p{O paragrafo tem:}
 
-\begin{itemize}
-\item Paragrafos
-\item Texto
-\item Elementos
-\end{itemize}
+			\li{
+				\item Paragrafos
+				\item Texto
+				\item Elementos
+			}
 
 			\p{Os elementos podem ser:}
-\begin{itemize}
-\item FootNote
-\item Ref
-\item Xref
-\item CitRef 
-\item Href
-\item Iterm
-\item Bold
-\item Italic
-\item Underline
-\item InlineCode
-\item Acronym 
-\end{itemize}
+				
+			\li{
+				\item {FootNote}
+				\item {Ref}
+				\item {Xref}
+				\item {CitRef} 
+				\item {Href}
+				\item {Iterm}
+				\item {Bold}
+				\item {Italic}
+				\item {Underline}
+				\item {InlineCode}
+				\item {Acronym} 
+			}
 
 			\p{O sumário e os elementos anteriores aceitam:}
 
-\begin{itemize}
-\item Texto
-\end{itemize}
+			\li{
+				\item Texto
+			}
 
 			\p{As listas podem ser:}
 
-\begin{itemize}
-\item Enumerate
-\item Itemize
-\end{itemize}
+			\li{
+				\item Enumerate
+				\item Itemize
+			}
 
 			\p{Se for Enumerate pode:}
 
-\begin{itemize}
-\item Ter um item relativo ao mesmo
-\item Conter um itemize
-\end{itemize}
+			\li{
+				\item {Ter um item relativo ao mesmo}
+				\item {Conter um itemize}
+			}
 
 			\p{Se for Itemize pode: }
 
-\begin{itemize}
-\item Ter um item relativo ao mesmo
-\item Conter um Enumerate
-\end{itemize}
+			\li{
+				\item Ter um item relativo ao mesmo
+				\item Conter um Enumerate
+			}
 
 			\p{O item pode ter texto ou todos os items referidos em cima no "Elementos".}
 			\p{Um corpo flutuante pode ser uma imagem ou uma tabela:}
 			\p{Se for uma imagem tem:}
 
-\begin{itemize}
-\item O caminho da imagem
-\item Legenda
-\end{itemize}
+			\li{
+				\item O caminho da imagem
+				\item Legenda
+			}
 
 			\p{Se for tabela tem:}
 
-\begin{itemize}
-\item Legenda
-\item Linhas
-\end{itemize}
+			\li{
+				\item Legenda
+				\item Linhas
+			}
 
 			\p{Uma linha contém uma lista de células.}
 		}
@@ -240,59 +217,58 @@ e opcionalmente:
 
 			\p{Para as estruturas temos funções de inicialização, que são as seguintes:}
 
-\begin{quote}
-\begin{verbatim}
-Autor init_Autor();
-Cell init_Cell();
-Row init_Row();
-Table init_Table();
-Image init_Image();
-IndiceCell init_IndiceCell();
-Image init_Image();
-Keywords init_Keywords();
-Report init_Report();
-\end{verbatim}
-\end{quote}
+			\codigo{
+				Autor init_Autor();
+				Cell init_Cell();
+				Row init_Row();
+				Table init_Table();
+				Image init_Image();
+				IndiceCell init_IndiceCell();
+				Image init_Image();
+				Keywords init_Keywords();
+				Report init_Report();
+			}
 
 			\p{Funções para a capa:}
-\begin{quote}
-void addTitulo(Report*,char*);\\
-void addSTitulo(Report*, char*);\\
-void addAutor(Report*,Autor*);\\
-void addKey(Report*,char*);
-\end{quote}
+
+			\codigo{
+				void addTitulo(Report*,char*);
+				void addSTitulo(Report*, char*);
+				void addAutor(Report*,Autor*);
+				void addKey(Report*,char*);
+			}
 
 			\p{E funções para o corpo do relatório:}
-\begin{quote}
-void addRef(Report*,char*, char*,int);\\
-void addHRef(Report*,char*,char*,int);\\
-void addNegTag(Report*,int);\\
-void addItTag(Report*,int);\\
-void addUnderTag(Report*,int);\\
-void fechoTag(Report*,char*,int);\\
-void addTexto(Report*,char*,int);\\
-void fechoParagrafo(Report*,int);\\
-void addCapitulo(Report*,char*);\\
-void addParagrafo(Report*,int);\\
-void addEndTAG(Report*,char*,char*);\\
-void addTextoNF(Report*,char*);\\
-void addCodLinha(Report*,char*,int);\\
-void addImagem(Report*,Image*);\\
-void addItem(Report*,char*);\\
-void addOrdList(Report*);\\
-void addItemList(Report*);\\
-void fechaOrdList(Report*);\\
-void fechaItemList(Report*);\\
-void addCelula(Row*,Cell*);\\
-void addLinha(Table*,Row*);\\
-void addTabela(Report*,Table*);\\
-void addSeccao(Report*,char*,int);\\
-void addResumo(Report*);\\
-void addAgradecimentos(Report*);\\
-void fechoResumo(Report*);\\
-void fechoAgradecimentos(Report*);
-\end{quote}
-
+			
+			\codigo{
+				void addRef(Report*,char*, char*,int);
+				void addHRef(Report*,char*,char*,int);
+				void addNegTag(Report*,int);
+				void addItTag(Report*,int);
+				void addUnderTag(Report*,int);
+				void fechoTag(Report*,char*,int);
+				void addTexto(Report*,char*,int);
+				void fechoParagrafo(Report*,int);
+				void addCapitulo(Report*,char*);
+				void addParagrafo(Report*,int);
+				void addEndTAG(Report*,char*,char*);
+				void addTextoNF(Report*,char*);
+				void addCodLinha(Report*,char*,int);
+				void addImagem(Report*,Image*);
+				void addItem(Report*,char*);
+				void addOrdList(Report*);
+				void addItemList(Report*);
+				void fechaOrdList(Report*);
+				void fechaItemList(Report*);
+				void addCelula(Row*,Cell*);
+				void addLinha(Table*,Row*);
+				void addTabela(Report*,Table*);
+				void addSeccao(Report*,char*,int);
+				void addResumo(Report*);
+				void addAgradecimentos(Report*);
+				void fechoResumo(Report*);
+				void fechoAgradecimentos(Report*);
+			}
 		}
 	}
 
@@ -304,39 +280,34 @@ void fechoAgradecimentos(Report*);
 
 			\p{A lista ligada implementada por nós é genérica e esta é a sua estrutura:}
 
-\begin{verbatim}
+			\codigo{
+				typedef struct node {
+				    void* data;    	/* Apontador para um tipo de dados*/
+				    struct node *next;	/* Apontador para o próximo nodo*/
+				}Node;
 
-typedef struct node {
-    void* data;    	/* Apontador para um tipo de dados*/
-    struct node *next;	/* Apontador para o próximo nodo*/
-}Node;
 
+				typedef struct list {
+				    int size;    	/* Número de elementos na lista ligada*/
+				    int (*compare) (void*,void*); /* Função de comparação*/
+				    size_t dataSize;	/* Memória que o tipo de dados necessita*/
+				    Node *list;		/* Apontador para o primeiro nodo da lista*/
+				}List;
+			}
+		}
 
-typedef struct list {
-    int size;    	/* Número de elementos na lista ligada*/
-    int (*compare) (void*,void*); /* Função de comparação*/
-    size_t dataSize;	/* Memória que o tipo de dados necessita*/
-    Node *list;		/* Apontador para o primeiro nodo da lista*/
-}List;
+		\s2(Funções para controlo das Estruturas){
 
-\end{verbatim}
-	
-	}
-	\s2(Funções para controlo das Estruturas){
-
-\begin{quote}
-\begin{verbatim}
-List* init(size_t dataSize,int (*compare) (void*,void*));
-List* insertHead (List *l, void *data);
-int search (List *l, void *data);
-int listDestroy(List *l);
-List* sortedInsert (List *l, void *data);
-List* insertTail (List *l, void *data);
-List* removeNode (List*l, void *data);
-void* pop(List* l);
-\end{verbatim}
-\end{quote}
-	
+			\codigo{
+				List* init(size_t dataSize,int (*compare) (void*,void*));
+				List* insertHead (List *l, void *data);
+				int search (List *l, void *data);
+				int listDestroy(List *l);
+				List* sortedInsert (List *l, void *data);
+				List* insertTail (List *l, void *data);
+				List* removeNode (List*l, void *data);
+				void* pop(List* l);
+			}
 		}
 	}
 
