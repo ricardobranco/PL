@@ -43,7 +43,12 @@ Report init_Report(){
 	report.indice_tab = 0;
 	report.indice_fig = 0;
 	report.data = 0;
+	int autorsize = sizeof(Autor);
+	printf("AUTOR:%d\n",autorsize );
 	report.autores = init(sizeof(Autor),NULL);
+	int valorlido = report.autores->dataSize;
+	printf("NA LISTA TEM%d\n",valorlido );
+
 	report.keywords = init(sizeof(char*),NULL);
 	report.keywords = init(sizeof(char*),NULL);
 	report.lindice_tab = init(sizeof(IndiceCell),NULL);
@@ -100,7 +105,10 @@ void addSTitulo(Report *report, char*arg){
 }
 
 void addAutor(Report* report, Autor* autor){
+	printf("%s\n",autor->anome);
+
 	insertHead(report->autores,autor);
+	printf("INSERIDO\n" );
 }
 
 void addKey(Report* report, char* arg){

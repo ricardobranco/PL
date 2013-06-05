@@ -1708,12 +1708,12 @@ yyreduce:
 
   case 8:
 #line 52 "yacc.y"
-    {addAutor(&report,&autor);}
+    {printf("JA TEMOS AUTOR\n"); addAutor(&report,&autor);}
     break;
 
   case 9:
 #line 53 "yacc.y"
-    {addAutor(&report,&autor);}
+    {printf("JA TEMOS AUTOR\n"); addAutor(&report,&autor);}
     break;
 
   case 11:

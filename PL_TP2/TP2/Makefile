@@ -1,6 +1,6 @@
 OBJS = y.tab.o lex.yy.o linkedlist.o preprocessador.o report.o
 CC = gcc
-CFLAGS = 
+CFLAGS = -g
 LIBS = -ll -ly
 YACC = yacc.y
 PARSER = flex.fl
@@ -9,7 +9,7 @@ OUTPUT = report
 
 
 report:$(OBJS)
-	$(CC) $(CFLAGS) -o $(OUTPUT) $(OBJS) $(LIBS) -g
+	$(CC) $(CFLAGS) -o $(OUTPUT) $(OBJS) $(LIBS) 
 	
 lex.yy.c: $(PARSER)
 	flex $(PARSER)
