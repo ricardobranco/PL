@@ -10,9 +10,7 @@
 <center>
 <h3>Universidade do Minho</h3></center>
 <h2>Resumo</h2><p>
-
-	Neste trabalho tem-se como objetivo criar um analisador léxico e um sintático, que "processa"/analisa o texto, que apanha as palavras reservadas, e de seguida verifica se a estrutura do relatório está bem construida. Enquanto analisa o texto este é guardado em estruturas de dados, e em listas ligadas para separar o código html do código latex, convertendo e criando por fim ficheiros HTML e/ou LaTeX com o nosso relatório convertido para cada uma das linguagens. 
-</p>
+Neste trabalho tem-se como objetivo criar um analisador léxico e um sintático, que "processa"/analisa o texto, que apanha as palavras reservadas, e de seguida verifica se a estrutura do relatório está bem construida. Enquanto analisa o texto este é guardado em estruturas de dados, e em listas ligadas para separar o código html do código latex, convertendo e criando por fim ficheiros HTML e/ou LaTeX com o nosso relatório convertido para cada uma das linguagens.</p>
 <h1>Introdução</h1>
 <a name="Introdução"></a>
 <p>
@@ -20,14 +18,18 @@ Para o segundo Trabalho Prático da Unidade Curricular de Processamento de Lingu
 <p>
 Neste projeto, pretende-se que seja criado um compilador capaz de "converter" uma relatório escrito numa linguagem criada por nós, e já usada no trabalho prático 1 para a linguagem HTML ou/e LaTeX.</p>
 <p>
-Portanto, neste documento irão estar presentes as nossas decisões, a estruturação do projecto, bem como as explicações e funcionamento do mesmo.
-</p>
+Portanto, neste documento irão estar presentes as nossas decisões, a estruturação do projecto, bem como as explicações e funcionamento do mesmo.</p>
 <h1>Sintaxe da Nossa Linguagem</h1>
 <a name="Sintaxe da Nossa Linguagem"></a>
 <p>
-Nós, como referido anteriormente, estamos a "continuar" o trabalho realizado no Trabalho Prático 1 (TP1) e por isso a sintaxe da linguagem manteve-se a do trabalho anterior, fazendo algumas alterações e acrescentando outras funcionalidades que são as seguintes:
-</p>
-<h1>Estruturação do Trabalho</h1>
+Nós, como referido anteriormente, estamos a "continuar" o trabalho realizado no Trabalho Prático 1 (TP1) e por isso a sintaxe da linguagem manteve-se a do trabalho anterior, fazendo algumas alterações e acrescentando outras funcionalidades que são as seguintes:</p>
+<a name="Comandos a utilizar"></a>
+<table border="1">
+<tr>
+<td align="center" colspan="1">Comandos</td>
+<td align="center" colspan="1">Descrição</td>
+</tr>
+</table><h1>Estruturação do Trabalho</h1>
 <a name="Estruturação do Trabalho"></a>
 <p>
 Este trabalho consiste em dois analisadores, um lexico, feito em flex que irá "apanhar" as palavras reservadas na nossa linguaguem e passar a informação do que reconheceu para o analisador sintático, feito em yacc, que irá verificar se a gramática obtida do documento que está a ser analisado está correta.</p>
@@ -249,8 +251,11 @@ Com a makefile podemos criar o executável, fazendo apenas "make", podemos tamb�
 <h1>Conclusão</h1>
 <a name="Conclusão"></a>
 <p>
-Este trabalho prático permitiu-nos consolidar os conhecimentos obtidos nas aulas uma vez que precisamos de tudo o que temos vindo a dar, a forma como estruturar o compilador, como funcionava a gramática disponibilizada pelo docente, o que era suposto os analisadores lexico e semantico fazerem, como funcionavam e interagiam, e nesse aspeto as aulas ajudaram bastante pois tudo foi explicado lá.
-O nível de dificuldade neste trabalho foi um pouco maior que no primeiro, o que era de esperar, e foi facilitado pelo facto de termos já grande parte da gramática, apenas tendo de fazer algumas alterações e acrescentar algumas derivações para ser compativel com o nosso primeiro trabalho.
-O facto de escolher-mos este enunciado também facilitou, porque no primeiro trabalho já tinhamos definido a sintaxe da nossa linguagem e então apenas tivemos de alterar um pouco o flex e não pensar em toda a sintaxe/gramática novamente, já tinhamos usado estruturas de dados no primeiro trabalho e foi só altera-las minimamente e aplica-las neste trabalho, o que nos poupou bastante tempo e trabalho.
-A nossa satisfação perante o que foi produzido neste trabalho é positiva, uma vez que ficamos a perceber melhor a estruturação do compilador dividindo o analisador em analisador lexico e sintatico, colocando depois um programa em C a fazer a gestão dos dados e escrever nos ficheiros HTML e LaTeX nas respetivas linguagens. </p>
+Este trabalho prático permitiu-nos consolidar os conhecimentos obtidos nas aulas uma vez que precisamos de tudo o que temos vindo a dar, a forma como estruturar o compilador, como funcionava a gramática disponibilizada pelo docente, o que era suposto os analisadores lexico e semantico fazerem, como funcionavam e interagiam, e nesse aspeto as aulas ajudaram bastante pois tudo foi explicado lá.</p>
+<p>
+O nível de dificuldade neste trabalho foi um pouco maior que no primeiro, o que era de esperar, e foi facilitado pelo facto de termos já grande parte da gramática, apenas tendo de fazer algumas alterações e acrescentar algumas derivações para ser compativel com o nosso primeiro trabalho.</p>
+<p>
+O facto de escolher-mos este enunciado também facilitou, porque no primeiro trabalho já tinhamos definido a sintaxe da nossa linguagem e então apenas tivemos de alterar um pouco o flex e não pensar em toda a sintaxe/gramática novamente, já tinhamos usado estruturas de dados no primeiro trabalho e foi só altera-las minimamente e aplica-las neste trabalho, o que nos poupou bastante tempo e trabalho.</p>
+<p>
+A nossa satisfação perante o que foi produzido neste trabalho é positiva, uma vez que ficamos a perceber melhor a estruturação do compilador dividindo o analisador em analisador lexico e sintatico, colocando depois um programa em C a fazer a gestão dos dados e escrever nos ficheiros HTML e LaTeX nas respetivas linguagens.</p>
 </body>
