@@ -31,6 +31,7 @@ void geraHTML(Report* report,char* output){
 
 	
 	List* autores = report->autores;
+	List* aux = init(sizeof(Autor),NULL);
 	while(autores->size){
 		Autor* autor = pop(autores);
 		fprintf(fileout,"<address> %s",autor->anome);
@@ -47,8 +48,9 @@ void geraHTML(Report* report,char* output){
 			fprintf(fileout," - %s",autor->aaffil);
 		}
 		fprintf(fileout,"</address>\n");
+		insertTail(aux,autor);
 }
-
+	report->autores = aux;	
 	
 	time_t timenow = time(NULL);
 	struct tm tm = *localtime(&timenow);
@@ -64,7 +66,20 @@ void geraHTML(Report* report,char* output){
 
 	
 	}
+	List* keywords = report->keywords;
+	List* aux2 = init(sizeof(char*),NULL);
+	if(keywords->size){
+		char** key1 = pop(keywords);
+		insertTail(aux2,key1);
+		fprintf(fileout, "<h2>Palavras-Chave</h2>\n%s",*key1);
+		while(keywords->size){
+			char** key2 = pop(keywords);
+			insertTail(aux2,key2);
+			fprintf(fileout,";%s",*key2);
+		}
+	}
 
+	report->keywords=aux2;
 
 	List* htmlresumoagradecimentos = report->htmlInicio;
 	while(htmlresumoagradecimentos->size){
@@ -158,7 +173,7 @@ void geraLATEX(Report* report,char* output){
 
 	}
 
-	char* docclass = "\\documentclass[11pt, a4paper, oneside]";
+	char* docclass = "\\documentclass[11pt, a4paper]{report}";
 	char* usepackage = "\\usepackage{graphicx, url,hyperref,verbatim}";
 	char* inputenc = "\\usepackage[utf8]{inputenc}";
 	char* babel = "\\usepackage[portuges]{babel}";
@@ -191,14 +206,51 @@ void geraLATEX(Report* report,char* output){
 	fprintf(fileout,"%s\n%s\n%s\n%s\n%s\n",counter,lever,indent,beforeskip,afterskip);
 	fprintf(fileout,"%s\n%s\n%s\n%s\n",font,subsubparagraph3,subsubparagraphmark,makeatother);
 
-	fprintf(fileout, "\\title{%s}\n",report->titulo) ;
+	fprintf(fileout, "\\title{%s",report->titulo) ;
 	
 	if(report->stitulo){
-		fprintf(fileout, "\\subtitle{%s}\n",report->stitulo);
+		fprintf(fileout, "\\\\ \n %s",report->stitulo);
+	}
+	fprintf(fileout, "}\n" );
+	List* autores = report->autores;
+	Autor* autor = pop(autores);
+	fprintf(fileout,"\\author{\n%s\n",autor->anome);
+	if(autor->aid){
+		fprintf(fileout,"\\\\ \\texttt{%s}\n",autor->aid);
+	}
+	if(autor->aemail){
+		fprintf(fileout,"\\\\ \\texttt{%s}\n",autor->aemail);
+	}
+	if(autor->aurl){
+		fprintf(fileout,"\\\\ \\texttt{%s}\n",autor->aurl);
+	}
+	if(autor->aaffil){
+		fprintf(fileout,"\\\\ \\texttt{%s}\n",autor->aaffil);
+	}
+	while(autores->size){
+
+		Autor* autor2 = pop(autores);
+	fprintf(fileout,"\\and \n%s\n",autor2->anome);
+	if(autor2->aid){
+		fprintf(fileout,"\\\\ \\texttt{%s}\n",autor2->aid);
+	}
+	if(autor2->aemail){
+		fprintf(fileout,"\\\\ \\texttt{%s}\n",autor2->aemail);
+	}
+	if(autor2->aurl){
+		fprintf(fileout,"\\\\ \\texttt{%s}\n",autor2->aurl);
+	}
+	if(autor2->aaffil){
+		fprintf(fileout,"\\\\ \\texttt{%s}\n",autor2->aaffil);
 	}
 
-	//geraAutoresLatex(report->autores,fileout);
-	fprintf(fileout, "\\frontmatter" );	
+	}
+
+	fprintf(fileout, "}\n" );
+
+
+
+
 	fprintf(fileout, "\\date{\\today}\n");
 
 	char* begindoc = "\\begin{document}";
@@ -206,6 +258,13 @@ void geraLATEX(Report* report,char* output){
 
 	
 	fprintf(fileout,"%s\n%s\n",begindoc,maketitle);
+
+	List* latexInicio = report->latexInicio;
+	while(latexInicio->list){
+		char** entrada = pop(latexInicio);
+		fprintf(fileout,"%s",*entrada);
+	}
+
 
 	char* indicelatex = "\\tableofcontents";
 	char* indicefig = "\\listoffigures";
@@ -215,11 +274,10 @@ void geraLATEX(Report* report,char* output){
 	if(report->indice_fig)
 		fprintf(fileout, "%s\n", indicefig );
 	if(report->indice_tab)
-		fprintf(stderr, "%s\n", indicetab );
+		fprintf(fileout, "%s\n", indicetab );
 
 
 
-	fprintf(fileout, "\\mainmatter\n");
 	List* latex = report->latexCorpo;
 	while(latex->list){
 		char** entrada = pop(latex);
@@ -232,14 +290,6 @@ void geraLATEX(Report* report,char* output){
 	fclose(fileout);
 }
 
-char* get_time(){
-    
-    char *data=(char*)malloc(sizeof(char)*11);
-	time_t rawtime = time(NULL);
-    struct tm tm = *localtime(&rawtime);
-    sprintf(data,"%d/%d/%d",tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
-    
-    return data;
-}
+
 
 

@@ -1,0 +1,16 @@
+\select@language {portuges}
+\contentsline {chapter}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{4}{chapter.1}
+\contentsline {chapter}{\numberline {2}Sintaxe da Nossa Linguagem}{5}{chapter.2}
+\contentsline {chapter}{\numberline {3}Estrutura\IeC {\c c}\IeC {\~a}o do Trabalho}{6}{chapter.3}
+\contentsline {section}{\numberline {3.1}Flex}{6}{section.3.1}
+\contentsline {section}{\numberline {3.2}Yacc}{6}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Estrutura do Relat\IeC {\'o}rio}{7}{subsection.3.2.1}
+\contentsline {section}{\numberline {3.3}PreProcessador}{10}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Estruturas de Dados}{11}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Fun\IeC {\c c}\IeC {\~o}es para as Estruturas}{11}{subsection.3.3.2}
+\contentsline {section}{\numberline {3.4}Lista Ligada}{12}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Estrura de dados}{12}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Fun\IeC {\c c}\IeC {\~o}es para controlo das Estruturas}{13}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}Report}{13}{section.3.5}
+\contentsline {section}{\numberline {3.6}Makefile}{13}{section.3.6}
+\contentsline {chapter}{\numberline {4}Conclus\IeC {\~a}o}{14}{chapter.4}

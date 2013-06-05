@@ -2277,7 +2277,7 @@ int main()
   	printf("YYRES: %d\n",yyres);
   	
   	geraHTML(&report,NULL);
-
+  	geraLATEX(&report,NULL);
 
   	return 0;
 }

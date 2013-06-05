@@ -515,7 +515,7 @@ void addItem(Report* report){
 	char* ahtmlitem = "<li>";
 	insertTail(report->htmlCorpo,&ahtmlitem);
 	//LATEX
-	char* latexitem = "\\item";
+	char* latexitem = "\\item ";
 	insertTail(report->latexCorpo,&latexitem);
 }
 
