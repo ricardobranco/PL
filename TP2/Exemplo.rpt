@@ -8,11 +8,11 @@
 
 \keys(cha1,cabrito,test2)
 
-\resumo{ teste exmplo do resumo, a que ) uma coisa ou outra ate ajhcaj 8263 ao ultimio '\}' e vamos lá ver se dá
-
-	\p{ agora dentro do paragrafo, ve se funciona \negrito( este negrico e \italico(agora o italico))
+\resumo
+	\p{ agora dentro do paragrafo, ve se funciona \negrito{ este negrico e \italico{agora o italico}}
 	}
-}
+
+
 
 \indice()
 \indice(figuras)

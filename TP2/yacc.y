@@ -43,14 +43,14 @@ FrontMatter : BFMatter  Title STitle Authores Date Institution Keywords Abstract
 
 BFMatter : {zona=FRONTMATTER;}
 
-Title: BTITLE '(' arg ')' 	{addTitulo(&report, $3);};
+Title: BTITLE '(' arg ')' 	{printf("Titulo\n");addTitulo(&report, $3);};
 
-STitle: BSTITLE '(' arg ')' {addSTitulo(&report, $3);}
+STitle: BSTITLE '(' arg ')' {printf("STitulo\n");addSTitulo(&report, $3);}
 	  | 
 	  ;
 
-Authores : Authores Author 	{addAutor(&report,&autor);} 
-		 | Author 			{addAutor(&report,&autor);}
+Authores : Authores Author 	{printf("Autor\n");addAutor(&report,&autor);} 
+		 | Author 			{printf("Autor\n");addAutor(&report,&autor);}
 		 ;
 
 Author : Bauthor '(' Nome OPT_Author ')';
@@ -84,9 +84,9 @@ Url : sep  url {autor.aurl = $2;};
 
 Affiliation : sep  arg {autor.aaffil = $2;};
 
-Date : BDATE '('')' {report.data = 1;};
+Date : BDATE '('')' {printf("Data\n");report.data = 1;};
 
-Institution : BINST '(' arg ')' {report.inst = $3;}
+Institution : BINST '(' arg ')' {printf("Instituição\n");report.inst = strdup($3);}
 			|
 			;
 
@@ -100,7 +100,7 @@ Keys : Keys sep Key
 
 Key : arg {addKey(&report,$1);};
 
-Abstract : BAbs '{' ParaList '}' ;
+Abstract : BAbs  ParaList  {printf("RESUMO\n");} ;
 
 BAbs : BABS {addResumo(&report);};
 
@@ -199,7 +199,7 @@ InlineCode: BLineCode '(' linha ')' {addCodLinha(&report,$3,zona);};
 
 Acronym	: BAcronym '(' texto ')';
 
-Bold: Bbold '(' BCont ')' {fechoTag(&report,"</b>",zona);};
+Bold: Bbold '{' BCont '}' {fechoTag(&report,"</b>",zona);};
 
 Bbold : BBOLD {addNegTag(&report,zona);};
 
@@ -209,7 +209,7 @@ BCont	: BCont texto {addTexto(&report,$2,zona);}
 		| 
 		;
 
-Italic: BItalic '(' ICont ')' {fechoTag(&report,"</i>",zona);};
+Italic: BItalic '{' ICont '}' {fechoTag(&report,"</i>",zona);};
 
 BItalic : BITALIC {addItTag(&report,zona);};
 
@@ -219,7 +219,7 @@ ICont	: ICont texto {addTexto(&report,$2,zona);}
 		| 
 		;
 
-Underline : BUnderLine '(' UCont ')' {fechoTag(&report,"</b>",zona);};
+Underline : BUnderLine '{' UCont '}' {fechoTag(&report,"</b>",zona);};
 
 BUnderLine : BUNDERLINE {addUnderTag(&report,zona);};
 

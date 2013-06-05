@@ -1033,7 +1033,7 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 31 "flex.fl"
-{printf("SEP:%s\n",yytext ); return BDATE;}
+{BEGIN ARGS;return BDATE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
