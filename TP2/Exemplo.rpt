@@ -41,6 +41,18 @@
 				asdasd
 
 			}
+
+			\tabela{
+			\leg(tabela 1)
+			\linha{
+			\cel(c,1){
+				texto
+			}
+
+			}
+			}
+
+
 		}
 		}
 	}

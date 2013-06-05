@@ -254,7 +254,7 @@ Image 	: BImg	'(' Path  ')';
 
 Path: texto {image.path = $1;};
 
-Caption	: BCAP '(' texto ')' {image.caption = $3;};
+Caption	: BCAP '(' arg ')' {image.caption = $3;};
 
 //---------------- Listas --------------------------
 
@@ -284,9 +284,9 @@ Item: BItem '(' ParaContend ')';
 
 
 
-Table : BTab '(' T_Caption  C_Tabela ')' {addTabela(&report,&table);};
+Table : BTab '{' T_Caption  C_Tabela '}' {addTabela(&report,&table);};
 
-T_Caption : BCAP '(' texto ')' {table.caption = $3;};
+T_Caption : BCAP '(' arg ')' {table.caption = $3;};
 
 BTab : BTAB {table = init_Table();};
 
@@ -311,7 +311,7 @@ BCel : BCEL {init_Cell();};
 OPT_Cel : POS sep OPT_Cel_um
 		| OPT_Cel_um;
 
-POS : carater {cell.pos = $1;};
+POS : carater {printf("POS"); cell.pos = $1;};
 
 OPT_Cel_um	: Dim
 			|

@@ -7,7 +7,7 @@
 
 %x INDICE CODIGO ARGS CODIGOLINHA
 
-arg ([^\(\)\,\\\{\}]|(\\[\\\(\)\{\}\,]))+
+arg ([^\(\)\,\\\{\}]|(\\[\\\(\)\{\}\,])){3,}
 email [a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}
 url ((http|ftp|https|socket):\/\/)?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+(:[0-9]+)?([/][a-z0-9=?]*(\.[a-z0-9]+)?)*
 id [a-zA-Z]{0,2}[0-9]+
@@ -23,6 +23,11 @@ inteiro [0-9]+
 <ARGS,INDICE>\)	 	{BEGIN 0; return ')';}
 <CODIGO>{codigo} 	{BEGIN 0; yylval.valS = strdup(yytext);
 					return codigo;}
+<ARGS>[cCdDeE]		{printf("CHAR:%s\n",yytext);yylval.valC = yytext[0];
+				 	return carater;}
+
+
+
 
 <*>[ \n\t]+		{;}
 <*>[\(\)\{\}] 	{printf("PARAM|%s|\n",yytext);return yytext[0];} 
@@ -61,7 +66,8 @@ inteiro [0-9]+
 
 \\figura 		{return BFIG;}
 \\imagem		{return BImg;}
-\\leg			{return BCAP;}
+\\leg			{BEGIN ARGS;
+				return BCAP;}
 
 \\lo 			{return BENUM;}
 \\li 			{return BItemize;}
@@ -69,7 +75,8 @@ inteiro [0-9]+
 
 \\tabela 		{return BTAB;}
 \\linha 		{return BLINHA;}
-\\cel 			{return BCEL;}
+\\cel 			{BEGIN ARGS;
+				return BCEL;}
 
 
 <INDICE>figuras         {return IFIGURE;}
@@ -78,11 +85,9 @@ inteiro [0-9]+
 
 
 
-[cCdDeE]	{yylval.valC = yytext[0];
-			return carater;}
 
-{inteiro}	{yylval.valI = atoi(strdup(yytext));
-			return inteiro;}
+<ARGS>{inteiro}	{printf("INTEIRO:%s\n",yytext);yylval.valI = atoi(strdup(yytext));
+				return inteiro;}
 
 <ARGS>{id}			{printf("ID:%s\n",yytext);yylval.valS = strdup(yytext);
 					return id;}
