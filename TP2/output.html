@@ -7,20 +7,20 @@
 <address> Diogo Alves - A61030 - a61030@alunos.uminho.pt</address>
 <address> Helder Gonçalves - A61084 - a61084@alunos.uminho.pt</address>
 <address> Ricardo Branco - A61075 - a61075@alunos.uminho.pt</address>
-<center>5/6/2013</center>
+<center>6/6/2013</center>
 <center>
 <h3>Universidade do Minho</h3></center>
 <h2>Resumo</h2><p>
 Neste trabalho tem-se como objetivo criar um analisador léxico e um sintático, que "processa"/analisa o texto, que apanha as palavras reservadas, e de seguida verifica se a estrutura do relatório está bem construida. Enquanto analisa o texto este é guardado em estruturas de dados, e em listas ligadas para separar o código html do código latex, convertendo e criando por fim ficheiros HTML e/ou LaTeX com o nosso relatório convertido para cada uma das linguagens.</p>
 <h2>Indice</h2>
 <ol>
-<li><a hef="#Introdução">Introdução</a></li><li><a hef="#Sintaxe da Nossa Linguagem">Sintaxe da Nossa Linguagem</a></li><li><a hef="#Estruturação do Trabalho">Estruturação do Trabalho</a></li><li><a hef="#Flex">Flex</a></li><li><a hef="#Yacc">Yacc</a></li><li><a hef="#Estrutura do Relatório">Estrutura do Relatório</a></li><li><a hef="#PreProcessador">PreProcessador</a></li><li><a hef="#Estruturas de Dados">Estruturas de Dados</a></li><li><a hef="#Funções para as Estruturas">Funções para as Estruturas</a></li><li><a hef="#Lista Ligada">Lista Ligada</a></li><li><a hef="#Estrura de dados">Estrura de dados</a></li><li><a hef="#Funções para controlo das Estruturas">Funções para controlo das Estruturas</a></li><li><a hef="#Report">Report</a></li><li><a hef="#Makefile">Makefile</a></li><li><a hef="#Conclusão">Conclusão</a></li></ol><br/>
+<li><a hef="#Introdução">Introdução</a></li><li><a hef="#Sintaxe da Nossa Linguagem">Sintaxe da Nossa Linguagem</a></li></ol><br/>
 <h2>Lista de figuras</h2>
 <ol>
-</ol><br/>
+<li><a hef="#1ª parte">1ª parte</a></li></ol><br/>
 <h2>Listas de tabelas</h2>
 <ol>
-<li><a hef="#Comandos a utilizar">Comandos a utilizar</a></li></ol><br/>
+</ol><br/>
 <h1>Introdução</h1>
 <a name="Introdução"></a>
 <p>
@@ -33,239 +33,8 @@ Portanto, neste documento irão estar presentes as nossas decisões, a estrutura
 <a name="Sintaxe da Nossa Linguagem"></a>
 <p>
 Nós, como referido anteriormente, estamos a "continuar" o trabalho realizado no Trabalho Prático 1 (TP1) e por isso a sintaxe da linguagem manteve-se a do trabalho anterior, fazendo algumas alterações e acrescentando outras funcionalidades que são as seguintes:</p>
-<a name="Comandos a utilizar"></a>
-<table border="1">
-<tr>
-<td align="center" colspan="1">Comandos</td>
-<td align="center" colspan="1">Descrição</td>
-</tr>
-</table><h1>Estruturação do Trabalho</h1>
-<a name="Estruturação do Trabalho"></a>
-<p>
-Este trabalho consiste em dois analisadores, um lexico, feito em flex que irá "apanhar" as palavras reservadas na nossa linguaguem e passar a informação do que reconheceu para o analisador sintático, feito em yacc, que irá verificar se a gramática obtida do documento que está a ser analisado está correta.</p>
-<p>
-Depois disto, e no yacc, gravamos os dados em estruturas de dados. Por fim, vamos buscar os dados a essas estruturas e criamos um ficheiro HTML e/ou LaTeX com a nossa linguagem convertida para essas linguagens.</p>
-<a name="Flex"></a>
-<h2>Flex</h2>
-<p>
-No ficheiro flex, temos uma condição de contexto exclusiva para os indices de figuras e tabelas, para criar caso exista os respectivos indices, caso contrário (se não existirem esses indices) cria o indice normal dos capitulos e secções.</p>
-<p>
-Criamos também umas variáveis para as expressões regulares para facilitar e tornar o trabalho mais legivel, e apenas as escrevemos nos locais onde deveriam ter essas mesmas expressões.</p>
-<p>
-Depois disto entramos na parte de flex mesmo, onde o compilador vai "filtrar" as tag's (palavras reservadas) da nossa linguagem, os textos, através das expressões regulares e mandar essa informação para o yacc para este verificar se a gramática se escontra correta.</p>
-<a name="Yacc"></a>
-<h2>Yacc</h2>
-<p>
-Em yacc temos a gramática para a estrutura de um relatório, como é formado e o que é permitido.</p>
-<p>
-Começamos por incluir as bibliotecas necessárias para trabalhar com o C, incluindo uma criada por nós (preprocessador) que contém as estruturas e funções para guardar as informações retiradas do documento inicial.</p>
-<p>
-Ainda nesta parte e depois dos includes declaramos as variáveis para as estruturas do preprocessador.</p>
-<p>
-Após esta parte de C, criamos os tokens, types, uma estrutura union onde estão guardados os valores filtrados no flex que irão ser lidos/tratados pelo yacc e indicamos ao yacc onde ele vai começar a verificar a gramática.</p>
-<p>
-Depois disto entramos na da gramática em si e das suas derivações, e o yacc vai começar em report que deriva na capa e no relatório em si (o corpo do relatório), e parte daí para o resto das derivações.</p>
-<p>
-No fim, temos as funções para os erros e o main onde inicializamos a estrutura do relatório e iniciamos o yacc.</p>
-<a name="Estrutura do Relatório"></a>
-<h3>Estrutura do Relatório</h3>
-<p>
-Como referido anteriormente, o nosso relatório e composto por duas partes, a capa e o corpo do relatório.</p>
-<p>
-A capa tem obrigatóriamente a seguinte estrutura:</p>
-<ol>
-<li>Titulo</li><li>Autor</li><li>Data</li><li>Resumo</li></ol>
-<p>
-e opcionalmente:</p>
-<ul>
-<li>Mais do que um autor</li><li>Sub Titulo</li><li>Instituição</li><li>Palavras Chave</li><li>Agradecimentos</li><li>Indice</li><li>Indice de Figuras</li><li>Indice de Tabelas</li></ul>
-<p>
-E o autor tem obrigatóriamente:</p>
-<ul>
-<li>Nome</li></ul>
-<p>
-e opcionalmente:</p>
-<ul>
-<li>Numero de identificação</li><li>Email</li><li>Url</li><li>Afiliação</li></ul>
-<p>
-Neste caso, as opção fizemos em forma de escada, onde uma tinha-se a ela própria e à seguinte ou apenas a seguinte.</p>
-<p>
-Depois no corpo do relatório temos obrigatoriamente:</p>
-<ul>
-<li>Capitulo ou lista de capitulos</li></ul>
-<p>
-Um capítulo tem obrigatoriamente:</p>
-<ul>
-<li>Titulo</li><li>Lista de Elementos</li></ul>
-<p>
-A lista de elementos pode ser qualquer um entre:</p>
-<ul>
-<li>Parágrafo</li><li>Corpo Flutuante</li><li>Lista</li><li>Secção</li><li>Sumário</li><li>Bloco de Código</li></ul>
-<p>
-Uma secção pode ter:</p>
-<ul>
-<li>Titulo</li><li>Lista de Elementos</li></ul>
-<p>
-O paragrafo tem:</p>
-<ul>
-<li>Paragrafos</li><li>Texto</li><li>Elementos</li></ul>
-<p>
-Os elementos podem ser:</p>
-<ul>
-<li>FootNote</li><li>Ref</li><li>Xref</li><li>CitRef</li><li>Href</li><li>Iterm</li><li>Bold</li><li>Italic</li><li>Underline</li><li>InlineCode</li><li>Acronym</li></ul>
-<p>
-O sumário e os elementos anteriores aceitam:</p>
-<ul>
-<li>Texto</li></ul>
-<p>
-As listas podem ser:</p>
-<ul>
-<li>Enumerate</li><li>Itemize</li></ul>
-<p>
-Se for Enumerate pode:</p>
-<ul>
-<li>Ter um item relativo ao mesmo</li><li>Conter um itemize</li></ul>
-<p>
-Se for Itemize pode: </p>
-<ul>
-<li>Ter um item relativo ao mesmo</li><li>Conter um Enumerate</li></ul>
-<p>
-O item pode ter texto ou todos os items referidos em cima no "Elementos".</p>
-<p>
-Um corpo flutuante pode ser uma imagem ou uma tabela:</p>
-<p>
-Se for uma imagem tem:</p>
-<ul>
-<li>O caminho da imagem</li><li>Legenda</li></ul>
-<p>
-Se for tabela tem:</p>
-<ul>
-<li>Legenda</li><li>Linhas</li></ul>
-<p>
-Uma linha contém uma lista de células.</p>
-<a name="PreProcessador"></a>
-<h2>PreProcessador</h2>
-<p>
-Neste modulo criado por nós, temos as estruturas necessárias para guardar os dados, bem como as funções para inicialização e para inserção dos dados nas mesmas. Temos támbem incluido um modulo de lista ligada genérica, também criado por nós, para guardar os dados nas estruturas, uma vez que podemos ter, por exemplo, vários autores, e também para o indice o que nos permite gerá-lo em apenas uma passagem pelo ficheiro de entrada, o que não seria possível sem uma estrutura de dados por causa de gerar o código para HTML.</p>
-<a name="Estruturas de Dados"></a>
-<h3>Estruturas de Dados</h3>
-<p>
-As estruturas de dados usadas para efetuar o trabalho foram as seguintes:</p>
-<p>
-Uma para as células da tabela, bem como para os indices e linhas da mesma e uma geral da tabela onde guarda a legenda e as linhas e estas guardam as células.</p>
-<p>
-Temos outra estrutura para as imagens onde e guardada a legenda e caminho para a imagem, as keywords são também guardadas numa estrutura em que usa o modulo da lista ligada, uma vez que pode conter várias palavras chave.</p>
-<p>
-Os autores têm uma estrutura própria com os dados de cada um e posteriormente será guardado numa lista ligada pois poderão ser vários, lista essa que está dentro da estrutura principal, que é a do relatório, onde são guardados também o titulo, o sub titulo, a intituição, os indices e a data, estes como dados únicos, pois haverá apenas um no relatório todo, depois temos todos os outros dados a serem gravados com listas ligadas, são eles, os autores, as palavras chave, os indices (um por lista ligada), outra para HTML e por fim para LaTeX.</p>
-<a name="Funções para as Estruturas"></a>
-<h3>Funções para as Estruturas</h3>
-<p>
-Para as estruturas temos funções de inicialização, que são as seguintes:</p>
-<pre>
-
-				Autor init_Autor();
-				Cell init_Cell();
-				Row init_Row();
-				Table init_Table();
-				Image init_Image();
-				IndiceCell init_IndiceCell();
-				Image init_Image();
-				Keywords init_Keywords();
-				Report init_Report();
-			</pre>
-<p>
-Funções para a capa:</p>
-<pre>
-
-				void addTitulo(Report*,char*);
-				void addSTitulo(Report*, char*);
-				void addAutor(Report*,Autor*);
-				void addKey(Report*,char*);
-			</pre>
-<p>
-E funções para o corpo do relatório:</p>
-<pre>
-
-				void addRef(Report*,char*, char*,int);
-				void addHRef(Report*,char*,char*,int);
-				void addNegTag(Report*,int);
-				void addItTag(Report*,int);
-				void addUnderTag(Report*,int);
-				void fechoTag(Report*,char*,int);
-				void addTexto(Report*,char*,int);
-				void fechoParagrafo(Report*,int);
-				void addCapitulo(Report*,char*);
-				void addParagrafo(Report*,int);
-				void addEndTAG(Report*,char*,char*);
-				void addTextoNF(Report*,char*);
-				void addCodLinha(Report*,char*,int);
-				void addImagem(Report*,Image*);
-				void addItem(Report*,char*);
-				void addOrdList(Report*);
-				void addItemList(Report*);
-				void fechaOrdList(Report*);
-				void fechaItemList(Report*);
-				void addCelula(Row*,Cell*);
-				void addLinha(Table*,Row*);
-				void addTabela(Report*,Table*);
-				void addSeccao(Report*,char*,int);
-				void addResumo(Report*);
-				void addAgradecimentos(Report*);
-				void fechoResumo(Report*);
-				void fechoAgradecimentos(Report*);
-			</pre>
-<a name="Lista Ligada"></a>
-<h2>Lista Ligada</h2>
-<p>
-Como referido na secção anterior, a lista ligada é usada nas estruturas para guardar os dados, pelos motivos referidos acima.</p>
-<a name="Estrura de dados"></a>
-<h3>Estrura de dados</h3>
-<p>
-A lista ligada implementada por nós é genérica e esta é a sua estrutura:</p>
-<pre>
-
-				typedef struct node {
-				    void* data;    	/* Apontador para um tipo de dados*/
-				    struct node *next;	/* Apontador para o próximo nodo*/
-				}Node;
-
-
-				typedef struct list {
-				    int size;    	/* Número de elementos na lista ligada*/
-				    int (*compare) (void*,void*); /* Função de comparação*/
-				    size_t dataSize;	/* Memória que o tipo de dados necessita*/
-				    Node *list;		/* Apontador para o primeiro nodo da lista*/
-				}List;
-			</pre>
-<a name="Funções para controlo das Estruturas"></a>
-<h3>Funções para controlo das Estruturas</h3>
-<pre>
-
-				List* init(size_t dataSize,int (*compare) (void*,void*));
-				List* insertHead (List *l, void *data);
-				int search (List *l, void *data);
-				int listDestroy(List *l);
-				List* sortedInsert (List *l, void *data);
-				List* insertTail (List *l, void *data);
-				List* removeNode (List*l, void *data);
-				void* pop(List* l);
-			</pre>
-<a name="Report"></a>
-<h2>Report</h2>
-<p>
-Neste modulo, temos as funções para gerar os ficheiros HTML e LaTeX, em que inclui o preprocessador e vai lá buscar os dados para criar os respectivos ficheiros.</p>
-<a name="Makefile"></a>
-<h2>Makefile</h2>
-<p>
-Com a makefile podemos criar o executável, fazendo apenas "make", podemos também eliminar os ficheiros .o, .c gerados pelo flex e yacc e o executável também fazendo "make clean", podemos ainda instalar o executável fazendo "make install", desinstala-o fazendo "make remove" e comprime os ficheiros principais fazendo "make tar".</p>
-<h1>Conclusão</h1>
-<a name="Conclusão"></a>
-<p>
-Este trabalho prático permitiu-nos consolidar os conhecimentos obtidos nas aulas uma vez que precisamos de tudo o que temos vindo a dar, a forma como estruturar o compilador, como funcionava a gramática disponibilizada pelo docente, o que era suposto os analisadores lexico e semantico fazerem, como funcionavam e interagiam, e nesse aspeto as aulas ajudaram bastante pois tudo foi explicado lá.</p>
-<p>
-O nível de dificuldade neste trabalho foi um pouco maior que no primeiro, o que era de esperar, e foi facilitado pelo facto de termos já grande parte da gramática, apenas tendo de fazer algumas alterações e acrescentar algumas derivações para ser compativel com o nosso primeiro trabalho.</p>
-<p>
-O facto de escolher-mos este enunciado também facilitou, porque no primeiro trabalho já tinhamos definido a sintaxe da nossa linguagem e então apenas tivemos de alterar um pouco o flex e não pensar em toda a sintaxe/gramática novamente, já tinhamos usado estruturas de dados no primeiro trabalho e foi só altera-las minimamente e aplica-las neste trabalho, o que nos poupou bastante tempo e trabalho.</p>
-<p>
-A nossa satisfação perante o que foi produzido neste trabalho é positiva, uma vez que ficamos a perceber melhor a estruturação do compilador dividindo o analisador em analisador lexico e sintatico, colocando depois um programa em C a fazer a gestão dos dados e escrever nos ficheiros HTML e LaTeX nas respetivas linguagens.</p>
-</body>
+<a name="1ª parte"></a>
+<figure>
+<img src="sintaxe.png"/>
+<figcaption>1ª parte</figcaption>
+</figure></body>
